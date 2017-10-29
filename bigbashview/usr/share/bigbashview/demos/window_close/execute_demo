@@ -1,0 +1,3 @@
+#!/bin/bash
+python ../../bigbashview.py 'content$close.html'
+

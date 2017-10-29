@@ -1,0 +1,36 @@
+#!/bin/bash
+
+#Control Center for BigLinux
+#
+#Authors:
+#  Bruno Goncalves Araujo <www.biglinux.com.br>
+#
+#License: GPLv2 or later
+#################################################
+
+
+python /usr/share/bigbashview/gtk-css.py
+
+echo "body, p, table{
+
+	font-size: $(gconftool -g /desktop/gnome/interface/font_name | awk '{print $NF}' | sed 's/\..*//g')pt;
+	font-family: '$(gconftool -g /desktop/gnome/interface/font_name | sed 's/Bold.*//g;s/Semi-Condensed//g;s/Oblique.*//;s/Condensed.*//;s/[0-9].*//;s/Ultra-Light//;s/Medium.*//')';
+"
+
+if [ "$(gconftool -g /desktop/gnome/interface/font_name | grep Bold)" = "" ]
+then
+	echo "font-weight: normal;"
+else
+	echo "font-weight: bold;"
+fi
+
+if [ "$(gconftool -g /desktop/gnome/interface/font_name | grep "Oblique\|Italic")" = "" ]
+then
+	echo "font-style: none;"
+else
+	echo "font-style: italic;"
+fi
+
+echo '
+}
+--></style>'

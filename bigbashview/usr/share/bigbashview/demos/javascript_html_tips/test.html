@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        
+        <!-- WINDOW ICON DEFINITION -->
+        <link REL="SHORTCUT ICON" HREF="/content$./favicon.ico" type='image/x-icon'/>
+        
+        <!-- WINDOW TITLE DEFINITION -->
+        <title>BigBashView 2 usage examples</title>
+        
+        <script src="/content$jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){ 
+                
+                $('#ajax').click(function(){
+                    $('#data').load('/content$./test_ajax.html');
+                });
+                
+                $('#title').click(function(){
+                    $(document).attr('title','Hello World')
+                });
+                
+                $('#windowsize').click(function(){
+                    window.resizeTo(150,150);
+                });
+                
+                $('#windowposition').click(function(){
+                    window.moveTo(50,50);
+                });
+                
+                $('#closewindow').click(function(){
+                    window.close();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Javascripts tips</h1>
+        <a href='#' id='ajax'>Load content with ajax, from teste_ajax.html file</a>
+        <div id='data'> </div>
+        <a href='#' id='title'>Change window title</a><br/>
+        <a href='#' id='windowsize'>Change window size</a><br/>
+        <a href='#' id='windowposition'>Change window position</a><br/>
+        <a href='#' id='closewindow'>Close the window</a><br/>
+    </body>
+</html>

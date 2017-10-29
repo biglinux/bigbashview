@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        <script src="/content$jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#windowclose').click(function(){
+                    window.close();
+                });
+                
+                //Do not redirect links with noredirect class
+                $('.noredirect').click(function(e){
+                    e.preventDefault();
+                    $.get($(this).attr('href'));
+                });
+                
+            });
+        </script>
+    </head>
+    <body>
+        <h1>How to close a window</h1>
+        <a href='#' id='windowclose'>Closing with javascript</a><br/>
+        <a href='/execute close$'>Close the window</a><br/>
+        <a href='/execute close$kdialog --msgbox "Closing program..."'>Show a message before closing the window</a><br/>
+        <a href='/execute close background$kdialog --msgbox "program closed"'>Show a message after closing the window</a><br/>
+        <a href='/execute close$./close.sh' class="noredirect">Ask before closing the window</a><br/>
+    </body>
+</html>

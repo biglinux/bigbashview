@@ -1,0 +1,11 @@
+Package: bigbashview
+Version: 3.0.0-0biglinux7
+Architecture: all
+Maintainer: Bruno Goncalves <www.biglinux.com.br>
+Installed-Size:4228
+Depends: python-pyqt5.qtwebkit, python-pyqt5, python-webpy
+Recommends: python-chameleon
+Section: admin
+Priority: optional
+Description: Graphical interface for bash with webkit engine.
+
