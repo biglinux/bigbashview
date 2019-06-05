@@ -17,16 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from bbv.ui.base import BaseWindow
+import webkit
+import gtk
 import sys
-import os
 
 import pygtk
 pygtk.require('2.0')
-import gtk
-import webkit
 
-from bbv.globals import *
-from bbv.ui.base import BaseWindow
 
 class Window(BaseWindow):
     def __init__(self):
@@ -39,29 +37,29 @@ class Window(BaseWindow):
         self.webview.connect("close-web-view", self.close_window)
         self.window.connect("destroy-event", self.close_window)
         self.window.connect("delete-event", self.close_window)
-        
-        #self.webview.connect("icon_changed", self.icon_clicked)
+
+        # self.webview.connect("icon_changed", self.icon_clicked)
 
     def show(self, *args):
-        #TODO Change window state when called
+        # TODO Change window state when called
         self.window.show()
-        
+
     def run(self):
         gtk.main()
         return 0
-        
+
     def set_debug(self, debuglevel):
-        self.debug=debuglevel
-        
+        self.debug = debuglevel
+
     def set_geometry(self):
-        #TODO Need to find a signal for this
+        # TODO Need to find a signal for this
         pass
 
     def close_window(self, *args):
         sys.exit()
-    
+
     def icon_changed(self, *args):
-        #TODO Implement this method
+        # TODO Implement this method
         pass
 
     def title_changed(self, widget, frame, title):
@@ -69,16 +67,12 @@ class Window(BaseWindow):
 
     def load_url(self, url):
         self.webview.open(url)
-        print url
-        
+        print(url)
+
     def set_size(self, width, height):
-        if width<=0:
-            width=640
-        if height<=0:
-            height=480
-        
+        if width <= 0:
+            width = 640
+        if height <= 0:
+            height = 480
+
         self.window.resize(width, height)
-
-
-
-        

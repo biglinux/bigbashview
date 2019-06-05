@@ -26,23 +26,29 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebView
 
-from bbv.globals import ICON, DATA_DIR
+from bbv.globals import ICON
 from bbv.ui.base import BaseWindow
+
+
+
+
+
+
+
 
 class Window(BaseWindow):
     def __init__(self):
-        self.debug=1
         self.app = QApplication(sys.argv)
-        self.desktop= QApplication.desktop()
+        self.desktop = QApplication.desktop()
         self.web = QWebView()
         self.icon = QIcon(ICON)
-        QWebSettings.setIconDatabasePath(DATA_DIR)
+        self.web.setWindowIcon(self.icon)
         self.web.titleChanged.connect(self.title_changed)
         self.web.iconChanged.connect(self.icon_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
         self.web.page().geometryChangeRequested.connect(self.set_geometry)
 
-    def show(self,window_state):
+    def show(self, window_state):
         if window_state == "maximized" and not self.web.isMaximized():
             self.web.showNormal()
             self.web.showMaximized()
@@ -58,9 +64,9 @@ class Window(BaseWindow):
         return self.app.exec_()
 
     def set_debug(self, debuglevel):
-        self.debug=debuglevel
+        self.debug = debuglevel
 
-    def set_geometry(self,geom ):
+    def set_geometry(self, geom):
         self.web.setGeometry(geom)
 
     def close_window(self):
@@ -73,19 +79,20 @@ class Window(BaseWindow):
             self.web.setWindowIcon(self.web.icon())
 
     def title_changed(self, title):
-        self.web.setWindowTitle(title)
+        if title:
+            self.web.setWindowTitle(title)
 
-    def load_url(self,url):
-        self.url=QUrl.fromEncoded(url)
+    def load_url(self, url):
+        self.url = QUrl.fromEncoded(url.encode("utf-8"))
         self.web.setUrl(self.url)
 
-    def set_size(self,width, height):
-        if width<=0:
-            width=640
-        if height<=0:
-            height=480
+    def set_size(self, width, height):
+        if width <= 0:
+            width = 640
+        if height <= 0:
+            height = 480
 
-        left=(self.desktop.width()-width)/2
-        top=(self.desktop.height()-height)/2
+        left = (self.desktop.width()-width)/2
+        top = (self.desktop.height()-height)/2
 
-        self.web.setGeometry(left,top,width,height)
+        self.web.setGeometry(left, top, width, height)

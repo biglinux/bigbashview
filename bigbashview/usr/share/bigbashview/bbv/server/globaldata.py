@@ -16,6 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-address = lambda: '127.0.0.1'
-port = lambda: 9000
+
+def address(): return '127.0.0.1'
+
+
+def port(): return 9000
+
+
 APP_VERSION = "2.0"

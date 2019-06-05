@@ -1,1 +1,1 @@
-kdialog --msgbox 'hello world'
+zenity --info --text  'hello world'

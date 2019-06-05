@@ -1,3 +1,3 @@
 #!/bin/bash
-python ../../bigbashview.py 'content$close.html'
+python3 ../../bigbashview.py 'content$close.html'
 

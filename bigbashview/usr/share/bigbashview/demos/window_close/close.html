@@ -21,8 +21,8 @@
         <h1>How to close a window</h1>
         <a href='#' id='windowclose'>Closing with javascript</a><br/>
         <a href='/execute close$'>Close the window</a><br/>
-        <a href='/execute close$kdialog --msgbox "Closing program..."'>Show a message before closing the window</a><br/>
-        <a href='/execute close background$kdialog --msgbox "program closed"'>Show a message after closing the window</a><br/>
+        <a href='/execute close$zenity --info --text  "Closing program..."'>Show a message before closing the window</a><br/>
+        <a href='/execute close background$zenity --info --text  "program closed"'>Show a message after closing the window</a><br/>
         <a href='/execute close$./close.sh' class="noredirect">Ask before closing the window</a><br/>
     </body>
 </html>

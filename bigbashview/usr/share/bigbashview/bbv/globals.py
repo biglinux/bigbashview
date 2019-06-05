@@ -16,23 +16,32 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os,sys
+import os
+import sys
 
 APP_NAME = "Big Bash View"
 APP_VERSION = "2.1"
-PROGDIR=os.path.dirname(os.path.abspath(sys.argv[0]))
+PROGDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-if os.path.isdir(os.sep.join((PROGDIR,".hg"))):
+if os.path.isdir(os.sep.join((PROGDIR, ".hg"))):
     try:
         import subprocess
-        po = subprocess.Popen("hg heads --template '{rev}'", stdin=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        po = subprocess.Popen(
+            "hg heads --template '{rev}'", stdin=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         stdout, stderr = po.communicate()
-        APP_VERSION+=' (DEV. VERSION) rev %s' %stdout
-    except:
+        APP_VERSION += ' (DEV. VERSION) rev %s' % stdout
+    except Exception:
         pass
 
-DATA_DIR = os.path.expanduser("~/.bigbashview") # TODO: Check portability issues
-ICON = os.sep.join((PROGDIR,"bbv","img","icone.png"))
-ADDRESS = lambda: '127.0.0.1'
-PORT = lambda: 9000
-COMPAT=False
+# TODO: Check portability issues
+DATA_DIR = os.path.expanduser("~/.bigbashview")
+ICON = os.sep.join((PROGDIR, "bbv", "img", "icone.png"))
+
+
+def ADDRESS(): return '127.0.0.1'
+
+
+def PORT(): return 9000
+
+
+COMPAT = False

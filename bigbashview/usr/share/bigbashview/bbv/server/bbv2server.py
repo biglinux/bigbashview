@@ -20,13 +20,14 @@ import web
 import sys
 import socket
 import threading
-import inspect
 import time
-import views
+from . import views
+import os
 try:
     from bbv import globals as globaldata
 except ImportError:
-    import globaldata
+    from . import globaldata
+
 
 class Server(threading.Thread):
     def _get_subclasses(self, classes=None):
@@ -59,8 +60,8 @@ class Server(threading.Thread):
         """ Run the webserver """
         ip = globaldata.ADDRESS()
         port = globaldata.PORT()
-        sys.argv = [ sys.argv[0], '' ]
-        sys.argv[1] = ':'.join((ip,str(port)))
+        sys.argv = [sys.argv[0], '']
+        sys.argv[1] = ':'.join((ip, str(port)))
 
         urls = self.get_urls()
         classes = self.get_classes()
@@ -68,20 +69,22 @@ class Server(threading.Thread):
         self.app.run()
 
     def stop(self):
-        print 'Waiting for server to shutdown...'
+        print('Waiting for server to shutdown...')
         self.app.stop()
+        os.kill(os.getpid(), 15)
 
-def run_server(ip='127.0.0.1',background=True):
+
+def run_server(ip='127.0.0.1', background=True):
     soc = socket.socket()
-    for port in range(19000,19100):
+    for port in range(19000, 19100):
         try:
-            soc.bind((ip,port))
+            soc.bind((ip, port))
             soc.close()
             break
-        except socket.error, e:
-            if e[0] != 98:
+        except socket.error as e:
+            if e.errno != 98:
                 raise socket.error(e)
-            print 'Port %d already in use, trying next one' %port
+            print('Port %d already in use, trying next one' % port)
 
     globaldata.ADDRESS = lambda: ip
     globaldata.PORT = lambda: port
@@ -95,16 +98,16 @@ def run_server(ip='127.0.0.1',background=True):
     server.daemon = True
     web.config.debug = False
     server.start()
-    #Wait for server to respond...
+    # Wait for server to respond...
     while True:
         try:
-            con = socket.create_connection((ip,port))
+            con = socket.create_connection((ip, port))
             con.close()
             break
-        except socket.error, e:
-            if e[0] != 111:
+        except socket.error as e:
+            if e.errno != 111:
                 raise socket.error(e)
-            print 'Waiting for server...'
+            print('Waiting for server...')
             time.sleep(0.1)
 
     return server

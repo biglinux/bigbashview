@@ -1,0 +1,83 @@
+#!/bin/bash
+
+#Control Center for BigLinux
+#
+#Authors:
+#  Bruno Goncalves Araujo <www.biglinux.com.br>
+#
+#License: GPLv2 or later
+#################################################
+
+if [ "$KDEHOME" = "" ]
+then
+KDEHOME="$HOME/.kde"
+fi
+
+
+#Confere se o KDE possui configuração feita
+	if [ "$(grep "^Palette.active=" ~/.config/Trolltech.conf | cut -f11 -d ",")" = "" ]; 		then
+mkdir ~/.config 2> /dev/null
+echo '[qt]
+KDE\kdeAddedLibraryPaths=/usr/lib/kde4/plugins
+4.5\libraryPath=/usr/lib/kde4/plugins
+Palette\active=#141312, #e4e4e7, #ffffff, #e8e8e1, #6b6b68, #b3b3ae, #141312, #ffffff, #141312, #ffffff, #dcdcd5, #3c3c3a, #418bd4, #ffffff, #0057ae, #644a9b, #f8f7f6, #000000, #c0daff, #141312
+Palette\inactive=#141312, #e4e4e7, #ffffff, #e8e8e1, #6b6b68, #b3b3ae, #141312, #ffffff, #141312, #ffffff, #dcdcd5, #3c3c3a, #418bd4, #ffffff, #0057ae, #644a9b, #f8f7f6, #000000, #c0daff, #141312
+Palette\disabled=#8f8f8a, #dadade, #fbfbf7, #deded7, #666663, #acaca6, #a5a4a4, #ffffff, #949495, #f4f4f4, #d2d2cb, #3b3b39, #d2d2cb, #8f8f8a, #97bcdf, #c1b6d7, #eeece9, #000000, #c0daff, #141312
+KWinPalette\activeBackground=#6094cf
+KWinPalette\activeBlend=#5787bc
+KWinPalette\activeForeground=#ffffff
+KWinPalette\frame=#dcdcd5
+KWinPalette\activeTitleBtnBg=#dcdcd5
+KWinPalette\inactiveBackground=#e0dfde
+KWinPalette\inactiveBlend=#cccbca
+KWinPalette\inactiveForeground=#141312
+KWinPalette\inactiveFrame=#dcdcd5
+KWinPalette\inactiveTitleBtnBg=#dcdcd5
+KDE\contrast=7
+font="DejaVu Sans,9,-1,5,50,0,0,0,0,0"
+' > ~/.config/Trolltech.conf
+	fi
+
+	if [ "$(grep "^font=" $KDEHOME/share/config/kdeglobals | cut -f2 -d ",")" = "" ]; 		then
+mkdir $KDEHOME 2> /dev/null
+mkdir $KDEHOME/share 2> /dev/null
+mkdir $KDEHOME/share/config 2> /dev/null
+
+echo 'font=DejaVu Sans,9,-1,5,50,0,0,0,0,0' > $KDEHOME/share/config/kdeglobals
+
+	fi
+
+#Transforma fontes e cores do KDE em CSS
+
+echo "<style><!--
+
+a:link {color:$(grep "^Palette.active=" ~/.config/Trolltech.conf | cut -f15 -d ",");text-decoration:none;}
+a:hover {text-decoration:underline;}
+body{
+	background-color: $(grep "^Palette.active=" ~/.config/Trolltech.conf | cut -f11 -d ",");
+	color: $(grep "^Palette.active=" ~/.config/Trolltech.conf | cut -f7 -d ",");
+	font-size: $(grep -m1 "^font=" $KDEHOME/share/config/kdeglobals | cut -f2 -d ",")pt;
+	font-family: '$(grep -m1 "^font=" $KDEHOME/share/config/kdeglobals | cut -f1 -d "," | sed s'/font=//'g)';"
+
+if [ "$(grep "^font=" $KDEHOME/share/config/kdeglobals | cut -f5 -d ",")" = "75" ]
+then
+  echo "	font-weight: bold;"
+else
+  echo "	font-weight: normal;"
+fi
+
+if [ "$(grep "^font=" $KDEHOME/share/config/kdeglobals | cut -f6 -d ",")" = "2" ]
+then
+  echo "	font-style: italic;"
+else
+  echo "	font-style: none;"
+fi
+
+
+echo "}
+table {font-size: $(($(grep -m1 "^font=" $KDEHOME/share/config/kdeglobals | cut -f2 -d ",") + 4));}
+table.kdecolor {
+background-color: $(grep "^Palette.active=" ~/.config/Trolltech.conf | cut -f10 -d ",");
+}
+--></style>
+"
