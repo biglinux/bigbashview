@@ -1,9 +1,9 @@
 Package: bigbashview
-Version: 3.0.0-0biglinux7
+Version: 3.0.0-0biglinux8
 Architecture: all
 Maintainer: Bruno Goncalves <www.biglinux.com.br>
-Installed-Size:4228
-Depends: python-pyqt5.qtwebkit, python-pyqt5, python-webpy
+Installed-Size:4120
+Depends: python3-pyqt5.qtwebkit, python3-pyqt5, python-webpy|python3-webpy
 Recommends: python-chameleon
 Section: admin
 Priority: optional
