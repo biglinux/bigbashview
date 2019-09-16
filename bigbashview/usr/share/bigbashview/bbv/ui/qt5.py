@@ -19,28 +19,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-import os
-from PyQt5.QtCore import QObject, QUrl
+from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWebKit import QWebSettings
-from PyQt5.QtWebKitWidgets import QWebView
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 from bbv.globals import ICON
 from bbv.ui.base import BaseWindow
-
-
-
-
-
-
 
 
 class Window(BaseWindow):
     def __init__(self):
         self.app = QApplication(sys.argv)
         self.desktop = QApplication.desktop()
-        self.web = QWebView()
+        self.web = QWebEngineView()
         self.icon = QIcon(ICON)
         self.web.setWindowIcon(self.icon)
         self.web.titleChanged.connect(self.title_changed)

@@ -9,3 +9,10 @@ $(document).ready(function() {
   $(document).ready(function() {
     $('select').material_select();
   });
+
+  
+function _run(run) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "execute$ " + run);
+    xhttp.send();
+    };

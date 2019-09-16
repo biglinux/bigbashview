@@ -5,6 +5,11 @@ body {
   font-size: 15px;
 }
 
+a {
+    cursor: pointer;
+    
+}
+
 #header {
   width: 100%;
   height: 70px;
