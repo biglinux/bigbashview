@@ -14,9 +14,7 @@ a {
 #header {
   width: 100%;
   height: 70px;
-  background: round;
-  background-color: rgba(204, 229, 255, 0.27058823529411763);
-  box-shadow: 2px 2px 5px 0px rgb(0, 0, 0);
+  background-color: rgba(144, 148, 152, 0.5);
 }
 
 #header-logo {
@@ -138,7 +136,7 @@ a {
 
 #bcc_footer {
   width: 100%;
-  background-color: rgba(191, 191, 191, 0.27);
+  background-color: rgba(172, 206, 227, 0.52);
   height: 55;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.27);
   position: fixed;

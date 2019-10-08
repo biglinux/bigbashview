@@ -1,5 +1,5 @@
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
-6dcd5c270aad1647c979f478bf356ca8  DEBIAN/control
+22053c7a077f64b8488cb2323823fb5b  DEBIAN/control
 7c6ba3dbffa7113bd6265a5a1f1fcdf4  usr/bin/bbv
 77f43ae8a86093fa1012a271ba94dab0  usr/bin/bigbashview
 0b8713289ae1fe28e6113bc380b92d9c  usr/bin/run.run
@@ -80,7 +80,8 @@ ac5eff516ba6e899409305d53ef221d8  usr/share/bigbashview/quit.sh.htm
 0b8713289ae1fe28e6113bc380b92d9c  usr/share/bigbashview/run.run
 df2d735b6fe73bf9e3a9ad87b48754b1  usr/share/bigbashview/server.py
 fe7e3c7cac42db4dc5afb6aeac10a14d  usr/share/bigbashview/system-css.sh.htm
-5c676a4284682cd8b1e6dd2ca8c319ff  usr/share/bigbashview/bcc/css/base.css
+5c676a4284682cd8b1e6dd2ca8c319ff  usr/share/bigbashview/bcc/css/base-old.css
+2b0eef2f3073111ebe872a326f162352  usr/share/bigbashview/bcc/css/base.css
 900e6049e2ee342ccba360636d91db4f  usr/share/bigbashview/bcc/images/about.png
 41e94622aeacdc69d873269e95028e51  usr/share/bigbashview/bcc/images/body-bg.jpg
 8a0a0ace78beb2893ae6eb645bca1357  usr/share/bigbashview/bcc/images/body-bg3.jpg
@@ -88,6 +89,7 @@ fe7e3c7cac42db4dc5afb6aeac10a14d  usr/share/bigbashview/system-css.sh.htm
 cb123730c4ae3b1cdd9c96797201f1cd  usr/share/bigbashview/bcc/images/close.png
 7694cb4d3074a8f696d6fc9633901413  usr/share/bigbashview/bcc/images/header-bg.jpg
 8a0a0ace78beb2893ae6eb645bca1357  usr/share/bigbashview/bcc/images/header-bg2.jpg
+481e55ff5bbcf048ef36d343b9bf9158  usr/share/bigbashview/bcc/images/body-bg2.jpg
 2f2d952e7194175be4806bda09b75690  usr/share/bigbashview/bcc/js/big.js
 4c8ebf71cec5455ad4dbdec59e47d740  usr/share/bigbashview/bcc/materialize/css/materialize.css
 5956a24fb49aeeff0a7469498d8a1fe2  usr/share/bigbashview/bcc/materialize/css/materialize.min.css
@@ -114,4 +116,5 @@ dfe56a876d0282555d1e2458e278060f  usr/share/bigbashview/bcc/materialize/fonts/ro
 09dd64a64ba840c31a812a3ca25eaeee  usr/share/bigbashview/bcc/materialize/js/jquery.js
 e97da5c8b60e6673b98b286c2acf437d  usr/share/bigbashview/bcc/materialize/js/materialize.js
 72604b4dd26e411dd6d7290b9f6c1d9c  usr/share/bigbashview/bcc/materialize/js/materialize.min.js
-37d1f392ebd6ff7e2f083aa311154741  usr/share/bigbashview/bcc/shell/base.sh
+37d1f392ebd6ff7e2f083aa311154741  usr/share/bigbashview/bcc/shell/base-old.sh
+250968658d513ea88d13a716b88c630a  usr/share/bigbashview/bcc/shell/base.sh
