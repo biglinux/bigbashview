@@ -72,7 +72,7 @@ class Main:
                 self.height = int(self.height)
 
             elif o in ('-t', '--toolkit'):
-                if a in ("gtk2", "qt5"):
+                if a in ("gtk", "qt5"):
                     self.toolkit = a
                 else:
                     self.toolkit = "auto"
@@ -98,21 +98,21 @@ class Main:
                 has_qt5 = False
 
             try:
-                from bbv.ui import gtk2
-                has_gtk2 = True
+                from bbv.ui import gtk
+                has_gtk = True
             except ImportError:
-                has_gtk2 = False
+                has_gtk = False
 
-            if not(has_qt5) and not(has_gtk2):
-                print(('bbv needs PyGTK or PyQt '
+            if not(has_qt5) and not(has_gtk):
+                print(('bbv needs GTK or PyQt '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
                 sys.exit(1)
 
             elif has_qt5:
                 self.window = qt5.Window()
-            elif has_gtk2:
-                self.window = gtk2.Window()
+            elif has_gtk:
+                self.window = gtk.Window()
 
         elif self.toolkit == "qt5":
             try:
@@ -131,24 +131,24 @@ class Main:
 
             self.window = qt5.Window()
 
-        elif self.toolkit == "gtk2":
+        elif self.toolkit == "gtk":
             try:
-                from bbv.ui import gtk2
-                has_gtk2 = True
+                from bbv.ui import gtk
+                has_gtk = True
             except ImportError:
-                has_gtk2 = False
+                has_gtk = False
 
-            if not has_gtk2:
-                print(('bbv needs PyGTK '
+            if not has_gtk:
+                print(('bbv needs GTK '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
 
                 sys.exit(1)
 
-            self.window = gtk2.Window()
+            self.window = gtk.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk2|qt5|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-c|--compatibility-mode] URL')
+        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt5|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-c|--compatibility-mode] URL')
         sys.exit()
 
     def run(self, start_server=True):
