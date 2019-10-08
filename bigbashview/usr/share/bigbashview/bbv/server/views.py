@@ -148,7 +148,7 @@ class default_handler(url_handler):
         return HTML
 
     def parse_and_call(self, qs, name):
-        self.original_qs = qs
+        self.original_qs = to_s(qs)
         return url_handler.parse_and_call(self, qs, name)
 
     def bbv1_compat_mode(self, options, content, query):
