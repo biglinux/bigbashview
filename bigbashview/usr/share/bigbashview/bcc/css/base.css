@@ -131,7 +131,7 @@ a {
 
 #content-background {
   background-color: rgba(202, 240, 255, 0.68);
-  height: 100%;
+  height: calc(100% - 70px);
 }
 
 #bcc_footer {
