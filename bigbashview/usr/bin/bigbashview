@@ -1,1 +1,1 @@
-/usr/share/bigbashview/bigbashview.py -c "$@"
+QTWEBENGINE_DISABLE_SANDBOX=1 /usr/share/bigbashview/bigbashview.py -c "$@"

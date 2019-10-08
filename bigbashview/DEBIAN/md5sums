@@ -1,7 +1,7 @@
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
 6dcd5c270aad1647c979f478bf356ca8  DEBIAN/control
 7c6ba3dbffa7113bd6265a5a1f1fcdf4  usr/bin/bbv
-164263bcd8ece7d3fafdab077f80550b  usr/bin/bigbashview
+77f43ae8a86093fa1012a271ba94dab0  usr/bin/bigbashview
 0b8713289ae1fe28e6113bc380b92d9c  usr/bin/run.run
 8b6f1eb6e0c9d616289b19e6cb610c4e  usr/share/bigbashview/demos/biglinux/close.sh
 7fdea852c6848d7ec30af74de1952b06  usr/share/bigbashview/demos/biglinux/gtk-css.py

@@ -85,6 +85,5 @@ fi
 # About dialog end
 # Content start
 ###############
-echo '<div id="content-background">'
 echo '<div id="content">'
 }
