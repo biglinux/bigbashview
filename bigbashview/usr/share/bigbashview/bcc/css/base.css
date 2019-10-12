@@ -14,7 +14,7 @@ a {
 #header {
   width: 100%;
   height: 70px;
-  background-color: rgba(144, 148, 152, 0.5);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 86%, rgba(254, 255, 255, 0.78) 100%);
 }
 
 #header-logo {
@@ -130,7 +130,7 @@ a {
 }
 
 #content-background {
-  background-color: rgba(202, 240, 255, 0.68);
+  background-color: rgba(254, 255, 255, 0.84);
   height: calc(100% - 70px);
 }
 
@@ -157,7 +157,7 @@ margin-bottom: -4px;
   margin-right: 16px;
   margin-left: 16px;
   margin-bottom: 30px;
-  background-color: rgba(36, 123, 183, 0.85) !important;
+background: linear-gradient(50deg, rgba(36, 123, 183, 0.78) 0%, rgba(36, 123, 183, 0.4) 100%) !important;
 }
 
 

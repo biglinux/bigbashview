@@ -1,5 +1,5 @@
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
-22053c7a077f64b8488cb2323823fb5b  DEBIAN/control
+81a95189dd37689c239b3e5131da5c0c  DEBIAN/control
 7c6ba3dbffa7113bd6265a5a1f1fcdf4  usr/bin/bbv
 77f43ae8a86093fa1012a271ba94dab0  usr/bin/bigbashview
 0b8713289ae1fe28e6113bc380b92d9c  usr/bin/run.run
@@ -61,14 +61,14 @@ c18e286f9eb980826dffd6d4070e1c18  usr/share/bigbashview/demos/run.sh
 ca9d6c18f8774d8ca63d7383fcf348d5  usr/share/bigbashview/bbv/server/bbv2server.py
 db4e5dcd2f87c8c696bcff002d220fcb  usr/share/bigbashview/bbv/server/globaldata.py
 b7a3145755817f52864ea845f454784d  usr/share/bigbashview/bbv/server/utils.py
-551ec89e7ee7417bed5a076c3d08aa40  usr/share/bigbashview/bbv/server/views.py
+6c139cdb783d67fac07e3e100f209437  usr/share/bigbashview/bbv/server/views.py
 759c840217e80754f77ca7b37c625719  usr/share/bigbashview/bbv/ui/__init__.py
-5965cbc9518e0506e0fa2e504d800c6c  usr/share/bigbashview/bbv/ui/base.py
-60a443044772cb15bc3a2ae4bcce109d  usr/share/bigbashview/bbv/ui/gtk2.py
 5e4459a2c2cd7f0569f985dd1a4b2217  usr/share/bigbashview/bbv/ui/qt5.py
+5965cbc9518e0506e0fa2e504d800c6c  usr/share/bigbashview/bbv/ui/base.py
+d393d21e3ec76c6cb3afb32d17c86110  usr/share/bigbashview/bbv/ui/gtk.py
 4d446b3416e3227879f32f7cf17d1a08  usr/share/bigbashview/bbv/__init__.py
 6f19deb85a7a3db44b2a1578f16dba70  usr/share/bigbashview/bbv/globals.py
-47865ec97a2a56ed7b3161cbd92ea89c  usr/share/bigbashview/bbv/main.py
+41195d685db439b114072de31e948e22  usr/share/bigbashview/bbv/main.py
 7c6ba3dbffa7113bd6265a5a1f1fcdf4  usr/share/bigbashview/bigbashview.py
 a060184aa4ef3d814a7519b38ecba7c1  usr/share/bigbashview/client.py
 8b6f1eb6e0c9d616289b19e6cb610c4e  usr/share/bigbashview/close.sh
@@ -81,7 +81,7 @@ ac5eff516ba6e899409305d53ef221d8  usr/share/bigbashview/quit.sh.htm
 df2d735b6fe73bf9e3a9ad87b48754b1  usr/share/bigbashview/server.py
 fe7e3c7cac42db4dc5afb6aeac10a14d  usr/share/bigbashview/system-css.sh.htm
 5c676a4284682cd8b1e6dd2ca8c319ff  usr/share/bigbashview/bcc/css/base-old.css
-2b0eef2f3073111ebe872a326f162352  usr/share/bigbashview/bcc/css/base.css
+3bafecc6f0743bd10d27df5b3d77dabd  usr/share/bigbashview/bcc/css/base.css
 900e6049e2ee342ccba360636d91db4f  usr/share/bigbashview/bcc/images/about.png
 41e94622aeacdc69d873269e95028e51  usr/share/bigbashview/bcc/images/body-bg.jpg
 8a0a0ace78beb2893ae6eb645bca1357  usr/share/bigbashview/bcc/images/body-bg3.jpg
