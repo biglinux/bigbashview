@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
+#  
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
+#  Copyright (C) 2019 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,18 +31,19 @@ from bbv.ui.base import BaseWindow
 class Window(BaseWindow):
     def __init__(self):
         self.window = Gtk.Window()
-        self.webview = WebKit2.WebView()        
-        self.window.add(self.webview) 
-        self.window.set_icon_from_file(ICON)        
+        self.webview = WebKit2.WebView()
+        self.websettings = WebKit2.Settings()
+        self.websettings.set_property('enable-developer-extras', True)
+        self.webview.set_settings(self.websettings)
+        self.window.add(self.webview)
+        self.window.set_icon_from_file(ICON)       
         self.webview.show()        
         self.webview.connect('notify::title', self.title_changed)
         self.webview_properties = self.webview.get_window_properties()
         self.webview_properties.connect('notify::geometry', self.set_changed_size)
         self.webview_properties.connect('notify::geometry', self.set_changed_position)
         self.webview.connect('close', self.close_window)
-        self.window.connect('destroy-event', self.close_window)
-        self.window.connect('delete-event', self.close_window)
-        
+        self.window.connect('destroy', Gtk.main_quit)
 
     def show(self, window_state):
         # TODO Change window state when called
@@ -75,7 +77,7 @@ class Window(BaseWindow):
         sys.exit()
 
     def title_changed(self, webview, title):
-    	title = webview.get_title()
+    	title = self.webview.get_title()
     	if title:
     		self.window.set_title(title)
 
