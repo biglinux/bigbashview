@@ -29,7 +29,7 @@ from bbv.server.bbv2server import run_server
 class Main:
     width = -1
     height = -1
-    toolkit = "qt5"
+    toolkit = "auto"
     url = "/"
     window_state = "normal"
     icon = globaldata.ICON
@@ -90,7 +90,7 @@ class Main:
             os.mkdir(globaldata.DATA_DIR)
 
         # construct window
-        if self.toolkit == "auto":
+        if self.toolkit == "auto":            
             try:
                 from bbv.ui import qt5
                 has_qt5 = True
@@ -101,7 +101,7 @@ class Main:
                 from bbv.ui import gtk
                 has_gtk = True
             except ImportError:
-                has_gtk = False
+                has_gtk = False            
 
             if not(has_qt5) and not(has_gtk):
                 print(('bbv needs GTK or PyQt '
@@ -110,6 +110,8 @@ class Main:
                 sys.exit(1)
 
             elif has_qt5:
+                os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
+                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
                 self.window = qt5.Window()
             elif has_gtk:
                 self.window = gtk.Window()
@@ -129,6 +131,8 @@ class Main:
 
                 sys.exit(1)
 
+            os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
+            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'    
             self.window = qt5.Window()
 
         elif self.toolkit == "gtk":
