@@ -72,7 +72,7 @@ class Main:
                 self.height = int(self.height)
 
             elif o in ('-t', '--toolkit'):
-                if a in ("gtk", "qt5"):
+                if a in ("gtk", "qt"):
                     self.toolkit = a
                 else:
                     self.toolkit = "auto"
@@ -92,10 +92,10 @@ class Main:
         # construct window
         if self.toolkit == "auto":            
             try:
-                from bbv.ui import qt5
-                has_qt5 = True
+                from bbv.ui import qt
+                has_qt = True
             except ImportError:
-                has_qt5 = False
+                has_qt = False
 
             try:
                 from bbv.ui import gtk
@@ -103,28 +103,28 @@ class Main:
             except ImportError:
                 has_gtk = False            
 
-            if not(has_qt5) and not(has_gtk):
+            if not(has_qt) and not(has_gtk):
                 print(('bbv needs GTK or PyQt '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
                 sys.exit(1)
 
-            elif has_qt5:
+            elif has_qt:
                 os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
                 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
-                self.window = qt5.Window()
+                self.window = qt.Window()
             elif has_gtk:
                 self.window = gtk.Window()
 
-        elif self.toolkit == "qt5":
+        elif self.toolkit == "qt":
             try:
-                from bbv.ui import qt5
-                has_qt5 = True
+                from bbv.ui import qt
+                has_qt = True
             except ImportError:
-                has_qt5 = False
+                has_qt = False
 
-            if not has_qt5:
-                from bbv.ui import qt5
+            if not has_qt:
+                from bbv.ui import qt
                 print(('bbv needs PyQt '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
@@ -133,7 +133,7 @@ class Main:
 
             os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'    
-            self.window = qt5.Window()
+            self.window = qt.Window()
 
         elif self.toolkit == "gtk":
             try:
@@ -152,7 +152,7 @@ class Main:
             self.window = gtk.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt5|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-c|--compatibility-mode] URL')
+        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-c|--compatibility-mode] URL')
         sys.exit()
 
     def run(self, start_server=True):
