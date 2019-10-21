@@ -57,9 +57,9 @@ class url_handler(object):
         content = '$'.join(optlist[1:])
         optlist = optlist[0]
         if 'plain' in optlist:
-            web.header('Content-Type', 'text/plain')
+            web.header('Content-Type', 'text/plain; charset=utf-8')
         else:
-            web.header('Content-Type', 'text/html')
+            web.header('Content-Type', 'text/html; charset=utf-8')
 
         return optlist, content
 
@@ -144,7 +144,7 @@ class default_handler(url_handler):
                     </body>
                 </html>
             ''' % (globaldata.APP_VERSION)
-        web.header('Content-Type', 'text/html')
+        web.header('Content-Type', 'text/html; charset=utf-8')
         return HTML
 
     def parse_and_call(self, qs, name):
@@ -164,9 +164,9 @@ class default_handler(url_handler):
             else:
                 content = './%s' % relative_content
         if content.endswith(content_plain_ext):
-            web.header('Content-Type', 'text/plain')
+            web.header('Content-Type', 'text/plain; charset=utf-8')
             return content_handler().called(options, content, query)
-        web.header('Content-Type', 'text/html')
+        web.header('Content-Type', 'text/html; charset=utf-8')
         execute_content = " ".join((content, unquote(self.original_qs)))
         if content.endswith(execute_ext):
             return execute_handler().called(options, execute_content, query)
