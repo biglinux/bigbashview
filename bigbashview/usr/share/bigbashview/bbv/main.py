@@ -33,11 +33,14 @@ class Main:
     url = "/"
     window_state = "normal"
     icon = globaldata.ICON
+    debugger = False
+    root = False
 
     def __init__(self):
         try:
-            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:c', ['help', 'screen=',
-                                                                         'version', "toolkit=", 'window_state=', 'icon=', 'compatibility-mode'])
+            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:cdr', ['help', 'screen=',
+                                                                         'version', "toolkit=", 'window_state=', 
+                                                                         'icon=', 'compatibility-mode', 'debug', 'root'])
 
         except getopt.error as msg:
             print(msg)
@@ -84,13 +87,17 @@ class Main:
                     globaldata.ICON = a
             elif o in ('-c', '--compatibility-mode'):
                 globaldata.COMPAT = True
+            elif o in ('-d', '--debug'):
+            	self.debugger = True
+            elif o in ('-r', '--root'):
+            	self.root = True
 
         # Create data folder if doesn't exists...
         if not os.path.isdir(globaldata.DATA_DIR):
             os.mkdir(globaldata.DATA_DIR)
 
         # construct window
-        if self.toolkit == "auto":            
+        if self.toolkit == "auto":
             try:
                 from bbv.ui import qt
                 has_qt = True
@@ -101,7 +108,7 @@ class Main:
                 from bbv.ui import gtk
                 has_gtk = True
             except ImportError:
-                has_gtk = False            
+                has_gtk = False
 
             if not(has_qt) and not(has_gtk):
                 print(('bbv needs GTK or PyQt '
@@ -110,9 +117,13 @@ class Main:
                 sys.exit(1)
 
             elif has_qt:
-                os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
-                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
-                self.window = qt.Window()
+            	if self.debugger:
+            		os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
+            	if self.root:
+            		os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+
+            	self.window = qt.Window()
+
             elif has_gtk:
                 self.window = gtk.Window()
 
@@ -131,8 +142,11 @@ class Main:
 
                 sys.exit(1)
 
-            os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
-            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'    
+            if self.debugger:
+            	os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
+            if self.root:
+            	os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+
             self.window = qt.Window()
 
         elif self.toolkit == "gtk":
@@ -152,7 +166,7 @@ class Main:
             self.window = gtk.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-c|--compatibility-mode] URL')
+        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-c|--compatibility-mode] [-d|--debug] [-r|--root] URL')
         sys.exit()
 
     def run(self, start_server=True):
