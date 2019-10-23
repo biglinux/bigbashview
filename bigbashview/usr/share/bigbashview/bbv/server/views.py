@@ -138,7 +138,7 @@ class default_handler(url_handler):
                     </body>
                 </html>
             ''' % (globaldata.APP_VERSION)
-        web.header('Content-Type', 'text/html')
+        web.header('Content-Type', 'text/html; charset=UTF-8')
         return HTML
 
     def parse_and_call(self, qs, name):
