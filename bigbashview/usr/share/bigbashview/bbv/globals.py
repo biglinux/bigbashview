@@ -20,7 +20,7 @@ import os
 import sys
 
 APP_NAME = "Big Bash View"
-APP_VERSION = "2.1"
+APP_VERSION = "3.0"
 PROGDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 if os.path.isdir(os.sep.join((PROGDIR, ".hg"))):
