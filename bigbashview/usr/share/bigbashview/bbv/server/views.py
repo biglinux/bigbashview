@@ -57,9 +57,9 @@ class url_handler(object):
         content = '$'.join(optlist[1:])
         optlist = optlist[0]
         if 'plain' in optlist:
-            web.header('Content-Type', 'text/plain; charset=utf-8')
+            web.header('Content-Type', 'text/plain; charset=UTF-8')
         else:
-            web.header('Content-Type', 'text/html; charset=utf-8')
+            web.header('Content-Type', 'text/html; charset=UTF-8')
 
         return optlist, content
 
@@ -82,7 +82,7 @@ class content_handler(url_handler):
 class execute_handler(url_handler):
     __url__ = '/execute(.*)'
 
-    def _execute(self, command, wait=False, extra_env={}):
+    def _execute(self, command, extra_env={}):
         env = os.environ.copy()
         env['bbv_ip'] = str(globaldata.ADDRESS())
         env['bbv_port'] = str(globaldata.PORT())
@@ -90,22 +90,16 @@ class execute_handler(url_handler):
 
         po = subprocess.Popen(command.encode(
             'utf-8'), stdin=None, stdout=subprocess.PIPE, shell=True, env=env)
-        if wait:
-            return po.communicate()
-        return ('', '')
+        return po.communicate()
 
     def called(self, options, content, query):
-        wait = 'background' not in options
         (stdout, stderr) = self._execute(
-            content, wait=wait, extra_env=get_env_for_shell(query))
+            content, extra_env=get_env_for_shell(query))
         if 'close' in options:
-            if wait and to_s(stdout).find('False') != -1:
+            if to_s(stdout).find('False') != -1:
                 return stdout
             os.kill(os.getpid(), 15)
-        if not wait:
-            web.HTTPError('403 Forbidden')
         return stdout
-
 
 class default_handler(url_handler):
     __url__ = '(.*)'
@@ -113,7 +107,7 @@ class default_handler(url_handler):
     def called(self, options, content, query):
         if content not in ("", "/"):
             if globaldata.COMPAT:
-                return self.bbv1_compat_mode(options, content, query)
+                return self.bbv_compat_mode(options, content, query)
             else:
                 HTML = '''
                    <html>
@@ -135,7 +129,7 @@ class default_handler(url_handler):
             HTML = '''
                 <html>
                     <body>
-                        <h1>Welcome to BigBashView 2!</h1>
+                        <h1>Welcome to BigBashView 3!</h1>
                         <p>
                             <i>
                                 <b>Software revision: </b><span style='color:red'> %s</span>
@@ -144,18 +138,17 @@ class default_handler(url_handler):
                     </body>
                 </html>
             ''' % (globaldata.APP_VERSION)
-        web.header('Content-Type', 'text/html; charset=utf-8')
+        web.header('Content-Type', 'text/html; charset=UTF-8')
         return HTML
 
     def parse_and_call(self, qs, name):
         self.original_qs = to_s(qs)
         return url_handler.parse_and_call(self, qs, name)
 
-    def bbv1_compat_mode(self, options, content, query):
+    def bbv_compat_mode(self, options, content, query):
         execute_ext = ('.sh', '.sh.html', '.sh.htm')
-        execute_background_ext = ('.run',)
         content_ext = ('.htm', '.html')
-        content_plain_ext = ('.txt',)
+        content_plain_ext = ('.txt')
 
         relative_content = content[1:]
         if os.path.isfile(relative_content):
@@ -164,14 +157,11 @@ class default_handler(url_handler):
             else:
                 content = './%s' % relative_content
         if content.endswith(content_plain_ext):
-            web.header('Content-Type', 'text/plain; charset=utf-8')
+            web.header('Content-Type', 'text/plain; charset=UTF-8')
             return content_handler().called(options, content, query)
-        web.header('Content-Type', 'text/html; charset=utf-8')
+        web.header('Content-Type', 'text/html; charset=UTF-8')
         execute_content = " ".join((content, unquote(self.original_qs)))
         if content.endswith(execute_ext):
-            return execute_handler().called(options, execute_content, query)
-        if content.endswith(execute_background_ext):
-            options.append('background')
             return execute_handler().called(options, execute_content, query)
         if content.endswith(content_ext):
             return content_handler().called(options, content, query)
