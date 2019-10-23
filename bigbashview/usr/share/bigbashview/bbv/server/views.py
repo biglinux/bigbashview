@@ -129,7 +129,7 @@ class default_handler(url_handler):
             HTML = '''
                 <html>
                     <body>
-                        <h1>Welcome to BigBashView 2!</h1>
+                        <h1>Welcome to BigBashView 3!</h1>
                         <p>
                             <i>
                                 <b>Software revision: </b><span style='color:red'> %s</span>
