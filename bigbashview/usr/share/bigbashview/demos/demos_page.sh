@@ -23,7 +23,7 @@ for x in *
 do
     if [ -d $x ] && [ -f $x/execute_demo ]
     then
-        echo "<a class='noredirect' href='/execute background\$./run.sh $x'>$x</a><br/>"
+        echo "<a class='noredirect' href='/execute\$./run.sh $x'>$x</a><br/>"
     fi
 done
 
