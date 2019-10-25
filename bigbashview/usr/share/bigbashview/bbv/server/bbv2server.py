@@ -75,9 +75,10 @@ class Server(threading.Thread):
 
 
 def run_server(ip='127.0.0.1', background=True):
-    soc = socket.socket()
+    soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     for port in range(19000, 19100):
         try:
+            soc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             soc.bind((ip, port))
             soc.close()
             break
