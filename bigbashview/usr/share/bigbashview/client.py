@@ -11,6 +11,7 @@ if __name__ == "__main__":
     del argv[1]
     globaldata.ADDRESS = lambda: ip
     globaldata.PORT = lambda: port
-
+    globaldata.COMPAT = TRUE
+    
     app = Main()
     app.run(False)

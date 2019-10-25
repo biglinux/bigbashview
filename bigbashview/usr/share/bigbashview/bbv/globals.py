@@ -3,7 +3,7 @@
 #
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#
+#  Copyright Elton 2019
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -20,18 +20,8 @@ import os
 import sys
 
 APP_NAME = "Big Bash View"
-APP_VERSION = "3.0"
+APP_VERSION = "3.1"
 PROGDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
-
-if os.path.isdir(os.sep.join((PROGDIR, ".hg"))):
-    try:
-        import subprocess
-        po = subprocess.Popen(
-            "hg heads --template '{rev}'", stdin=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        stdout, stderr = po.communicate()
-        APP_VERSION += ' (DEV. VERSION) rev %s' % stdout
-    except Exception:
-        pass
 
 # TODO: Check portability issues
 DATA_DIR = os.path.expanduser("~/.bigbashview")

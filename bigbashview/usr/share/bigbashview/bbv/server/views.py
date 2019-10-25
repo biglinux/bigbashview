@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#
+#  Copyright (C) 2019 Elton Fabricio Ferreira 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +21,6 @@ from urllib.parse import unquote
 import subprocess
 import os
 import web
-from .parser import parser
 from .utils import get_env_for_shell
 from .utils import to_s
 
@@ -44,9 +43,6 @@ class url_handler(object):
         qs = parse_qs(qs)
         options, content = self._get_set_default_options(name)
         html = self.called(options, content, qs)
-        if 'parse' in options:
-            return parser.parse(html, qs)
-
         return html
 
     def _get_set_default_options(self, options):
@@ -167,3 +163,4 @@ class default_handler(url_handler):
             return content_handler().called(options, content, query)
         # Default option
         return content_handler().called(options, content, query)
+
