@@ -1,3 +1,0 @@
-#!/bin/bash
-python3 ../../bigbashview.py 'content parse$parser_demo_template.pt'
-
