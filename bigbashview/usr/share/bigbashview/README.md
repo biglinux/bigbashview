@@ -50,7 +50,9 @@ There are serveral command line arguments that can be used as following:
 ```
 
 Where URL is a URL or a server path as documented bellow
+```
 || Option || Description ||
+
 || -h, --help || Show the list of available options and exit ||
 || -s,--screen=widthxheight || Change the screen size for a specific widthxheight ||
 || -v, --version || Show version number and exit ||
@@ -60,6 +62,7 @@ Where URL is a URL or a server path as documented bellow
 || -c, --compatibility-mode || Enables `BigBashView` compatibility mode ||
 || -r, --root || Disable sandbox in QT UI for work as root. *only QT*
 || -d, --debug || Enable remote debugging *only QT*
+```
 
 Basic usage
 -----------
@@ -186,9 +189,9 @@ Compatibility Mode
 
 To enable the compatibility mode, you need to use the *-c* or *--compatibility-mode* argument option when starting the application.
 
-  # The urls cannot contain *`file://`*, only the absolute path for the file.
-  # You need to use the absolute path for the file. Relative paths wont work.
-  # The old HTML tag *`<scripttool>`* is not available even in compatibility mode.
+  The urls cannot contain *`file://`*, only the absolute path for the file.
+  You need to use the absolute path for the file. Relative paths wont work.
+  The old HTML tag *`<scripttool>`* is not available even in compatibility mode.
 
 In comptibility mode, the URLs will not contain commands, just the path for the file. `BigBashView` will try to guess what to do with the file according its extension.
 
