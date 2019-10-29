@@ -1,4 +1,4 @@
-<img src="http://bigbashview.googlecode.com/hg/demos/documentation_images/bigbashview_logo.png" />
+<img src="https://github.com/biglinux/bigbashview/blob/master/bigbashview/usr/share/bigbashview/demos/documentation_images/bigbashview_logo.png" />
 ===================================
 
 Graphical Frontends for shellscripts using HTML/JS/CSS
