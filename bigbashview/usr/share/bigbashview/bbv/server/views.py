@@ -124,17 +124,19 @@ class default_handler(url_handler):
         else:
             HTML = '''
                 <html>
+                    <head><title>BigBashView</title></head>
                     <body>
                         <h1>Welcome to BigBashView 3!</h1>
                         <p>
                             <i>
-                                <b>Software revision: </b><span style='color:red'> %s</span>
+                            	<b>Operational System: </b><span style='color:red'> %s</span><br/>
+                                <b>Desktop Environment: </b><span style='color:red'> %s</span><br/>            
+                                <b>Software Revision: </b><span style='color:red'> %s</span>                                
                             </i>
                         </p>
                     </body>
                 </html>
-            ''' % (globaldata.APP_VERSION)
-        web.header('Content-Type', 'text/html; charset=UTF-8')
+            ''' % (os.uname()[1], os.environ.get('XDG_CURRENT_DESKTOP'), globaldata.APP_VERSION)
         return HTML
 
     def parse_and_call(self, qs, name):
