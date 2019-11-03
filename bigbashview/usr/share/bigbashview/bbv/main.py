@@ -29,7 +29,7 @@ from bbv.server.bbv2server import run_server
 class Main:
     width = -1
     height = -1
-    toolkit = "auto"
+    toolkit = "gtk"
     url = "/"
     window_state = "normal"
     icon = globaldata.ICON
@@ -99,16 +99,15 @@ class Main:
         # construct window
         if self.toolkit == "auto":
             try:
-                from bbv.ui import qt
-                has_qt = True
-            except ImportError:
-                has_qt = False
-
-            try:
                 from bbv.ui import gtk
                 has_gtk = True
             except ImportError:
                 has_gtk = False
+            try:
+                from bbv.ui import qt
+                has_qt = True
+            except ImportError:
+                has_qt = False
 
             if not(has_qt) and not(has_gtk):
                 print(('bbv needs GTK or PyQt '
@@ -126,6 +125,22 @@ class Main:
 
             elif has_gtk:
                 self.window = gtk.Window()
+
+        elif self.toolkit == "gtk":
+            try:
+                from bbv.ui import gtk
+                has_gtk = True
+            except ImportError:
+                has_gtk = False
+
+            if not has_gtk:
+                print(('bbv needs GTK '
+                       'to run. Please install '
+                       'the latest stable version'), file=sys.stderr)
+
+                sys.exit(1)
+
+            self.window = gtk.Window()
 
         elif self.toolkit == "qt":
             try:
@@ -148,22 +163,6 @@ class Main:
             	os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
 
             self.window = qt.Window()
-
-        elif self.toolkit == "gtk":
-            try:
-                from bbv.ui import gtk
-                has_gtk = True
-            except ImportError:
-                has_gtk = False
-
-            if not has_gtk:
-                print(('bbv needs GTK '
-                       'to run. Please install '
-                       'the latest stable version'), file=sys.stderr)
-
-                sys.exit(1)
-
-            self.window = gtk.Window()
 
     def help(self):
         print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-c|--compatibility-mode] [-d|--debug] [-r|--root] URL')
