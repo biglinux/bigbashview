@@ -22,7 +22,7 @@ import sys
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('WebKit2', '4.0')
-from gi.repository import Gtk, WebKit2
+from gi.repository import Gtk, WebKit2, Gdk
 
 from bbv.globals import ICON
 from bbv.ui.base import BaseWindow
@@ -44,6 +44,7 @@ class Window(BaseWindow):
         self.webview_properties.connect('notify::geometry', self.set_changed_position)
         self.webview.connect('close', self.close_window)
         self.window.connect('destroy', Gtk.main_quit)
+        
 
     def show(self, window_state):
         # TODO Change window state when called
@@ -94,3 +95,6 @@ class Window(BaseWindow):
         self.window.set_position(Gtk.WindowPosition.CENTER)
 
         self.window.resize(width, height)
+
+    def style(self, r, g, b, a):
+        self.webview.set_background_color(Gdk.RGBA(r, g, b, a))
