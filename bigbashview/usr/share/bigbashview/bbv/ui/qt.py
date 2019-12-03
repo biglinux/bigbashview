@@ -21,7 +21,7 @@
 import sys
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 from bbv.globals import ICON
@@ -88,3 +88,6 @@ class Window(BaseWindow):
         top = (self.desktop.height()-height)/2
 
         self.web.setGeometry(left, top, width, height)
+
+    def style(self, r, g, b, a):
+        self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, a))
