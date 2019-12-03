@@ -4,6 +4,7 @@
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #  Copyright (C) 2009  Bruno Goncalves Araujo
+#  Copyright (C) 2019  EltonFF
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,12 +36,17 @@ class Main:
     icon = globaldata.ICON
     debugger = False
     root = False
+    r = 1.0
+    g = 1.0
+    b = 1.0
+    a = 1.0
+
 
     def __init__(self):
         try:
-            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:cdr', ['help', 'screen=',
+            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:b:cdr', ['help', 'screen=',
                                                                          'version', "toolkit=", 'window_state=', 
-                                                                         'icon=', 'compatibility-mode', 'debug', 'root'])
+                                                                         'icon=', 'background=', 'compatibility-mode', 'debug', 'root'])
 
         except getopt.error as msg:
             print(msg)
@@ -73,6 +79,20 @@ class Main:
                 # Window Size
                 self.width = int(self.width)
                 self.height = int(self.height)
+
+            elif o in ('-b', '--background'):
+                args = a.split('x')
+
+                if len(args) != 4:
+                    self.help()
+
+                self.r, self.g, self.b, self.a = args
+
+                # Background Color
+                self.r = float(self.r)
+                self.g = float(self.g)
+                self.b = float(self.b)
+                self.a = float(self.a)
 
             elif o in ('-t', '--toolkit'):
                 if a in ("gtk", "qt"):
@@ -165,7 +185,7 @@ class Main:
             self.window = qt.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-c|--compatibility-mode] [-d|--debug] [-r|--root] URL')
+        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-b|--background=rxgxbxa] [-c|--compatibility-mode] [-d|--debug] [-r|--root] URL')
         sys.exit()
 
     def run(self, start_server=True):
@@ -173,6 +193,7 @@ class Main:
 
         self.window.set_size(self.width, self.height)
         self.window.show(self.window_state)
+        self.window.style(self.r, self.g, self.b, self.a)
         if self.url.find('://') == -1:
             if not self.url.startswith('/'):
                 self.url = '/'+self.url
