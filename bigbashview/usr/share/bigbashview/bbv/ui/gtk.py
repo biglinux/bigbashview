@@ -96,5 +96,6 @@ class Window(BaseWindow):
 
         self.window.resize(width, height)
 
-    def style(self, r, g, b, a):
-        self.webview.set_background_color(Gdk.RGBA(r, g, b, a))
+    def style(self, r, g, b):
+    	self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(r, g, b, 1.0))
+    	self.webview.set_background_color(Gdk.RGBA(r, g, b, 1.0))
