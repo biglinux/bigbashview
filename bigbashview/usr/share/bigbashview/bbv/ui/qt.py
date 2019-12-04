@@ -89,5 +89,5 @@ class Window(BaseWindow):
 
         self.web.setGeometry(left, top, width, height)
 
-    def style(self, r, g, b, a):
-        self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, a))
+    def style(self, r, g, b):
+        self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
