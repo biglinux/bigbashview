@@ -4,7 +4,7 @@
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #  Copyright (C) 2009  Bruno Goncalves Araujo
-#  Copyright (C) 2019  EltonFF
+#  Copyright (C) 2019 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,7 +39,6 @@ class Main:
     r = 1.0
     g = 1.0
     b = 1.0
-    a = 1.0
 
 
     def __init__(self):
@@ -81,18 +80,17 @@ class Main:
                 self.height = int(self.height)
 
             elif o in ('-b', '--background'):
-                args = a.split('x')
+                args = a.split(',')
 
-                if len(args) != 4:
+                if len(args) != 3:
                     self.help()
 
-                self.r, self.g, self.b, self.a = args
+                self.r, self.g, self.b = args
 
                 # Background Color
                 self.r = float(self.r)
                 self.g = float(self.g)
                 self.b = float(self.b)
-                self.a = float(self.a)
 
             elif o in ('-t', '--toolkit'):
                 if a in ("gtk", "qt"):
@@ -185,7 +183,7 @@ class Main:
             self.window = qt.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-b|--background=rxgxbxa] [-c|--compatibility-mode] [-d|--debug] [-r|--root] URL')
+        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-b|--background=r,g,b] [-c|--compatibility-mode] [-d|--debug] [-r|--root] URL')
         sys.exit()
 
     def run(self, start_server=True):
@@ -193,7 +191,7 @@ class Main:
 
         self.window.set_size(self.width, self.height)
         self.window.show(self.window_state)
-        self.window.style(self.r, self.g, self.b, self.a)
+        self.window.style(self.r, self.g, self.b)
         if self.url.find('://') == -1:
             if not self.url.startswith('/'):
                 self.url = '/'+self.url
