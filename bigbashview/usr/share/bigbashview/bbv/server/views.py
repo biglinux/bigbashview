@@ -129,7 +129,7 @@ class default_handler(url_handler):
                         <h1>Welcome to BigBashView 3!</h1>
                         <p>
                             <i>
-                            	<b>Operational System: </b><span style='color:red'> %s</span><br/>
+                            	<b>Hostname: </b><span style='color:red'> %s</span><br/>
                                 <b>Desktop Environment: </b><span style='color:red'> %s</span><br/>            
                                 <b>Software Revision: </b><span style='color:red'> %s</span>                                
                             </i>
