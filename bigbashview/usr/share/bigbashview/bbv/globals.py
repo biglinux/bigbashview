@@ -20,7 +20,7 @@ import os
 import sys
 
 APP_NAME = "Big Bash View"
-APP_VERSION = "3.2"
+APP_VERSION = "3.3"
 PROGDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 # TODO: Check portability issues
