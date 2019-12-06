@@ -5,7 +5,7 @@ Graphical Frontends for shellscripts using HTML/JS/CSS
 
 NEWS
 ----
-*25/10/2019* - Version 3.2 released
+*25/10/2019* - Version 3.3 released
 
 About
 -----
