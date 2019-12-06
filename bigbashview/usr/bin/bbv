@@ -1,1 +1,1 @@
-/usr/share/bigbashview/bigbashview.py
+/usr/share/bigbashview/bigbashview.py "$@"
