@@ -84,8 +84,10 @@ class Window(BaseWindow):
         if height <= 0:
             height = 480
 
-        center = self.desktop.availableGeometry().center() - self.web.rect().center()
-        self.web.setGeometry(center.x(), center.y(), width, height)
+        left = (self.desktop.width()-width)/2
+        top = (self.desktop.height()-height)/2
+
+        self.web.setGeometry(left, top, width, height)
 
     def style(self, r, g, b):
         self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
