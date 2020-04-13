@@ -1,1 +1,1 @@
-QTWEBENGINE_CHROMIUM_FLAGS="--no-sandbox" /usr/share/bigbashview/bigbashview.py -c "$@"
+/usr/share/bigbashview/bigbashview.py -c "$@"
