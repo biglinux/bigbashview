@@ -34,8 +34,6 @@ class Main:
     url = "/"
     window_state = "normal"
     icon = globaldata.ICON
-    debugger = False
-    root = False
     r = 1.0
     g = 1.0
     b = 1.0
@@ -43,9 +41,9 @@ class Main:
 
     def __init__(self):
         try:
-            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:b:cdr', ['help', 'screen=',
+            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:b:c', ['help', 'screen=',
                                                                          'version', "toolkit=", 'window_state=', 
-                                                                         'icon=', 'background=', 'compatibility-mode', 'debug', 'root'])
+                                                                         'icon=', 'background=', 'compatibility-mode'])
 
         except getopt.error as msg:
             print(msg)
@@ -105,10 +103,6 @@ class Main:
                     globaldata.ICON = a
             elif o in ('-c', '--compatibility-mode'):
                 globaldata.COMPAT = True
-            elif o in ('-d', '--debug'):
-            	self.debugger = True
-            elif o in ('-r', '--root'):
-            	self.root = True
 
         # Create data folder if doesn't exists...
         if not os.path.isdir(globaldata.DATA_DIR):
@@ -134,11 +128,7 @@ class Main:
                 sys.exit(1)
 
             elif has_qt:
-            	if self.debugger:
-            		os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
-            	if self.root:
-            		os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
-
+            	os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             	self.window = qt.Window()
 
             elif has_gtk:
@@ -175,11 +165,7 @@ class Main:
 
                 sys.exit(1)
 
-            if self.debugger:
-            	os.environ['QTWEBENGINE_REMOTE_DEBUGGING'] = '8888'
-            if self.root:
-            	os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
-
+            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
     def help(self):
