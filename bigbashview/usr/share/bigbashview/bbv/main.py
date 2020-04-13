@@ -169,7 +169,7 @@ class Main:
             self.window = qt.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-b|--background=r,g,b] [-c|--compatibility-mode] [-d|--debug] [-r|--root] URL')
+        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-b|--background=r,g,b] [-c|--compatibility-mode] URL')
         sys.exit()
 
     def run(self, start_server=True):
