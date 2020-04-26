@@ -17,12 +17,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 import sys
+from PyQt5 import QtCore
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon, QColor
-from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
 
 from bbv.globals import ICON
 from bbv.ui.base import BaseWindow
@@ -33,21 +33,23 @@ class Window(BaseWindow):
         self.app = QApplication(sys.argv)
         self.desktop = QApplication.desktop()
         self.web = QWebEngineView()
-        self.icon = QIcon(ICON)
-        self.web.setWindowIcon(self.icon)
+        self.web.settings().setAttribute(
+                QWebEngineSettings.AutoLoadIconsForPage, False)
+        self.web.setWindowIcon(QIcon(ICON))
         self.web.titleChanged.connect(self.title_changed)
-        self.web.iconChanged.connect(self.icon_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
-        self.web.page().geometryChangeRequested.connect(self.set_geometry)
-
+        
     def show(self, window_state):
-        if window_state == "maximized" and not self.web.isMaximized():
+        if window_state == "maximized":
             self.web.showNormal()
             self.web.showMaximized()
-        elif window_state == "fullscreen" and not self.web.isFullScreen():
+        elif window_state == "fullscreen":
             self.web.showNormal()
             self.web.showFullScreen()
         elif window_state == "normal":
+            self.web.showNormal()
+        elif window_state == "top":
+            self.web.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
             self.web.showNormal()
         else:
             self.web.show()
@@ -55,20 +57,8 @@ class Window(BaseWindow):
     def run(self):
         return self.app.exec_()
 
-    def set_debug(self, debuglevel):
-        self.debug = debuglevel
-
-    def set_geometry(self, geom):
-        self.web.setGeometry(geom)
-
     def close_window(self):
         sys.exit()
-
-    def icon_changed(self):
-        if not self.icon.isNull():
-            self.web.setWindowIcon(self.icon)
-        if not self.web.icon().isNull():
-            self.web.setWindowIcon(self.web.icon())
 
     def title_changed(self, title):
         if title:
@@ -78,16 +68,19 @@ class Window(BaseWindow):
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
         self.web.setUrl(self.url)
 
-    def set_size(self, width, height):
+    def set_size(self, width, height, window_state):
         if width <= 0:
             width = 640
         if height <= 0:
             height = 480
 
-        left = (self.desktop.width()-width)/2
-        top = (self.desktop.height()-height)/2
-
-        self.web.setGeometry(left, top, width, height)
+        self.web.resize(width, height)
+        qr = self.web.frameGeometry()
+        cp = self.desktop.availableGeometry().center()
+        qr.moveCenter(cp)
+        self.web.move(qr.topLeft())
+        if window_state == "fixed":
+            self.web.setFixedSize(width, height)
 
     def style(self, r, g, b):
         self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))

@@ -13,6 +13,6 @@ $(document).ready(function() {
   
 function _run(run) {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "execute$ " + run);
+    xhttp.open("GET", "/execute$ " + run);
     xhttp.send();
     };

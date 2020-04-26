@@ -1,7 +1,7 @@
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
-f65b4cc26cbee4811ac43f714e0eaa66  DEBIAN/control
-fe62f04948617354283d0c1d3f6afe4b  usr/bin/bigbashview
+d359069ddad575ae3c6ebe637297ca4a  DEBIAN/control
 f2d1abe00bf4d3511fcba50c19048f0a  usr/bin/bbv
+fe62f04948617354283d0c1d3f6afe4b  usr/bin/bigbashview
 2e251c1d6e1715a6cc4effd08cf770c4  usr/share/bigbashview/bbv/__init__.py
 07ed5768df5cd8b9fa0bc02f58a2b730  usr/share/bigbashview/bbv/img/icone.png
 15d4c67869bbe5f2bc53bb33621981d5  usr/share/bigbashview/bbv/server/__init__.py
@@ -11,10 +11,10 @@ b7a3145755817f52864ea845f454784d  usr/share/bigbashview/bbv/server/utils.py
 8c8c6d9979e35bc5263eb1a98af7a5f7  usr/share/bigbashview/bbv/server/views.py
 351684422acd65f380a67ae3011a0286  usr/share/bigbashview/bbv/ui/__init__.py
 5965cbc9518e0506e0fa2e504d800c6c  usr/share/bigbashview/bbv/ui/base.py
-c77fbf9f54cf8eb64b727af64f64303b  usr/share/bigbashview/bbv/ui/gtk.py
-98a15b15bccc1b010b2c608b57b01a87  usr/share/bigbashview/bbv/ui/qt.py
-a0cd222c4205d01cc940ae228255fb14  usr/share/bigbashview/bbv/main.py
+2c47c04063122a89459ca9f4e40e0f89  usr/share/bigbashview/bbv/ui/qt.py
+d08d5ecaec743e8b58affbca68a1c449  usr/share/bigbashview/bbv/ui/gtk.py
 8df6c5b96dc73f48225e9b8de6e9ea65  usr/share/bigbashview/bbv/globals.py
+c9cb73c648f92a89b9a78d44a263c7fd  usr/share/bigbashview/bbv/main.py
 5c676a4284682cd8b1e6dd2ca8c319ff  usr/share/bigbashview/bcc/css/base-old.css
 3bafecc6f0743bd10d27df5b3d77dabd  usr/share/bigbashview/bcc/css/base.css
 900e6049e2ee342ccba360636d91db4f  usr/share/bigbashview/bcc/images/about.png
@@ -25,7 +25,7 @@ a0cd222c4205d01cc940ae228255fb14  usr/share/bigbashview/bbv/main.py
 cb123730c4ae3b1cdd9c96797201f1cd  usr/share/bigbashview/bcc/images/close.png
 7694cb4d3074a8f696d6fc9633901413  usr/share/bigbashview/bcc/images/header-bg.jpg
 8a0a0ace78beb2893ae6eb645bca1357  usr/share/bigbashview/bcc/images/header-bg2.jpg
-2f2d952e7194175be4806bda09b75690  usr/share/bigbashview/bcc/js/big.js
+4cb1e37032d0fa3696e4e0286db45932  usr/share/bigbashview/bcc/js/big.js
 4c8ebf71cec5455ad4dbdec59e47d740  usr/share/bigbashview/bcc/materialize/css/materialize.css
 5956a24fb49aeeff0a7469498d8a1fe2  usr/share/bigbashview/bcc/materialize/css/materialize.min.css
 ecdd509cadbf1ea78b8d2e31ec52328c  usr/share/bigbashview/bcc/materialize/fonts/roboto/Roboto-Bold.eot

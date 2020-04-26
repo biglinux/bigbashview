@@ -56,15 +56,15 @@ class Window(BaseWindow):
             self.window.show()
         elif window_state == "normal":
             self.window.show()
+        elif window_state == "top":
+            Gtk.Window.set_keep_above(self.window, True)
+            self.window.show()
         else:
         	self.window.show()
 
     def run(self):
         Gtk.main()
         return 0
-
-    def set_debug(self, debuglevel):
-        self.debug = debuglevel
 
     def set_changed_size(self, width, height):
     	rect_size = self.webview_properties.get_geometry()
@@ -84,17 +84,18 @@ class Window(BaseWindow):
 
     def load_url(self, url):
     	self.webview.load_uri(url)
-    	print(url)
 
-    def set_size(self, width, height):
+    def set_size(self, width, height, window_state):
         if width <= 0:
             width = 640
         if height <= 0:
             height = 480
 
+        self.window.set_size_request(width, height)
         self.window.set_position(Gtk.WindowPosition.CENTER)
-
-        self.window.resize(width, height)
+        if window_state == "fixed":
+            Gtk.Window.set_resizable(self.window, False)
+        
 
     def style(self, r, g, b):
     	self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(r, g, b, 1.0))

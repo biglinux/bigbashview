@@ -42,7 +42,7 @@ class Main:
     def __init__(self):
         try:
             opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:b:c', ['help', 'screen=',
-                                                                         'version', "toolkit=", 'window_state=', 
+                                                                         'version', "toolkit=", 'window_state=',
                                                                          'icon=', 'background=', 'compatibility-mode'])
 
         except getopt.error as msg:
@@ -96,7 +96,7 @@ class Main:
                 else:
                     self.toolkit = "auto"
             elif o in ('-w', '--window_state'):
-                if a in ("normal", "maximized", "fullscreen"):
+                if a in ("normal", "maximized", "fullscreen", "fixed", "top", "noframe"):
                     self.window_state = a
             elif o in ('-i', '--icon'):
                 if os.path.exists(a):
@@ -128,8 +128,9 @@ class Main:
                 sys.exit(1)
 
             elif has_qt:
-            	os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
-            	self.window = qt.Window()
+                os.environ['QT_QUICK_BACKEND'] = 'software'
+                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+                self.window = qt.Window()
 
             elif has_gtk:
                 self.window = gtk.Window()
@@ -164,20 +165,20 @@ class Main:
                        'the latest stable version'), file=sys.stderr)
 
                 sys.exit(1)
-
+            os.environ['QT_QUICK_BACKEND'] = 'software'
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen]] [-i|--icon image] [-b|--background=r,g,b] [-c|--compatibility-mode] URL')
+        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen|fixed|top]] [-i|--icon image] [-b|--background=r,g,b] [-c|--compatibility-mode] URL')
         sys.exit()
 
     def run(self, start_server=True):
         server = run_server() if start_server else None
 
-        self.window.set_size(self.width, self.height)
-        self.window.show(self.window_state)
+        self.window.set_size(self.width, self.height, self.window_state)
         self.window.style(self.r, self.g, self.b)
+        self.window.show(self.window_state)
         if self.url.find('://') == -1:
             if not self.url.startswith('/'):
                 self.url = '/'+self.url
