@@ -1,5 +1,5 @@
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
-d359069ddad575ae3c6ebe637297ca4a  DEBIAN/control
+5c79bc73c759bcb257c08f081830389a  DEBIAN/control
 f2d1abe00bf4d3511fcba50c19048f0a  usr/bin/bbv
 fe62f04948617354283d0c1d3f6afe4b  usr/bin/bigbashview
 2e251c1d6e1715a6cc4effd08cf770c4  usr/share/bigbashview/bbv/__init__.py
@@ -11,10 +11,10 @@ b7a3145755817f52864ea845f454784d  usr/share/bigbashview/bbv/server/utils.py
 8c8c6d9979e35bc5263eb1a98af7a5f7  usr/share/bigbashview/bbv/server/views.py
 351684422acd65f380a67ae3011a0286  usr/share/bigbashview/bbv/ui/__init__.py
 5965cbc9518e0506e0fa2e504d800c6c  usr/share/bigbashview/bbv/ui/base.py
-2c47c04063122a89459ca9f4e40e0f89  usr/share/bigbashview/bbv/ui/qt.py
 d08d5ecaec743e8b58affbca68a1c449  usr/share/bigbashview/bbv/ui/gtk.py
+eed1f284e1ce7a401083987775c70027  usr/share/bigbashview/bbv/ui/qt.py
 8df6c5b96dc73f48225e9b8de6e9ea65  usr/share/bigbashview/bbv/globals.py
-c9cb73c648f92a89b9a78d44a263c7fd  usr/share/bigbashview/bbv/main.py
+326fb8fec666f3a0df5b8e004f470858  usr/share/bigbashview/bbv/main.py
 5c676a4284682cd8b1e6dd2ca8c319ff  usr/share/bigbashview/bcc/css/base-old.css
 3bafecc6f0743bd10d27df5b3d77dabd  usr/share/bigbashview/bcc/css/base.css
 900e6049e2ee342ccba360636d91db4f  usr/share/bigbashview/bcc/images/about.png

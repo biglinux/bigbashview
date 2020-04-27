@@ -111,15 +111,16 @@ class Main:
         # construct window
         if self.toolkit == "auto":
             try:
-                from bbv.ui import gtk
-                has_gtk = True
-            except ImportError:
-                has_gtk = False
-            try:
                 from bbv.ui import qt
                 has_qt = True
             except ImportError:
                 has_qt = False
+                
+            try:
+                from bbv.ui import gtk
+                has_gtk = True
+            except ImportError:
+                has_gtk = False
 
             if not(has_qt) and not(has_gtk):
                 print(('bbv needs GTK or PyQt '
