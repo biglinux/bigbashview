@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  
+#
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #  Copyright (C) 2019 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
@@ -36,19 +36,30 @@ class Window(BaseWindow):
         self.websettings.set_property('enable-developer-extras', True)
         self.webview.set_settings(self.websettings)
         self.window.add(self.webview)
-        self.window.set_icon_from_file(ICON)       
-        self.webview.show()        
+        self.window.set_icon_from_file(ICON)
+        self.webview.show()
         self.webview.connect('notify::title', self.title_changed)
         self.webview_properties = self.webview.get_window_properties()
         self.webview_properties.connect('notify::geometry', self.set_changed_size)
         self.webview_properties.connect('notify::geometry', self.set_changed_position)
+        self.webview.connect('load-changed', self.add_script)
         self.webview.connect('close', self.close_window)
         self.window.connect('destroy', Gtk.main_quit)
-        
+
+    def add_script(self, event, data):
+        script = '''
+        function _run(run) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "/execute$" + run);
+            xhttp.send();
+        };
+        '''
+        if event:
+            self.webview.run_javascript(script)
 
     def show(self, window_state):
         # TODO Change window state when called
-        if window_state == "maximized":   
+        if window_state == "maximized":
             self.window.maximize()
             self.window.show()
         elif window_state == "fullscreen":
@@ -95,7 +106,7 @@ class Window(BaseWindow):
         self.window.set_position(Gtk.WindowPosition.CENTER)
         if window_state == "fixed":
             Gtk.Window.set_resizable(self.window, False)
-        
+
 
     def style(self, r, g, b):
     	self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(r, g, b, 1.0))

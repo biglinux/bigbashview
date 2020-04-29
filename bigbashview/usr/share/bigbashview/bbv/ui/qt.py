@@ -38,7 +38,19 @@ class Window(BaseWindow):
         self.web.setWindowIcon(QIcon(ICON))
         self.web.titleChanged.connect(self.title_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
-        
+        self.web.loadFinished.connect(self.add_script)
+
+    def add_script(self, event):
+        script = '''
+        function _run(run) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "/execute$" + run);
+            xhttp.send();
+        };
+        '''
+        if event:
+            self.web.page().runJavaScript(script)
+
     def show(self, window_state):
         if window_state == "maximized":
             self.web.showNormal()
