@@ -30,7 +30,7 @@ from bbv.server.bbv2server import run_server
 class Main:
     width = -1
     height = -1
-    toolkit = "gtk"
+    toolkit = "qt"
     url = "/"
     window_state = "normal"
     icon = globaldata.ICON
