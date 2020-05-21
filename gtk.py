@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 #
@@ -19,7 +19,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-import os
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('WebKit2', '4.0')
@@ -32,18 +31,12 @@ class Window(BaseWindow):
     def __init__(self):
         self.window = Gtk.Window()
         self.webview = WebKit2.WebView()
-        self.webview.show()
         self.window.add(self.webview)
         self.window.set_icon_from_file(ICON)
         self.webview.connect('notify::title', self.title_changed)
         self.webview.connect('load-changed', self.add_script)
         self.webview.connect('close', self.close_window)
         self.window.connect('destroy', Gtk.main_quit)
-        self.window.connect("key-press-event",self.key_f5)
-
-    def key_f5(self, webview, event):
-        if event.keyval == 65474:
-            self.webview.reload()
 
     def add_script(self, webview, event):
         script = '''
@@ -55,24 +48,21 @@ class Window(BaseWindow):
         '''
         if event.FINISHED:
             self.webview.run_javascript(script)
+            self.webview.show()
+            self.window.show()
 
     def show(self, window_state):
         if window_state == "maximized":
             self.window.maximize()
-            self.window.show()
         elif window_state == "fullscreen":
             self.window.fullscreen()
-            self.window.show()
         elif window_state == "top":
             self.window.set_keep_above(True)
-            self.window.show()
-        else:
-            self.window.show()
 
     def run(self):
         Gtk.main()
 
-    def close_window(self):
+    def close_window(self, *args):
         sys.exit()
 
     def title_changed(self, webview, title):
@@ -94,22 +84,6 @@ class Window(BaseWindow):
         if window_state == "fixed":
             self.window.set_resizable(False)
 
-    def style(self, black):
-        if black:
-            self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0.0, 0.0, 0.0, 1.0))
-            self.webview.set_background_color(Gdk.RGBA(0.0, 0.0, 0.0, 1.0))
-
-        elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
-        	rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
-        	r, g, b = rgb
-        	r = float(int(r)/255)
-        	g = float(int(g)/255)
-        	b = float(int(b)/255)
-
-        	self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(r, g, b, 1.0))
-        	self.webview.set_background_color(Gdk.RGBA(r, g, b, 1.0))
-
-        else:
-            color = Gtk.Window().get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
-            self.window.override_background_color(Gtk.StateFlags.NORMAL, color)
-            self.webview.set_background_color(color)
+    def style(self, r, g, b):
+    	self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(r, g, b, 1.0))
+    	self.webview.set_background_color(Gdk.RGBA(r, g, b, 1.0))

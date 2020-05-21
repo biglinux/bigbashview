@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
@@ -18,15 +18,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
-from PyQt5 import QtCore
-from PyQt5.QtCore import QUrl
-from PyQt5.QtWidgets import QApplication
+import os
+from PyQt5.QtCore import QUrl, Qt
+from PyQt5.QtWidgets import QApplication, QShortcut
 from PyQt5.QtGui import QIcon, QColor
-from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 from bbv.globals import ICON
 from bbv.ui.base import BaseWindow
-
 
 class Window(BaseWindow):
     def __init__(self):
@@ -34,11 +33,13 @@ class Window(BaseWindow):
         self.desktop = QApplication.desktop()
         self.web = QWebEngineView()
         self.web.settings().setAttribute(
-                QWebEngineSettings.AutoLoadIconsForPage, False)
+                self.web.settings().AutoLoadIconsForPage, False)
         self.web.setWindowIcon(QIcon(ICON))
         self.web.titleChanged.connect(self.title_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
         self.web.loadFinished.connect(self.add_script)
+        self.key_f5 = QShortcut(Qt.Key_F5, self.web)
+        self.key_f5.activated.connect(self.web.reload)
 
     def add_script(self, event):
         script = '''
@@ -53,21 +54,19 @@ class Window(BaseWindow):
 
     def show(self, window_state):
         if window_state == "maximized":
-            self.web.showNormal()
-            self.web.showMaximized()
+            self.web.setWindowState(Qt.WindowMaximized)
+            self.web.show()
         elif window_state == "fullscreen":
-            self.web.showNormal()
-            self.web.showFullScreen()
-        elif window_state == "normal":
-            self.web.showNormal()
+            self.web.setWindowState(Qt.WindowFullScreen)
+            self.web.show()
         elif window_state == "top":
-            self.web.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-            self.web.showNormal()
+            self.web.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.web.show()
         else:
             self.web.show()
 
     def run(self):
-        return self.app.exec_()
+        self.app.exec_()
 
     def close_window(self):
         sys.exit()
@@ -94,5 +93,18 @@ class Window(BaseWindow):
         if window_state == "fixed":
             self.web.setFixedSize(width, height)
 
-    def style(self, r, g, b):
-        self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
+    def style(self, black):
+    	if black:
+    		self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 1.0))
+
+    	elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
+    		rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
+    		r, g, b = rgb
+    		r = float(int(r)/255)
+    		g = float(int(g)/255)
+    		b = float(int(b)/255)
+
+    		self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
+
+    	else:
+    		self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))

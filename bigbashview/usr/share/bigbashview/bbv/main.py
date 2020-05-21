@@ -30,20 +30,18 @@ from bbv.server.bbv2server import run_server
 class Main:
     width = -1
     height = -1
-    toolkit = "qt"
+    toolkit = "auto"
     url = "/"
-    window_state = "normal"
+    window_state = None
     icon = globaldata.ICON
-    r = 1.0
-    g = 1.0
-    b = 1.0
+    black = False
 
 
     def __init__(self):
         try:
-            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:b:c', ['help', 'screen=',
+            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:bc', ['help', 'screen=',
                                                                          'version', "toolkit=", 'window_state=',
-                                                                         'icon=', 'background=', 'compatibility-mode'])
+                                                                         'icon=', 'black', 'compatibility-mode'])
 
         except getopt.error as msg:
             print(msg)
@@ -77,18 +75,8 @@ class Main:
                 self.width = int(self.width)
                 self.height = int(self.height)
 
-            elif o in ('-b', '--background'):
-                args = a.split(',')
-
-                if len(args) != 3:
-                    self.help()
-
-                self.r, self.g, self.b = args
-
-                # Background Color
-                self.r = float(self.r)
-                self.g = float(self.g)
-                self.b = float(self.b)
+            elif o in ('-b', '--black'):
+            	self.black = True
 
             elif o in ('-t', '--toolkit'):
                 if a in ("gtk", "qt"):
@@ -96,7 +84,7 @@ class Main:
                 else:
                     self.toolkit = "auto"
             elif o in ('-w', '--window_state'):
-                if a in ("normal", "maximized", "fullscreen", "fixed", "top", "noframe"):
+                if a in ("maximized", "fullscreen", "fixed", "top"):
                     self.window_state = a
             elif o in ('-i', '--icon'):
                 if os.path.exists(a):
@@ -115,7 +103,7 @@ class Main:
                 has_qt = True
             except ImportError:
                 has_qt = False
-                
+
             try:
                 from bbv.ui import gtk
                 has_gtk = True
@@ -171,21 +159,21 @@ class Main:
             self.window = qt.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[normal|maximized|fullscreen|fixed|top]] [-i|--icon image] [-b|--background=r,g,b] [-c|--compatibility-mode] URL')
+        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[maximized|fullscreen|fixed|top]] [-i|--icon image] [-b|--black] [-c|--compatibility-mode] URL')
         sys.exit()
 
     def run(self, start_server=True):
         server = run_server() if start_server else None
 
-        self.window.set_size(self.width, self.height, self.window_state)
-        self.window.style(self.r, self.g, self.b)
-        self.window.show(self.window_state)
         if self.url.find('://') == -1:
             if not self.url.startswith('/'):
                 self.url = '/'+self.url
             self.url = "http://%s:%s%s" % (globaldata.ADDRESS(),
                                            globaldata.PORT(), self.url)
         self.window.load_url(self.url)
+        self.window.set_size(self.width, self.height, self.window_state)
+        self.window.style(self.black)
+        self.window.show(self.window_state)
         globaldata.ICON = self.icon
         self.window.run()
         if server:
