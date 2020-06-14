@@ -25,7 +25,6 @@ import getopt
 
 from bbv import globals as globaldata
 from bbv.server.bbv2server import run_server
-from PyQt5.QtWidgets import QApplication
 
 class Main:
     x, y = os.popen("xrandr|grep 'primary'|sed 's|.*primary ||;s|+.*||'").read().split('x')
