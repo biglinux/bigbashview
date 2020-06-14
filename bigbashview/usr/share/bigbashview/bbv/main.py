@@ -25,11 +25,12 @@ import getopt
 
 from bbv import globals as globaldata
 from bbv.server.bbv2server import run_server
-
+from PyQt5.QtWidgets import QApplication
 
 class Main:
-    width = -1
-    height = -1
+    x, y = os.popen("xrandr|grep 'primary'|sed 's|.*primary ||;s|+.*||'").read().split('x')
+    width = int(x)/2
+    height = int(y)/2
     toolkit = "auto"
     url = "/"
     window_state = None
