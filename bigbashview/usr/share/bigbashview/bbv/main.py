@@ -170,7 +170,7 @@ bigbashview options arguments URL
 ============================================================================================
 Option:           Argument:        Description:
 --------------------------------------------------------------------------------------------
--s|--screen=      widthxheight     Window size
+-s|--size=      widthxheight     Window size
 --------------------------------------------------------------------------------------------
 -t|--toolkit=     gtk              Rendering by WebKitGTK
                   qt               Rendering by QtWebEngine
