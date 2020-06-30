@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
@@ -27,9 +27,8 @@ from bbv import globals as globaldata
 from bbv.server.bbv2server import run_server
 
 class Main:
-    x, y = os.popen("xrandr|grep 'primary'|sed 's|.*primary ||;s|+.*||'").read().split('x')
-    width = int(x)/2
-    height = int(y)/2
+    width = 0
+    height = 0
     toolkit = "auto"
     url = "/"
     window_state = None
@@ -39,13 +38,11 @@ class Main:
 
     def __init__(self):
         try:
-            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:bc', ['help', 'screen=',
-                                                                         'version', "toolkit=", 'window_state=',
-                                                                         'icon=', 'black', 'compatibility-mode'])
-
+            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:bc', ['help', 'size=', 'version', "toolkit=",
+                                                                          'window_state=', 'icon=', 'black', 'compatibility-mode'])
         except getopt.error as msg:
             print(msg)
-            print('for help use --help')
+            print('For help use -h or --help')
             sys.exit(2)
 
         if len(args):
@@ -59,7 +56,7 @@ class Main:
                 print(globaldata.APP_NAME, globaldata.APP_VERSION)
                 sys.exit()
 
-            elif o in ('-s', '--screen'):
+            elif o in ('-s', '--size'):
                 args = a.split('x')
 
                 if len(args) != 2:
@@ -76,7 +73,7 @@ class Main:
                 self.height = int(self.height)
 
             elif o in ('-b', '--black'):
-            	self.black = True
+                self.black = True
 
             elif o in ('-t', '--toolkit'):
                 if a in ("gtk", "qt"):
@@ -159,7 +156,42 @@ class Main:
             self.window = qt.Window()
 
     def help(self):
-        print(sys.argv[0], '[-h|--help] [-s|--screen=widthxheight] [-v|--version] [-t|--toolkit=[gtk|qt|]] [-w|--window_state=[maximized|fullscreen|fixed|top]] [-i|--icon image] [-b|--black] [-c|--compatibility-mode] URL')
+        helper = '''
+  ____  _       ____            _ __      ___               
+ |  _ \(_)     |  _ \          | |\ \    / (_)              
+ | |_) |_  __ _| |_) | __ _ ___| |_\ \  / / _  _____      __
+ |  _ <| |/ _` |  _ < / _` / __| '_ \ \/ / | |/ _ \ \ /\ / /
+ | |_) | | (_| | |_) | (_| \__ \ | | \  /  | |  __/\ V  V / 
+ |____/|_|\__, |____/ \__,_|___/_| |_|\/   |_|\___| \_/\_/  
+           __/ |                                            
+          |___/      
+          
+bigbashview options arguments URL
+============================================================================================
+Option:           Argument:        Description:
+--------------------------------------------------------------------------------------------
+-s|--screen=      widthxheight     Window size
+--------------------------------------------------------------------------------------------
+-t|--toolkit=     gtk              Rendering by WebKitGTK
+                  qt               Rendering by QtWebEngine
+--------------------------------------------------------------------------------------------
+-w|--window_state=maximized        Open maximized window
+                  fullscreen       Open window in fullscreen
+                  fixed            Open window in fixed size
+                  top              Keep window on top
+--------------------------------------------------------------------------------------------
+-i|--icon=        /path/to/image   Window icon
+--------------------------------------------------------------------------------------------
+-b|--black                         Black background
+--------------------------------------------------------------------------------------------
+-c|--compatibility-mode            Compatible with executable files (.sh, .sh.htm, .sh.html)
+--------------------------------------------------------------------------------------------
+-h|--help                          BigBashView help
+--------------------------------------------------------------------------------------------
+-v|--version                       BigBashView version
+============================================================================================
+        '''
+        print(helper)
         sys.exit()
 
     def run(self, start_server=True):

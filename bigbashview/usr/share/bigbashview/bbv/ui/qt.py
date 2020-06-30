@@ -30,7 +30,6 @@ from bbv.ui.base import BaseWindow
 class Window(BaseWindow):
     def __init__(self):
         self.app = QApplication(sys.argv)
-        self.desktop = QApplication.desktop()
         self.web = QWebEngineView()
         self.web.settings().setAttribute(
                 self.web.settings().AutoLoadIconsForPage, False)
@@ -80,14 +79,16 @@ class Window(BaseWindow):
         self.web.setUrl(self.url)
 
     def set_size(self, width, height, window_state):
+        display = self.app.primaryScreen()
+        size = display.availableGeometry()
         if width <= 0:
-            width = 640
+            width = size.width()/2
         if height <= 0:
-            height = 480
+            height = size.height()/2
 
         self.web.resize(width, height)
         qr = self.web.frameGeometry()
-        cp = self.desktop.availableGeometry().center()
+        cp = display.availableGeometry().center()
         qr.moveCenter(cp)
         self.web.move(qr.topLeft())
         if window_state == "fixed":

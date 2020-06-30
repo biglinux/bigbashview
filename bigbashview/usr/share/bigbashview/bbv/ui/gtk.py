@@ -84,10 +84,12 @@ class Window(BaseWindow):
     	self.webview.load_uri(url)
 
     def set_size(self, width, height, window_state):
+        display = Gdk.Display.get_primary_monitor(Gdk.Display.get_default())
+        size = display.get_geometry()
         if width <= 0:
-            width = 640
+            width = size.width/2
         if height <= 0:
-            height = 480
+            height = size.height/2
 
         self.window.set_size_request(width, height)
         self.window.set_position(Gtk.WindowPosition.CENTER)
