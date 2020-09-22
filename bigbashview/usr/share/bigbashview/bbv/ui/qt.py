@@ -31,6 +31,7 @@ class Window(BaseWindow):
     def __init__(self):
         self.app = QApplication(sys.argv)
         self.web = QWebEngineView()
+        self.inspector = QWebEngineView()
         self.web.settings().setAttribute(
                 self.web.settings().AutoLoadIconsForPage, False)
         self.web.setWindowIcon(QIcon(ICON))
@@ -39,6 +40,12 @@ class Window(BaseWindow):
         self.web.loadFinished.connect(self.add_script)
         self.key_f5 = QShortcut(Qt.Key_F5, self.web)
         self.key_f5.activated.connect(self.web.reload)
+        self.key_f12 = QShortcut(Qt.Key_F12, self.web)
+        self.key_f12.activated.connect(self.devpage)
+
+    def devpage(self):
+    	self.inspector.page().setInspectedPage(self.web.page())
+    	self.inspector.show()
 
     def add_script(self, event):
         script = '''
@@ -76,7 +83,7 @@ class Window(BaseWindow):
 
     def load_url(self, url):
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
-        self.web.setUrl(self.url)
+        self.web.load(self.url)
 
     def set_size(self, width, height, window_state):
         display = self.app.primaryScreen()

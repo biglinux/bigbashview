@@ -157,20 +157,20 @@ class Main:
 
     def help(self):
         helper = '''
-  ____  _       ____            _ __      ___               
- |  _ \(_)     |  _ \          | |\ \    / (_)              
+  ____  _       ____            _ __      ___
+ |  _ \(_)     |  _ \          | |\ \    / (_)
  | |_) |_  __ _| |_) | __ _ ___| |_\ \  / / _  _____      __
  |  _ <| |/ _` |  _ < / _` / __| '_ \ \/ / | |/ _ \ \ /\ / /
- | |_) | | (_| | |_) | (_| \__ \ | | \  /  | |  __/\ V  V / 
- |____/|_|\__, |____/ \__,_|___/_| |_|\/   |_|\___| \_/\_/  
-           __/ |                                            
-          |___/      
-          
+ | |_) | | (_| | |_) | (_| \__ \ | | \  /  | |  __/\ V  V /
+ |____/|_|\__, |____/ \__,_|___/_| |_|\/   |_|\___| \_/\_/
+           __/ |
+          |___/
+
 bigbashview options arguments URL
 ============================================================================================
 Option:           Argument:        Description:
 --------------------------------------------------------------------------------------------
--s|--size=      widthxheight     Window size
+-s|--size=        widthxheight     Window size
 --------------------------------------------------------------------------------------------
 -t|--toolkit=     gtk              Rendering by WebKitGTK
                   qt               Rendering by QtWebEngine
@@ -202,6 +202,7 @@ Option:           Argument:        Description:
                 self.url = '/'+self.url
             self.url = "http://%s:%s%s" % (globaldata.ADDRESS(),
                                            globaldata.PORT(), self.url)
+        print(self.url)
         self.window.load_url(self.url)
         self.window.set_size(self.width, self.height, self.window_state)
         self.window.style(self.black)
