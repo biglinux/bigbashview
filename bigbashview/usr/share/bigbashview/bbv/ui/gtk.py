@@ -101,15 +101,20 @@ class Window(BaseWindow):
             self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0.0, 0.0, 0.0, 1.0))
             self.webview.set_background_color(Gdk.RGBA(0.0, 0.0, 0.0, 1.0))
 
-        elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE' and bool(os.popen("kreadconfig5 --group WM --key activeBackground").read().strip()) is True:
+        elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
         	rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
-        	r, g, b = rgb
-        	r = float(int(r)/255)
-        	g = float(int(g)/255)
-        	b = float(int(b)/255)
+        	if not len(rgb) > 1:
+        		color = Gtk.Window().get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
+        		self.window.override_background_color(Gtk.StateFlags.NORMAL, color)
+        		self.webview.set_background_color(color)
+        	else:
+	        	r, g, b = rgb
+	        	r = float(int(r)/255)
+	        	g = float(int(g)/255)
+	        	b = float(int(b)/255)
 
-        	self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(r, g, b, 1.0))
-        	self.webview.set_background_color(Gdk.RGBA(r, g, b, 1.0))
+	        	self.window.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(r, g, b, 1.0))
+	        	self.webview.set_background_color(Gdk.RGBA(r, g, b, 1.0))
 
         else:
             color = Gtk.Window().get_style_context().get_background_color(Gtk.StateFlags.NORMAL)

@@ -19,8 +19,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os
-from PyQt5.QtCore import QUrl, Qt
-from PyQt5.QtWidgets import QApplication, QShortcut
+from PyQt5.QtCore import QUrl, Qt, QFileInfo
+from PyQt5.QtWidgets import QApplication, QShortcut, QFileDialog
 from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
@@ -68,6 +68,11 @@ class Window(BaseWindow):
         elif window_state == "top":
             self.web.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.web.show()
+        elif window_state == "noframe":
+            self.web.setWindowFlags(Qt.FramelessWindowHint)
+            self.web.show()
+        elif window_state == "hide":
+            self.web.hide()
         else:
             self.web.show()
 
@@ -105,14 +110,15 @@ class Window(BaseWindow):
     	if black:
     		self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 1.0))
 
-    	elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE' and bool(os.popen("kreadconfig5 --group WM --key activeBackground").read().strip()) is True:
+    	elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
     		rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
-    		r, g, b = rgb
-    		r = float(int(r)/255)
-    		g = float(int(g)/255)
-    		b = float(int(b)/255)
-
-    		self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
-
+    		if len(rgb) > 1:
+    			r, g, b = rgb
+    			r = float(int(r)/255)
+    			g = float(int(g)/255)
+    			b = float(int(b)/255)
+    			self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
+    		else:
+    			self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))
     	else:
     		self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))
