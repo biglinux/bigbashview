@@ -1,8 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2008 Wilson Pinto J�nior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
+#  Copyright (C) 2020 Elton Fabrício Ferrira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,9 +19,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from bbv.main import Main
-from bbv import globals as globaldata
+from sys import argv
 
 if __name__ == "__main__":
-	globaldata.COMPAT = True
-	app = Main()
-	app.run()
+
+    if len(argv) != 2:
+        print("URL only!")
+        exit()
+
+    if 'https://' not in argv[1] and 'file://' not in argv[1]:
+        print("URL only!")
+        exit()
+
+    app = Main()
+    app.url=argv[1]
+    app.run(False)

@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #  Copyright (C) 2009  Bruno Goncalves Araujo
+#  Copyright (C) 2020  EltonFF
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os
-from PyQt5.QtCore import QUrl, Qt, QFileInfo
-from PyQt5.QtWidgets import QApplication, QShortcut, QFileDialog
-from PyQt5.QtGui import QIcon, QColor
-from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PySide2.QtCore import QUrl, Qt, QFileInfo
+from PySide2.QtWidgets import QApplication, QShortcut, QFileDialog
+from PySide2.QtGui import QIcon, QColor, QKeySequence
+from PySide2.QtWebEngineWidgets import QWebEngineView
 
 from bbv.globals import ICON
 from bbv.ui.base import BaseWindow
@@ -38,14 +38,25 @@ class Window(BaseWindow):
         self.web.titleChanged.connect(self.title_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
         self.web.loadFinished.connect(self.add_script)
-        self.key_f5 = QShortcut(Qt.Key_F5, self.web)
+        self.key_f5 = QShortcut(QKeySequence(Qt.Key_F5), self.web)
         self.key_f5.activated.connect(self.web.reload)
-        self.key_f12 = QShortcut(Qt.Key_F12, self.web)
+        self.key_f12 = QShortcut(QKeySequence(Qt.Key_F12), self.web)
         self.key_f12.activated.connect(self.devpage)
 
     def devpage(self):
-    	self.inspector.page().setInspectedPage(self.web.page())
-    	self.inspector.show()
+        self.inspector.page().setInspectedPage(self.web.page())
+        self.inspector.setWindowIcon(QIcon(ICON))
+        self.inspector.setWindowTitle('BigBashView DevTools')
+        display = self.app.primaryScreen()
+        size = display.availableGeometry()
+        width = size.width()/4
+        height = size.height()
+        self.inspector.resize(width, height)
+        self.inspector.move(width*3, 0)
+        self.inspector.show()
+
+        self.web.move(0, 0)
+        self.web.resize(width*3, height)
 
     def add_script(self, event):
         script = '''
@@ -107,18 +118,18 @@ class Window(BaseWindow):
             self.web.setFixedSize(width, height)
 
     def style(self, black):
-    	if black:
-    		self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 1.0))
+        if black:
+            self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 1.0))
 
-    	elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
-    		rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
-    		if len(rgb) > 1:
-    			r, g, b = rgb
-    			r = float(int(r)/255)
-    			g = float(int(g)/255)
-    			b = float(int(b)/255)
-    			self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
-    		else:
-    			self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))
-    	else:
-    		self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))
+        elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
+            rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
+            if len(rgb) > 1:
+                r, g, b = rgb
+                r = float(int(r)/255)
+                g = float(int(g)/255)
+                b = float(int(b)/255)
+                self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
+            else:
+                self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))
+        else:
+            self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))

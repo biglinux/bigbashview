@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
@@ -19,19 +18,12 @@
 import os
 import sys
 
-APP_NAME = "Big Bash View"
-APP_VERSION = "3.3.2"
-PROGDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
-
-# TODO: Check portability issues
-DATA_DIR = os.path.expanduser("~/.bigbashview")
-ICON = os.sep.join((PROGDIR, "bbv", "img", "icone.png"))
-
+APP_NAME = "BigBashView"
+APP_VERSION = "3.3.9"
+PROGDIR = os.path.dirname(os.path.realpath(__file__))
+ICON = os.sep.join((PROGDIR, "img", "icone.png"))
+COMPAT = False
 
 def ADDRESS(): return '127.0.0.1'
 
-
 def PORT(): return 9000
-
-
-COMPAT = False

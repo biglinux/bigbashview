@@ -1,7 +1,5 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2008 Wilson Pinto J�nior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -17,10 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from bbv.main import Main
-from bbv import globals as globaldata
 
-if __name__ == "__main__":
-	globaldata.COMPAT = True
-	app = Main()
-	app.run()
+def address(): return '127.0.0.1'
+
+
+def port(): return 9000
+
+
+APP_VERSION = "3.3.9"

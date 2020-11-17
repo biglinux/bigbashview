@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
@@ -74,24 +73,21 @@ class Main:
 
             elif o in ('-b', '--black'):
                 self.black = True
-
+                
             elif o in ('-t', '--toolkit'):
                 if a in ("gtk", "qt"):
                     self.toolkit = a
-                else:
-                    self.toolkit = "auto"
+                                    	
             elif o in ('-w', '--window_state'):
                 if a in ("maximized", "fullscreen", "fixed", "top"):
                     self.window_state = a
+                    
             elif o in ('-i', '--icon'):
                 if os.path.exists(a):
                     globaldata.ICON = a
+                    
             elif o in ('-c', '--compatibility-mode'):
                 globaldata.COMPAT = True
-
-        # Create data folder if doesn't exists...
-        if not os.path.isdir(globaldata.DATA_DIR):
-            os.mkdir(globaldata.DATA_DIR)
 
         # construct window
         if self.toolkit == "auto":
@@ -101,14 +97,14 @@ class Main:
             except ImportError:
                 has_qt = False
 
-            try:
-                from bbv.ui import gtk
-                has_gtk = True
-            except ImportError:
-                has_gtk = False
+                try:
+                    from bbv.ui import gtk
+                    has_gtk = True
+                except ImportError:
+                    has_gtk = False
 
             if not(has_qt) and not(has_gtk):
-                print(('bbv needs GTK or PyQt '
+                print(('bbv needs WebKitGtk2 or PySide2 '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
                 sys.exit(1)
@@ -129,7 +125,7 @@ class Main:
                 has_gtk = False
 
             if not has_gtk:
-                print(('bbv needs GTK '
+                print(('bbv needs WebKitGtk2 '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
 
@@ -146,7 +142,7 @@ class Main:
 
             if not has_qt:
                 from bbv.ui import qt
-                print(('bbv needs PyQt '
+                print(('bbv needs PySide2 '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
 
