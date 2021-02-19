@@ -22,15 +22,6 @@ from bbv.main import Main
 from sys import argv
 
 if __name__ == "__main__":
-
-    if len(argv) != 2:
-        print("URL only!")
-        exit()
-
-    if 'https://' not in argv[1] and 'file://' not in argv[1]:
-        print("URL only!")
-        exit()
-
     app = Main()
     app.url=argv[1]
     app.run(False)

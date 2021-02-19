@@ -19,9 +19,10 @@ import os
 import sys
 
 APP_NAME = "BigBashView"
-APP_VERSION = "3.3.9"
+APP_VERSION = "3.5.1"
 PROGDIR = os.path.dirname(os.path.realpath(__file__))
 ICON = os.sep.join((PROGDIR, "img", "icone.png"))
+LOGO = os.sep.join((PROGDIR, "img", "logo.png"))
 COMPAT = False
 
 def ADDRESS(): return '127.0.0.1'

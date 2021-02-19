@@ -32,13 +32,13 @@ class Main:
     url = "/"
     window_state = None
     icon = globaldata.ICON
-    black = False
+    color = None
 
 
     def __init__(self):
         try:
-            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:bc', ['help', 'size=', 'version', "toolkit=",
-                                                                          'window_state=', 'icon=', 'black', 'compatibility-mode'])
+            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:c:', ['help', 'size=', 'version', "toolkit=",
+                                                                          'window_state=', 'icon=', 'color='])
         except getopt.error as msg:
             print(msg)
             print('For help use -h or --help')
@@ -71,23 +71,22 @@ class Main:
                 self.width = int(self.width)
                 self.height = int(self.height)
 
-            elif o in ('-b', '--black'):
-                self.black = True
-                
             elif o in ('-t', '--toolkit'):
                 if a in ("gtk", "qt"):
                     self.toolkit = a
-                                    	
+
             elif o in ('-w', '--window_state'):
-                if a in ("maximized", "fullscreen", "fixed", "top"):
+                if a in ("maximized", "maximizedTop", "fullscreen", "fixed",
+                         "fixedTop", "frameless", "framelessTop"):
                     self.window_state = a
-                    
+
             elif o in ('-i', '--icon'):
                 if os.path.exists(a):
                     globaldata.ICON = a
-                    
-            elif o in ('-c', '--compatibility-mode'):
-                globaldata.COMPAT = True
+
+            elif o in ('-c', '--color'):
+                if a in ('black', 'none'):
+                    self.color = a
 
         # construct window
         if self.toolkit == "auto":
@@ -162,30 +161,49 @@ class Main:
            __/ |
           |___/
 
-bigbashview options arguments URL
-============================================================================================
-Option:           Argument:        Description:
---------------------------------------------------------------------------------------------
--s|--size=        widthxheight     Window size
---------------------------------------------------------------------------------------------
--t|--toolkit=     gtk              Rendering by WebKitGTK
-                  qt               Rendering by QtWebEngine
---------------------------------------------------------------------------------------------
--w|--window_state=maximized        Open maximized window
-                  fullscreen       Open window in fullscreen
-                  fixed            Open window in fixed size
-                  top              Keep window on top
---------------------------------------------------------------------------------------------
--i|--icon=        /path/to/image   Window icon
---------------------------------------------------------------------------------------------
--b|--black                         Black background
---------------------------------------------------------------------------------------------
--c|--compatibility-mode            Compatible with executable files (.sh, .sh.htm, .sh.html)
---------------------------------------------------------------------------------------------
--h|--help                          BigBashView help
---------------------------------------------------------------------------------------------
--v|--version                       BigBashView version
-============================================================================================
+~$bigbashview options arguments URL
+==================================================================
+Options              Arguments           Descriptions
+------------------------------------------------------------------
+-s|--size=           widthxheight        Window size
+------------------------------------------------------------------
+-t|--toolkit=        gtk                 Rendering by WebKitGTK2
+                     qt                  Rendering by QtWebEngine
+------------------------------------------------------------------
+-w|--window_state=   fullscreen          Open window in fullscreen
+                     maximized           Open maximized window
+                     maximizedTop        Open maximized window
+                                         and keep window on top
+                     fixed               Open window in fixed size
+                     fixedTop            Open window in fixed size
+                                         and keep window on top
+                     frameless           Open window frameless
+                     framelessTop        Open window frameless
+                                         and keep window on top
+------------------------------------------------------------------
+-i|--icon=           /path/to/image      Window icon
+------------------------------------------------------------------
+-c|--color=          black               Black background
+                     none                Transparent background
+------------------------------------------------------------------
+-h|--help                                BigBashView help
+-v|--version                             BigBashView version
+==================================================================
+PlainText Extension:   .txt              Text Content
+------------------------------------------------------------------
+HTML Extensions:       .html   |.htm     HTML Content
+------------------------------------------------------------------
+Executable Extensions: .sh     |.run     Shell Script
+                       .sh.html|.sh.htm  Html Markup
+                       .sh.php           PHP Script
+                       .sh.py            Python Script
+                       .sh.lua           Lua Script
+                       .sh.rb            Ruby Script
+                       .sh.pl            Perl Script
+                       .sh.lisp          Lisp Script
+                       .sh.jl            Julia Script
+------------------------------------------------------------------
+*Note: All executable files must have the shebang*
         '''
         print(helper)
         sys.exit()
@@ -201,8 +219,8 @@ Option:           Argument:        Description:
         print(self.url)
         self.window.load_url(self.url)
         self.window.set_size(self.width, self.height, self.window_state)
-        self.window.style(self.black)
-        self.window.show(self.window_state)
+        self.window.style(self.color)
+        self.window.viewer(self.window_state)
         globaldata.ICON = self.icon
         self.window.run()
         if server:

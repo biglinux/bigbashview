@@ -22,4 +22,4 @@ def address(): return '127.0.0.1'
 def port(): return 9000
 
 
-APP_VERSION = "3.3.9"
+APP_VERSION = "3.5.1"

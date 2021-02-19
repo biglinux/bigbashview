@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#  Copyright (C) 2019 Elton Fabricio Ferreira 
+#  Copyright (C) 2019 Elton Fabricio Ferreira
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -123,19 +123,21 @@ class default_handler(url_handler):
         else:
             HTML = '''
                 <html>
-                    <head><title>BigBashView</title></head>
-                    <body>
-                        <h1>Welcome to BigBashView 3!</h1>
+                    <head><title>Welcome to BigBashView</title></head>
+                    <body style="font-size:large">
+                        <img src='%s'/>
                         <p>
-                            <i>
-                            	<b>Hostname: </b><span style='color:red'> %s</span><br/>
-                                <b>Desktop Environment: </b><span style='color:red'> %s</span><br/>            
-                                <b>Software Revision: </b><span style='color:red'> %s</span>                                
-                            </i>
+                            <i><b>
+                                Hostname: <span style='color:red'> %s</span><br/>
+                                Desktop Environment: <span style='color:red'> %s</span><br/>
+                                Software Revision: <span style='color:red'> %s</span><br/>
+                                URL: <a href="#!" onclick="_run('xdg-open https://github.com/biglinux/bigbashview')"
+                                style='text-decoration:none'><span style='color:red'>https://github.com/biglinux/bigbashview</span></a>
+                            </b></i>
                         </p>
                     </body>
                 </html>
-            ''' % (os.uname()[1], os.environ.get('XDG_CURRENT_DESKTOP'), globaldata.APP_VERSION)
+            ''' % (globaldata.LOGO, os.uname()[1], os.environ.get('XDG_CURRENT_DESKTOP'), globaldata.APP_VERSION)
         return HTML
 
     def parse_and_call(self, qs, name):
@@ -143,7 +145,9 @@ class default_handler(url_handler):
         return url_handler.parse_and_call(self, qs, name)
 
     def bbv_compat_mode(self, options, content, query):
-        execute_ext = ('.sh', '.sh.html', '.sh.htm')
+        execute_ext = ('.sh','.sh.html','.sh.htm','.sh.php',
+                       '.sh.py','.sh.lua','.sh.rb','.sh.pl',
+                       '.sh.lisp','.sh.jl','.run')
         content_ext = ('.htm', '.html')
         content_plain_ext = ('.txt')
 

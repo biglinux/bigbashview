@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2008 Wilson Pinto J�nior <wilson@openlanhouse.org>
@@ -18,7 +18,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from bbv.main import Main
+from bbv import globals as globaldata
 
 if __name__ == "__main__":
-    app = Main()
-    app.run()
+	globaldata.COMPAT = True
+	app = Main()
+	app.run()

@@ -19,22 +19,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os
-from PySide2.QtCore import QUrl, Qt, QFileInfo
-from PySide2.QtWidgets import QApplication, QShortcut, QFileDialog
+from PySide2.QtCore import QUrl, Qt
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication, QShortcut
 from PySide2.QtGui import QIcon, QColor, QKeySequence
 from PySide2.QtWebEngineWidgets import QWebEngineView
 
 from bbv.globals import ICON
-from bbv.ui.base import BaseWindow
 
-class Window(BaseWindow):
+class Window(QWidget):
     def __init__(self):
         self.app = QApplication(sys.argv)
+        super().__init__()
         self.web = QWebEngineView()
         self.inspector = QWebEngineView()
+        self.inspector.page().setInspectedPage(self.web.page())
         self.web.settings().setAttribute(
                 self.web.settings().AutoLoadIconsForPage, False)
-        self.web.setWindowIcon(QIcon(ICON))
+        self.setWindowIcon(QIcon(ICON))
         self.web.titleChanged.connect(self.title_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
         self.web.loadFinished.connect(self.add_script)
@@ -43,20 +44,29 @@ class Window(BaseWindow):
         self.key_f12 = QShortcut(QKeySequence(Qt.Key_F12), self.web)
         self.key_f12.activated.connect(self.devpage)
 
-    def devpage(self):
-        self.inspector.page().setInspectedPage(self.web.page())
-        self.inspector.setWindowIcon(QIcon(ICON))
-        self.inspector.setWindowTitle('BigBashView DevTools')
-        display = self.app.primaryScreen()
-        size = display.availableGeometry()
-        width = size.width()/4
-        height = size.height()
-        self.inspector.resize(width, height)
-        self.inspector.move(width*3, 0)
-        self.inspector.show()
+        # pagesplitter
+        self.hbox = QHBoxLayout(self)
+        self.hbox.setContentsMargins(0,0,0,0)
+        self.splitter = QSplitter(Qt.Horizontal)
+        self.splitter.addWidget(self.web)
+        self.splitter2 = QSplitter(Qt.Horizontal)
+        self.hbox.addWidget(self.splitter)
+        self.setLayout(self.hbox)
 
-        self.web.move(0, 0)
-        self.web.resize(width*3, height)
+    def devpage(self):
+        if self.splitter.count() == 1 or self.splitter2.count() == 1:
+            self.splitter2.hide()
+            self.splitter.addWidget(self.web)
+            self.splitter.addWidget(self.inspector)
+            self.splitter.show()
+            self.hbox.addWidget(self.splitter)
+            self.setLayout(self.hbox)
+        else:
+            self.splitter.hide()
+            self.splitter2.addWidget(self.web)
+            self.splitter2.show()
+            self.hbox.addWidget(self.splitter2)
+            self.setLayout(self.hbox)
 
     def add_script(self, event):
         script = '''
@@ -69,23 +79,28 @@ class Window(BaseWindow):
         if event:
             self.web.page().runJavaScript(script)
 
-    def show(self, window_state):
+    def viewer(self, window_state):
         if window_state == "maximized":
-            self.web.setWindowState(Qt.WindowMaximized)
-            self.web.show()
+            self.setWindowState(Qt.WindowMaximized)
+            self.show()
         elif window_state == "fullscreen":
-            self.web.setWindowState(Qt.WindowFullScreen)
-            self.web.show()
-        elif window_state == "top":
-            self.web.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.web.show()
-        elif window_state == "noframe":
-            self.web.setWindowFlags(Qt.FramelessWindowHint)
-            self.web.show()
-        elif window_state == "hide":
-            self.web.hide()
+            self.setWindowState(Qt.WindowFullScreen)
+            self.show()
+        elif window_state == "maximizedTop":
+            self.setWindowState(Qt.WindowMaximized)
+            self.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.show()
+        elif window_state == "frameless":
+            self.setWindowFlags(Qt.FramelessWindowHint)
+            self.show()
+        elif window_state == "framelessTop":
+            self.setWindowFlags(Qt.FramelessWindowHint|Qt.WindowStaysOnTopHint)
+            self.show()
+        elif window_state == "fixedTop":
+            self.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.show()
         else:
-            self.web.show()
+            self.show()
 
     def run(self):
         self.app.exec_()
@@ -95,7 +110,7 @@ class Window(BaseWindow):
 
     def title_changed(self, title):
         if title:
-            self.web.setWindowTitle(title)
+            self.setWindowTitle(title)
 
     def load_url(self, url):
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
@@ -109,27 +124,33 @@ class Window(BaseWindow):
         if height <= 0:
             height = size.height()/2
 
-        self.web.resize(width, height)
-        qr = self.web.frameGeometry()
+        self.resize(width, height)
+        qr = self.frameGeometry()
         cp = display.availableGeometry().center()
         qr.moveCenter(cp)
-        self.web.move(qr.topLeft())
-        if window_state == "fixed":
-            self.web.setFixedSize(width, height)
+        self.move(qr.topLeft())
+        if window_state in ("fixed", "fixedTop"):
+            self.setFixedSize(width, height)
 
-    def style(self, black):
-        if black:
-            self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 1.0))
+    def style(self, colorful):
+        if colorful == 'black':
+            self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 1))
+
+        elif colorful == 'none':
+            self.setAttribute(Qt.WA_TranslucentBackground)
+            self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
 
         elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
             rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
+
             if len(rgb) > 1:
                 r, g, b = rgb
                 r = float(int(r)/255)
                 g = float(int(g)/255)
                 b = float(int(b)/255)
-                self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1.0))
+                self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1))
             else:
-                self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))
+               self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
+
         else:
-            self.web.page().setBackgroundColor(QColor.fromRgbF(0.0, 0.0, 0.0, 0.0))
+            self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
