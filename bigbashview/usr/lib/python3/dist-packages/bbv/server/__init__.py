@@ -2,6 +2,7 @@
 #
 #  Copyright (C) 2008 Wilson Pinto J�nior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
+#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

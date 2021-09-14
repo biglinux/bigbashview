@@ -3,7 +3,7 @@
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #  Copyright (C) 2009  Bruno Goncalves Araujo
-#  Copyright (C) 2020  EltonFF
+#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ from PySide2.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication, QSh
 from PySide2.QtGui import QIcon, QColor, QKeySequence
 from PySide2.QtWebEngineWidgets import QWebEngineView
 
-from bbv.globals import ICON
+from bbv.globaldata import ICON, TITLE
 
 class Window(QWidget):
     def __init__(self):
@@ -32,11 +32,14 @@ class Window(QWidget):
         super().__init__()
         self.web = QWebEngineView()
         self.inspector = QWebEngineView()
-        self.inspector.page().setInspectedPage(self.web.page())
         self.web.settings().setAttribute(
                 self.web.settings().AutoLoadIconsForPage, False)
         self.setWindowIcon(QIcon(ICON))
-        self.web.titleChanged.connect(self.title_changed)
+        if TITLE:
+            self.app.setApplicationName(TITLE)
+            self.setWindowTitle(TITLE)
+        else:
+            self.web.titleChanged.connect(self.title_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
         self.web.loadFinished.connect(self.add_script)
         self.key_f5 = QShortcut(QKeySequence(Qt.Key_F5), self.web)
@@ -55,9 +58,11 @@ class Window(QWidget):
 
     def devpage(self):
         if self.splitter.count() == 1 or self.splitter2.count() == 1:
+            self.inspector.page().setInspectedPage(self.web.page())
             self.splitter2.hide()
             self.splitter.addWidget(self.web)
             self.splitter.addWidget(self.inspector)
+            self.splitter.setSizes([(self.width()/3)*2, self.width()/3])
             self.splitter.show()
             self.hbox.addWidget(self.splitter)
             self.setLayout(self.hbox)
@@ -106,11 +111,12 @@ class Window(QWidget):
         self.app.exec_()
 
     def close_window(self):
-        sys.exit()
+        self.app.quit()
 
     def title_changed(self, title):
-        if title:
-            self.setWindowTitle(title)
+        os.system('''xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)" \
+                    -f WM_CLASS 8s -set WM_CLASS "%s"''' % title)
+        self.setWindowTitle(title)
 
     def load_url(self, url):
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
@@ -144,7 +150,7 @@ class Window(QWidget):
             rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
 
             if len(rgb) > 1:
-                r, g, b = rgb
+                r, g, b = rgb if len(rgb) == 3 else rgb[:-1]
                 r = float(int(r)/255)
                 g = float(int(g)/255)
                 b = float(int(b)/255)

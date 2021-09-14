@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#  Copyright (C) 2019 Elton Fabricio Ferreira
+#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -23,11 +24,7 @@ import web
 from .utils import get_env_for_shell
 from .utils import to_s
 
-try:
-    from bbv import globals as globaldata
-except ImportError:
-    from . import globaldata
-
+from bbv import globaldata
 
 class url_handler(object):
     __url__ = '/'
@@ -61,18 +58,16 @@ class url_handler(object):
     def called(self, options, content, query):
         raise NotImplementedError
 
-
 class content_handler(url_handler):
     __url__ = '/content(.*)'
 
     def called(self, options, content, query):
-        with open(content) as arq:
-            try:
+        try:
+            with open(content) as arq:
                 return arq.read()
-            except UnicodeDecodeError:
-                with open(content, 'rb') as arq:
-                    return arq.read()
-
+        except UnicodeDecodeError:
+            with open(content, 'rb') as arq:
+                return arq.read()
 
 class execute_handler(url_handler):
     __url__ = '/execute(.*)'
@@ -83,16 +78,19 @@ class execute_handler(url_handler):
         env['bbv_port'] = str(globaldata.PORT())
         env.update(extra_env)
 
-        po = subprocess.Popen(command.encode(
-            'utf-8'), stdin=None, stdout=subprocess.PIPE, shell=True, env=env)
+        if not globaldata.ROOT_FILE:
+            po = subprocess.Popen(command,
+                stdin=None, stdout=subprocess.PIPE, shell=True, env=env)
+        else:
+            po = subprocess.Popen('/bin/bash {}'.format(command),
+                stdin=None, stdout=subprocess.PIPE, shell=True, env=env)
+
         return po.communicate()
 
     def called(self, options, content, query):
         (stdout, stderr) = self._execute(
             content, extra_env=get_env_for_shell(query))
         if 'close' in options:
-            if to_s(stdout).find('False') != -1:
-                return stdout
             os.kill(os.getpid(), 15)
         return stdout
 
@@ -101,44 +99,27 @@ class default_handler(url_handler):
 
     def called(self, options, content, query):
         if content not in ("", "/"):
-            if globaldata.COMPAT:
-                return self.bbv_compat_mode(options, content, query)
-            else:
-                HTML = '''
-                   <html>
-                       <body>
-                           <h1>Invalid request</h1>
-                           <p>
-                               <b>options: </b>%s
-                           </p>
-                           <p>
-                               <b>content: </b>%s
-                           </p>
-                           <p>
-                               <b>query: </b>%s
-                           </p>
-                       </body>
-                   </html>
-               ''' % (options, content, query)
+            return self.bbv_compat_mode(options, content, query)
         else:
             HTML = '''
-                <html>
-                    <head><title>Welcome to BigBashView</title></head>
-                    <body style="font-size:large">
-                        <img src='%s'/>
-                        <p>
-                            <i><b>
-                                Hostname: <span style='color:red'> %s</span><br/>
-                                Desktop Environment: <span style='color:red'> %s</span><br/>
-                                Software Revision: <span style='color:red'> %s</span><br/>
-                                URL: <a href="#!" onclick="_run('xdg-open https://github.com/biglinux/bigbashview')"
-                                style='text-decoration:none'><span style='color:red'>https://github.com/biglinux/bigbashview</span></a>
-                            </b></i>
-                        </p>
-                    </body>
-                </html>
+            <html>
+            <head><title>Welcome to BigBashView</title></head>
+            <body style="font-size:large">
+                <img src='%s'/>
+                <p><i><b>
+                    Hostname: <span style='color:red'> %s</span><br/>
+                    Desktop Environment: <span style='color:red'> %s</span><br/>
+                    Software Revision: <span style='color:red'> %s</span><br/>
+                    URL:
+                    <a href="#!" style='text-decoration:none'
+                       onclick="_run('xdg-open https://gitlab.com/biglinux/bigbashview')">
+                       <span style='color:red'>https://gitlab.com/biglinux/bigbashview</span>
+                    </a>
+                </b></i></p>
+            </body>
+            </html>
             ''' % (globaldata.LOGO, os.uname()[1], os.environ.get('XDG_CURRENT_DESKTOP'), globaldata.APP_VERSION)
-        return HTML
+            return HTML
 
     def parse_and_call(self, qs, name):
         self.original_qs = to_s(qs)
@@ -150,6 +131,8 @@ class default_handler(url_handler):
                        '.sh.lisp','.sh.jl','.run')
         content_ext = ('.htm', '.html')
         content_plain_ext = ('.txt')
+        content_css_ext = ('.css')
+        content_js_ext = ('.js')
 
         relative_content = content[1:]
         if os.path.isfile(relative_content):
@@ -157,8 +140,20 @@ class default_handler(url_handler):
                 content = relative_content
             else:
                 content = './%s' % relative_content
+        if not os.access(content, os.X_OK) and content.endswith(execute_ext):
+            try:
+                import stat
+                os.chmod(content, os.stat(content).st_mode | stat.S_IEXEC)
+            except:
+                globaldata.ROOT_FILE = True
         if content.endswith(content_plain_ext):
             web.header('Content-Type', 'text/plain; charset=UTF-8')
+            return content_handler().called(options, content, query)
+        if content.endswith(content_css_ext):
+            web.header('Content-Type', 'text/css; charset=UTF-8')
+            return content_handler().called(options, content, query)
+        if content.endswith(content_js_ext):
+            web.header('Content-Type', 'text/javascript; charset=UTF-8')
             return content_handler().called(options, content, query)
         web.header('Content-Type', 'text/html; charset=UTF-8')
         execute_content = " ".join((content, unquote(self.original_qs)))
@@ -168,4 +163,3 @@ class default_handler(url_handler):
             return content_handler().called(options, content, query)
         # Default option
         return content_handler().called(options, content, query)
-

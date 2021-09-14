@@ -22,7 +22,7 @@ import sys
 import os
 import getopt
 
-from bbv import globals as globaldata
+from bbv import globaldata
 from bbv.server.bbv2server import run_server
 
 class Main:
@@ -31,14 +31,12 @@ class Main:
     toolkit = "auto"
     url = "/"
     window_state = None
-    icon = globaldata.ICON
     color = None
-
 
     def __init__(self):
         try:
-            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vt:w:i:c:', ['help', 'size=', 'version', "toolkit=",
-                                                                          'window_state=', 'icon=', 'color='])
+            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vn:w:i:c:t:', ['help', 'size=', 'version', "name=",
+                                                                          'window_state=', 'icon=', 'color=', 'toolkit='])
         except getopt.error as msg:
             print(msg)
             print('For help use -h or --help')
@@ -88,18 +86,23 @@ class Main:
                 if a in ('black', 'none'):
                     self.color = a
 
+            elif o in ('-n', '--name'):
+                globaldata.TITLE = a
+
         # construct window
         if self.toolkit == "auto":
             try:
                 from bbv.ui import qt
                 has_qt = True
-            except ImportError:
+            except ImportError as e:
+                print(e)
                 has_qt = False
 
                 try:
                     from bbv.ui import gtk
                     has_gtk = True
-                except ImportError:
+                except ImportError as e:
+                    print(e)
                     has_gtk = False
 
             if not(has_qt) and not(has_gtk):
@@ -109,18 +112,23 @@ class Main:
                 sys.exit(1)
 
             elif has_qt:
-                os.environ['QT_QUICK_BACKEND'] = 'software'
-                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+                if os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
+                    os.environ['QT_QUICK_BACKEND'] = 'software'
+                if os.getuid() == 0:
+                    os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
                 self.window = qt.Window()
 
             elif has_gtk:
                 self.window = gtk.Window()
+                if globaldata.TITLE:
+                    self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
 
         elif self.toolkit == "gtk":
             try:
                 from bbv.ui import gtk
                 has_gtk = True
-            except ImportError:
+            except ImportError as e:
+                print(e)
                 has_gtk = False
 
             if not has_gtk:
@@ -131,23 +139,28 @@ class Main:
                 sys.exit(1)
 
             self.window = gtk.Window()
+            if globaldata.TITLE:
+                self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
 
         elif self.toolkit == "qt":
             try:
                 from bbv.ui import qt
                 has_qt = True
-            except ImportError:
+            except ImportError as e:
+                print(e)
                 has_qt = False
 
             if not has_qt:
-                from bbv.ui import qt
                 print(('bbv needs PySide2 '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
 
                 sys.exit(1)
-            os.environ['QT_QUICK_BACKEND'] = 'software'
-            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+
+            if os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
+                os.environ['QT_QUICK_BACKEND'] = 'software'
+            if os.getuid() == 0:
+                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
     def help(self):
@@ -183,6 +196,8 @@ Options              Arguments           Descriptions
 ------------------------------------------------------------------
 -i|--icon=           /path/to/image      Window icon
 ------------------------------------------------------------------
+-n|--name=           AppName             Window title
+------------------------------------------------------------------
 -c|--color=          black               Black background
                      none                Transparent background
 ------------------------------------------------------------------
@@ -216,12 +231,11 @@ Executable Extensions: .sh     |.run     Shell Script
                 self.url = '/'+self.url
             self.url = "http://%s:%s%s" % (globaldata.ADDRESS(),
                                            globaldata.PORT(), self.url)
-        print(self.url)
-        self.window.load_url(self.url)
+
         self.window.set_size(self.width, self.height, self.window_state)
         self.window.style(self.color)
         self.window.viewer(self.window_state)
-        globaldata.ICON = self.icon
+        self.window.load_url(self.url)
         self.window.run()
         if server:
             server.stop()

@@ -2,7 +2,8 @@
 #
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#  Copyright Elton 2019 
+#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -16,5 +17,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-__all__ = ("main", "ui", "globals")
+__all__ = ("main", "ui", "globaldata")
 

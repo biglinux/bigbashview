@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-#
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#  Copyright (C) 2019 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
+#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,12 +19,11 @@
 import sys
 import os
 import gi
-import cairo
 gi.require_version('Gtk', '3.0')
 gi.require_version('WebKit2', '4.0')
 from gi.repository import Gtk, WebKit2, Gdk
 
-from bbv.globals import ICON
+from bbv.globaldata import ICON, TITLE
 
 class Window(Gtk.Window):
     def __init__(self):
@@ -34,12 +32,15 @@ class Window(Gtk.Window):
         self.webview.show()
         self.add(self.webview)
         self.set_icon_from_file(ICON)
-        self.webview.connect("notify::title", self.title_changed)
+        if TITLE:
+            self.set_title(TITLE)
+        else:
+            self.webview.connect("notify::title", self.title_changed)
         self.webview.connect("load-changed", self.add_script)
         self.webview.connect("close", self.close_window)
         self.webview.get_settings().set_property("enable-developer-extras",True)
         self.connect("destroy", Gtk.main_quit)
-        self.connect("key-press-event",self.key)
+        self.connect("key-press-event", self.key)
 
     def key(self, webview, event):
         if event.keyval == 65474:
@@ -86,13 +87,14 @@ class Window(Gtk.Window):
     def run(self):
         Gtk.main()
 
-    def close_window(self):
-        sys.exit()
+    def close_window(self, webview):
+        Gtk.main_quit()
 
     def title_changed(self, webview, title):
         title = self.webview.get_title()
-        if title:
-            self.set_title(title)
+        os.system('''xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)" \
+                    -f WM_CLASS 8s -set WM_CLASS "%s"''' % title)
+        self.set_title(title)
 
     def load_url(self, url):
         self.webview.load_uri(url)
@@ -128,7 +130,7 @@ class Window(Gtk.Window):
             rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
 
             if len(rgb) > 1:
-                r, g, b = rgb
+                r, g, b = rgb if len(rgb) == 3 else rgb[:-1]
                 r = float(int(r)/255)
                 g = float(int(g)/255)
                 b = float(int(b)/255)

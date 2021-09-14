@@ -14,4 +14,3 @@
 Visit [BigLinux Blog](https://biglinux.blogspot.com/2009/07/bigbashview-em-busca-da-revolucao.html) and [BigBashView's section](https://github.com/biglinux/bigbashview/blob/master/bigbashview/usr/share/bigbashview/README.md)
 
 Check out our [legacy page on Google Code](https://code.google.com/archive/p/bigbashview/wikis/Documentation.wiki)
-

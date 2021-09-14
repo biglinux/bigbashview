@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
+#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +23,8 @@ import threading
 import time
 from . import views
 import os
-try:
-    from bbv import globals as globaldata
-except ImportError:
-    from . import globaldata
 
+from bbv import globaldata
 
 class Server(threading.Thread):
     def _get_subclasses(self, classes=None):
@@ -72,7 +70,6 @@ class Server(threading.Thread):
         self.app.stop()
         os.kill(os.getpid(), 15)
 
-
 def run_server(ip='127.0.0.1', background=True):
     soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     for port in range(19000, 19100):
@@ -111,7 +108,6 @@ def run_server(ip='127.0.0.1', background=True):
             time.sleep(0.1)
 
     return server
-
 
 if __name__ == "__main__":
     run_server(background=False)
