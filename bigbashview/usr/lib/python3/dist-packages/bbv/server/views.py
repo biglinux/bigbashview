@@ -112,8 +112,8 @@ class default_handler(url_handler):
                     Software Revision: <span style='color:red'> %s</span><br/>
                     URL:
                     <a href="#!" style='text-decoration:none'
-                       onclick="_run('xdg-open https://gitlab.com/biglinux/bigbashview')">
-                       <span style='color:red'>https://gitlab.com/biglinux/bigbashview</span>
+                       onclick="_run('xdg-open https://github.com/biglinux/bigbashview')">
+                       <span style='color:red'>https://github.com/biglinux/bigbashview</span>
                     </a>
                 </b></i></p>
             </body>

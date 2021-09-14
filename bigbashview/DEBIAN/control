@@ -1,13 +1,13 @@
 Package: bigbashview
 Version: 3.6.5-0biglinux1
 Provides: qtdeclarative-abi-5-12-8
-Depends: python3, python3-pyside2.qtwebenginewidgets | gir1.2-webkit2-4.0
+Depends: python3, python3-pyside2.qtwebenginewidgets, gir1.2-webkit2-4.0
 Recommends: python3-pyside2.qtcore, python3-pyside2.qtgui, python3-pyside2.qtwidgets, python3-pyside2.qtnetwork, python3-pyside2.qtwebchannel, python3-pyside2.qtwebenginecore, python3-pyside2.qtwebenginewidgets, gir1.2-webkit2-4.0
 Architecture: all
 Maintainer: eltonff <eltonfabricio10@gmail.com>
 Section: admin
 Priority: optional
-Installed-Size:4856
+Installed-Size:5048
 Description: BigBashView is a interface for rendering bash output using QWebEngine or WebKitGtk2.
 Conflicts: bigbashview
 Replaces: bigbashview
