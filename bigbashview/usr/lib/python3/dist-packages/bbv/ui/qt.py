@@ -75,10 +75,8 @@ class Window(QWidget):
 
     def add_script(self, event):
         script = '''
-        function _run(run) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "/execute$" + run);
-            xhttp.send();
+        function _run(run){
+            fetch("/execute$"+run);
         };
         '''
         if event:

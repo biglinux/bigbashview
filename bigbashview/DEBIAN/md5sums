@@ -33,8 +33,8 @@ ec2dbfae1a46720c49f32e436f1e2ee3  usr/lib/python3/dist-packages/bbv/bigbashview.
 ba5c6393f94ba168b90633e927c4f4af  usr/lib/python3/dist-packages/bbv/server/utils.py
 2639a045eb60fb3f4fb7ee57f27c835e  usr/lib/python3/dist-packages/bbv/server/views.py
 462893e89568e9689560bb23674627ba  usr/lib/python3/dist-packages/bbv/server/bbv2server.py
-a10e561a4dd9129cf023f101dd173ac3  usr/lib/python3/dist-packages/bbv/ui/qt.py
-d26ddc263d59658c1d225d43ec0d8664  usr/lib/python3/dist-packages/bbv/ui/gtk.py
+4d627cf2df921d7fc97ba781398e6331  usr/lib/python3/dist-packages/bbv/ui/qt.py
+8bbb08974b3f460e74bc5d7bf32b17e7  usr/lib/python3/dist-packages/bbv/ui/gtk.py
 a1b93e5c8d59c98995e5c29120935ed3  usr/lib/python3/dist-packages/bbv/ui/__init__.py
 aec44dbf690b73375cf19dab51d030e1  usr/lib/python3/dist-packages/bbv/ui/base.py
 42731fbc90c3973a23bfb3de65aeae40  usr/lib/python3/dist-packages/bbv/jaraco/__init__.py
@@ -70,12 +70,12 @@ ccac36c07449c4bc55f6cadbdbdbc598  usr/lib/python3/dist-packages/bbv/cheroot/work
 aab46ccc260da4aed9598e6ade79a45c  usr/lib/python3/dist-packages/bbv/cheroot/cli.py
 e5fbceaf8c28d854c9dfc03b1fc8ecbc  usr/lib/python3/dist-packages/bbv/img/icone.png
 5ae19cff36ae30812fede376f7516f84  usr/lib/python3/dist-packages/bbv/img/logo.png
-3289dfc915565ee78861aaa4c281762b  usr/lib/python3/dist-packages/bbv/globaldata.py
+e3590e302bb9bc0fe66d585b82783b88  usr/lib/python3/dist-packages/bbv/globaldata.py
 874e629565cad43143fa54176fc41337  usr/share/bigbashview/README.md
 250968658d513ea88d13a716b88c630a  usr/share/bigbashview/bcc/shell/base.sh
 37d1f392ebd6ff7e2f083aa311154741  usr/share/bigbashview/bcc/shell/base-old.sh
 4cb1e37032d0fa3696e4e0286db45932  usr/share/bigbashview/bcc/js/big.js
-3bafecc6f0743bd10d27df5b3d77dabd  usr/share/bigbashview/bcc/css/base.css
+bdfa7c2f78b127b3a81230e1a45b3571  usr/share/bigbashview/bcc/css/base.css
 5c676a4284682cd8b1e6dd2ca8c319ff  usr/share/bigbashview/bcc/css/base-old.css
 481e55ff5bbcf048ef36d343b9bf9158  usr/share/bigbashview/bcc/images/body-bg2.jpg
 900e6049e2ee342ccba360636d91db4f  usr/share/bigbashview/bcc/images/about.png
@@ -139,5 +139,5 @@ c065e56ba8de319934ca2cced1876bc4  usr/share/bigbashview/demos/javascript_html_ti
 5ae19cff36ae30812fede376f7516f84  usr/share/bigbashview/demos/documentation_images/logo.png
 8b6f1eb6e0c9d616289b19e6cb610c4e  usr/share/bigbashview/close.sh
 6cd21aa10b74f748329c14f142a56045  usr/bin/bigbashview
-b92b664f78554df564fcf2bf96deabca  DEBIAN/md5sums
-d16a49e82de38e7e441f3e4605cbfb9d  DEBIAN/control
+1e62a687b8eabe1cde9285fcbbd18910  DEBIAN/md5sums
+d46134943b2154c18f50a419a4850961  DEBIAN/control
