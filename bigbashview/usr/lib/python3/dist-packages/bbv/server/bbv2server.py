@@ -96,6 +96,7 @@ def run_server(ip='127.0.0.1', background=True):
     web.config.debug = False
     server.start()
     # Wait for server to respond...
+    print('Waiting for server...')
     while True:
         try:
             con = socket.create_connection((ip, port))
@@ -104,8 +105,6 @@ def run_server(ip='127.0.0.1', background=True):
         except socket.error as e:
             if e.errno != 111:
                 raise socket.error(e)
-            print('Waiting for server...')
-            time.sleep(0.1)
 
     return server
 
