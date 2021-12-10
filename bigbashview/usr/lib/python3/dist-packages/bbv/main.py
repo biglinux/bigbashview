@@ -112,10 +112,10 @@ class Main:
                 sys.exit(1)
 
             elif has_qt:
-                os.environ['QT_QUICK_BACKEND'] = 'software'
-                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
-                os.environ['QTWEBENGINE_ENABLE_LINUX_ACCESSIBILITY'] = '0'
-                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --single-process'
+                if os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
+                    os.environ['QT_QUICK_BACKEND'] = 'software'
+                if os.getuid() == 0:
+                    os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
                 self.window = qt.Window()
 
             elif has_gtk:
