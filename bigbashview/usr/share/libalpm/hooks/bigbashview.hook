@@ -3,6 +3,7 @@ Type = Package
 Operation = Install
 Operation = Upgrade
 Target = python
+Target = bigbashview
 
 [Action]
 Description = Automatic make links to bigbashview
