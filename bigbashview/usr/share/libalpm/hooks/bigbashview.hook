@@ -1,0 +1,9 @@
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = python
+
+[Action]
+Description = Automatic make links to bigbashview
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/bigbashview

@@ -20,7 +20,7 @@ import sys
 import os
 import gi
 gi.require_version('Gtk', '3.0')
-gi.require_version('WebKit2', '4.0')
+gi.require_version('WebKit2', '4.1')
 from gi.repository import Gtk, WebKit2, Gdk
 
 from bbv.globaldata import ICON, TITLE
@@ -51,8 +51,10 @@ class Window(Gtk.Window):
 
     def add_script(self, webview, event):
         script = '''
-        function _run(run){
-            fetch("/execute$"+run);
+        function _run(run) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "/execute$" + run);
+            xhttp.send();
         };
         '''
         if event.FINISHED:

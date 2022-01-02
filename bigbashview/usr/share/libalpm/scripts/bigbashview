@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i  in  $(ls -d /usr/lib/python3*); do
+    if [ ! -e "${i}/bbv" ]; then
+        ln -s "/usr/lib/bbv" "${i}/bbv" 2> /dev/null
+    fi
+done
+
