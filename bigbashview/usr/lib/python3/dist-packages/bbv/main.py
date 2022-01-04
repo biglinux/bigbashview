@@ -137,7 +137,7 @@ class Main:
                        'the latest stable version'), file=sys.stderr)
 
                 sys.exit(1)
-
+            os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
             self.window = gtk.Window()
             if globaldata.TITLE:
                 self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
@@ -160,7 +160,6 @@ class Main:
             if os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
                 os.environ['QT_QUICK_BACKEND'] = 'software'
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
-            os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
             self.window = qt.Window()
 
     def help(self):
