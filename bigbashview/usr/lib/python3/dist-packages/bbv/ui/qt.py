@@ -19,10 +19,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os
-from PySide2.QtCore import QUrl, Qt
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication, QShortcut
-from PySide2.QtGui import QIcon, QColor, QKeySequence
-from PySide2.QtWebEngineWidgets import QWebEngineView
+from PySide6.QtCore import QUrl, Qt
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication
+from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut
+from PySide6.QtWebEngineWidgets import QWebEngineView
 
 from bbv.globaldata import ICON, TITLE
 
