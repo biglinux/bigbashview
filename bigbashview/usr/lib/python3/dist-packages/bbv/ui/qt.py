@@ -41,6 +41,7 @@ class Window(QWidget):
         else:
             self.web.titleChanged.connect(self.title_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
+        self.web.page().featurePermissionRequested.connect(self.onFeaturePermissionRequested)
         self.web.loadFinished.connect(self.add_script)
         self.key_f5 = QShortcut(QKeySequence(Qt.Key_F5), self.web)
         self.key_f5.activated.connect(self.web.reload)
@@ -55,6 +56,16 @@ class Window(QWidget):
         self.splitter2 = QSplitter(Qt.Horizontal)
         self.hbox.addWidget(self.splitter)
         self.setLayout(self.hbox)
+
+    def onFeaturePermissionRequested(self, url, feature):
+        if feature in (
+            self.web.page().MediaAudioCapture,
+            self.web.page().MediaVideoCapture,
+            self.web.page().MediaAudioVideoCapture,
+        ):
+            self.web.page().setFeaturePermission(url, feature, self.web.page().PermissionGrantedByUser)
+        else:
+            self.web.page().setFeaturePermission(url, feature, self.web.page().PermissionDeniedByUser)
 
     def devpage(self):
         if self.splitter.count() == 1 or self.splitter2.count() == 1:
