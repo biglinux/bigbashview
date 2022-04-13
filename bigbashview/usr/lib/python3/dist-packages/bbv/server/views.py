@@ -133,6 +133,7 @@ class default_handler(url_handler):
         content_plain_ext = ('.txt')
         content_css_ext = ('.css')
         content_js_ext = ('.js')
+        content_svg_ext = ('.svg', '.svgz')
 
         relative_content = content[1:]
         if os.path.isfile(relative_content):
@@ -154,6 +155,9 @@ class default_handler(url_handler):
             return content_handler().called(options, content, query)
         if content.endswith(content_js_ext):
             web.header('Content-Type', 'text/javascript; charset=UTF-8')
+            return content_handler().called(options, content, query)
+        if content.endswith(content_svg_ext):
+            web.header('Content-Type', 'image/svg+xml; charset=UTF-8')
             return content_handler().called(options, content, query)
         web.header('Content-Type', 'text/html; charset=UTF-8')
         execute_content = " ".join((content, unquote(self.original_qs)))

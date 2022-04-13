@@ -51,10 +51,8 @@ class Window(Gtk.Window):
 
     def add_script(self, webview, event):
         script = '''
-        function _run(run) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "/execute$" + run);
-            xhttp.send();
+        function _run(run){
+            fetch("/execute$"+run);
         };
         '''
         if event.FINISHED:
