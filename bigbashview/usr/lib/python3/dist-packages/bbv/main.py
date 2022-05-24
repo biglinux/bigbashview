@@ -112,8 +112,6 @@ class Main:
                 sys.exit(1)
 
             elif has_qt:
-                if os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
-                    os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-gpu'
                 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
                 self.window = qt.Window()
 
@@ -157,8 +155,6 @@ class Main:
 
                 sys.exit(1)
 
-            if os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
-                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-gpu'
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
