@@ -114,6 +114,7 @@ class Main:
             elif has_qt:
                 if os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
                     os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required'
+                os.environ['QMLSCENE_DEVICE'] = 'softwarecontext'
                 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
                 self.window = qt.Window()
 
@@ -158,7 +159,7 @@ class Main:
                 sys.exit(1)
             if os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
                 os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required'
-
+            os.environ['QMLSCENE_DEVICE'] = 'softwarecontext'
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
