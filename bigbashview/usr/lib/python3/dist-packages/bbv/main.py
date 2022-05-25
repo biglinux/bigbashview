@@ -112,8 +112,9 @@ class Main:
                 sys.exit(1)
 
             elif has_qt:
-                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required'
-                os.environ['QMLSCENE_DEVICE'] = 'software'
+                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
+                os.environ['QT_QUICK_BACKEND'] = 'software'
+                os.environ['QSG_RENDER_LOOP'] = 'basic'
                 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
                 self.window = qt.Window()
 
@@ -156,8 +157,9 @@ class Main:
                        'the latest stable version'), file=sys.stderr)
 
                 sys.exit(1)
-            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required'
-            os.environ['QMLSCENE_DEVICE'] = 'software'
+            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
+            os.environ['QT_QUICK_BACKEND'] = 'software'
+            os.environ['QSG_RENDER_LOOP'] = 'basic'
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
