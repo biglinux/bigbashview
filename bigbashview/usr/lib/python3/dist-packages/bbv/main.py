@@ -114,6 +114,7 @@ class Main:
             elif has_qt:
                 os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
                 os.environ['QT_QUICK_BACKEND'] = 'software'
+                os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
                 os.environ['QSG_RENDER_LOOP'] = 'basic'
                 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
                 self.window = qt.Window()
@@ -160,6 +161,7 @@ class Main:
             os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
             os.environ['QT_QUICK_BACKEND'] = 'software'
             os.environ['QSG_RENDER_LOOP'] = 'basic'
+            os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
