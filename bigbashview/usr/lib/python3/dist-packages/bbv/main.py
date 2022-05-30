@@ -120,6 +120,7 @@ class Main:
                 self.window = qt.Window()
 
             elif has_gtk:
+                os.environ['GDK_BACKEND'] = 'x11'
                 os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
                 self.window = gtk.Window()
                 if globaldata.TITLE:
@@ -139,6 +140,7 @@ class Main:
                        'the latest stable version'), file=sys.stderr)
 
                 sys.exit(1)
+            os.environ['GDK_BACKEND'] = 'x11'
             os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
             self.window = gtk.Window()
             if globaldata.TITLE:

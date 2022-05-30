@@ -87,7 +87,16 @@ class Window(QWidget):
     def add_script(self, event):
         script = '''
         function _run(run){
-            fetch("/execute$"+run);
+
+            // Create the AbortController
+            const controller = new AbortController();
+
+            // Perform the request
+            fetch("/execute$"+run, controller);
+
+            // Abort the request
+            controller.abort();
+            controller.abort();
         };
         '''
         if event:
