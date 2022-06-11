@@ -688,13 +688,12 @@ def intersperse(e, iterable, n=1):
         # interleave(repeat(e), iterable) -> e, x_0, e, e, x_1, e, x_2...
         # islice(..., 1, None) -> x_0, e, e, x_1, e, x_2...
         return islice(interleave(repeat(e), iterable), 1, None)
-    else:
-        # interleave(filler, chunks) -> [e], [x_0, x_1], [e], [x_2, x_3]...
-        # islice(..., 1, None) -> [x_0, x_1], [e], [x_2, x_3]...
-        # flatten(...) -> x_0, x_1, e, x_2, x_3...
-        filler = repeat([e])
-        chunks = chunked(iterable, n)
-        return flatten(islice(interleave(filler, chunks), 1, None))
+    # interleave(filler, chunks) -> [e], [x_0, x_1], [e], [x_2, x_3]...
+    # islice(..., 1, None) -> [x_0, x_1], [e], [x_2, x_3]...
+    # flatten(...) -> x_0, x_1, e, x_2, x_3...
+    filler = repeat([e])
+    chunks = chunked(iterable, n)
+    return flatten(islice(interleave(filler, chunks), 1, None))
 
 
 def unique_to_each(*iterables):
@@ -1946,8 +1945,7 @@ class numeric_range(abc.Sequence, abc.Hashable):
                 and self._step == other._step
                 and self._get_by_index(-1) == other._get_by_index(-1)
             )
-        else:
-            return False
+        return False
 
     def __getitem__(self, key):
         if isinstance(key, int):
