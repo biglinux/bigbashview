@@ -27,10 +27,12 @@ pov = 'pPeErRsSiIsStTeEnNcCeE oOfF vViIsSiIoOnN'
 class Controller(helper.Controller):
     """Controller for serving WSGI apps."""
 
+    @staticmethod
     def hello(req, resp):
         """Render Hello world."""
         return 'Hello, world!'
 
+    @staticmethod
     def pov(req, resp):
         """Render ``pov`` value."""
         return pov
@@ -55,30 +57,36 @@ class Controller(helper.Controller):
             )
         return "thanks for '%s'" % req.environ['wsgi.input'].read()
 
+    @staticmethod
     def custom_204(req, resp):
         """Render response with status 204."""
         resp.status = '204'
         return 'Code = 204'
 
+    @staticmethod
     def custom_304(req, resp):
         """Render response with status 304."""
         resp.status = '304'
         return 'Code = 304'
 
+    @staticmethod
     def err_before_read(req, resp):
         """Render response with status 500."""
         resp.status = '500 Internal Server Error'
         return 'ok'
 
+    @staticmethod
     def one_megabyte_of_a(req, resp):
         """Render 1MB response."""
         return ['a' * 1024] * 1024
 
+    @staticmethod
     def wrong_cl_buffered(req, resp):
         """Render buffered response with invalid length value."""
         resp.headers['Content-Length'] = '5'
         return 'I have too many bytes'
 
+    @staticmethod
     def wrong_cl_unbuffered(req, resp):
         """Render unbuffered response with invalid length value."""
         resp.headers['Content-Length'] = '5'
