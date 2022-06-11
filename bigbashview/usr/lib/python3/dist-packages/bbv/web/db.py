@@ -334,8 +334,7 @@ def _sqllist(values):
     >>> _sqllist((5, 1, 3, 2, 2, 5))
     <sql: '(1, 2, 3, 5)'>
     """
-    items = []
-    items.append("(")
+    items = ["(", ")"]
 
     if isinstance(values, set):
         values = list(values)
@@ -346,7 +345,6 @@ def _sqllist(values):
         if i != 0:
             items.append(", ")
         items.append(sqlparam(v))
-    items.append(")")
     return SQLQuery(items)
 
 
