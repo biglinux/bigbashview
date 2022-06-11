@@ -119,7 +119,7 @@ class Window(Gtk.Window):
         elif colorful == 'none':
             screen = self.get_screen()
             visual = screen.get_rgba_visual()
-            if visual != None and screen.is_composited():
+            if visual is not None and screen.is_composited():
                 self.set_visual(visual)
                 self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0))
                 self.webview.set_background_color(Gdk.RGBA(0, 0, 0, 0))
