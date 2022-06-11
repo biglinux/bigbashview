@@ -251,6 +251,7 @@ class SQLQuery(object):
         """
         return [i.value for i in self.items if isinstance(i, SQLParam)]
 
+    @staticmethod
     def join(items, sep=" ", prefix=None, suffix=None, target=None):
         """
         Joins multiple queries.
@@ -287,8 +288,6 @@ class SQLQuery(object):
         if suffix:
             target_items.append(suffix)
         return target
-
-    join = staticmethod(join)
 
     def _str(self):
         try:
