@@ -692,7 +692,7 @@ def assertNotRegex(self, *args, **kwargs):
 
 
 if PY3:
-    exec_ = getattr(moves.builtins, "exec")
+    exec_ = moves.builtins.exec
 
     def reraise(tp, value, tb=None):
         try:
