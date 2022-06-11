@@ -40,7 +40,8 @@ def test_bytes_read():
     sock.messages.append(b'foo')
     rfile = makefile.MakeFile(sock, 'r')
     rfile.read()
-    assert rfile.bytes_read == 3
+    if rfile.bytes_read != 3:
+        raise AssertionError
 
 
 def test_bytes_written():
@@ -49,4 +50,5 @@ def test_bytes_written():
     sock.messages.append(b'foo')
     wfile = makefile.MakeFile(sock, 'w')
     wfile.write(b'bar')
-    assert wfile.bytes_written == 3
+    if wfile.bytes_written != 3:
+        raise AssertionError

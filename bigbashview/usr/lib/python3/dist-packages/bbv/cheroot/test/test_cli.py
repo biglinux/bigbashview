@@ -41,7 +41,8 @@ def test_parse_wsgi_bind_addr(raw_bind_addr, expected_bind_addr):
 
     Verify some of the supported addresses and the expected return value.
     """
-    assert parse_wsgi_bind_addr(raw_bind_addr) == expected_bind_addr
+    if parse_wsgi_bind_addr(raw_bind_addr) != expected_bind_addr:
+        raise AssertionError
 
 
 @pytest.fixture
@@ -94,4 +95,5 @@ def test_Aplication_resolve(app_name, app_method, wsgi_app):
     else:
         wsgi_app_spec = 'mypkg.wsgi:{app_name}'.format(**locals())
     expected_app = getattr(wsgi_app, app_method)
-    assert Application.resolve(wsgi_app_spec).wsgi_app == expected_app
+    if Application.resolve(wsgi_app_spec).wsgi_app != expected_app:
+        raise AssertionError

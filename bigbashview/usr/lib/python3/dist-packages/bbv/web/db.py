@@ -1719,7 +1719,8 @@ def test_parser():
         p = Parser()
         nodes = list(p.parse(text))
         print(repr(text), nodes)
-        assert nodes == expected, "Expected %r" % expected
+        if nodes != expected:
+            raise AssertionError("Expected %r" % expected)
 
     f("Hello", [_Node("text", "Hello")])
     f("Hello $name", [_Node("text", "Hello "), _Node("param", "name")])
@@ -1751,7 +1752,8 @@ def test_safeeval():
         return SafeEval().safeeval(q, vars)
 
     print(f("WHERE id=$id", {"id": 1}).items)
-    assert f("WHERE id=$id", {"id": 1}).items == ["WHERE id=", sqlparam(1)]
+    if f("WHERE id=$id", {"id": 1}).items != ["WHERE id=", sqlparam(1)]:
+        raise AssertionError
 
 
 if __name__ == "__main__":

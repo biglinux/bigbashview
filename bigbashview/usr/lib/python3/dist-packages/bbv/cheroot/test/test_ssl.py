@@ -243,8 +243,10 @@ def test_ssl_adapters(
         verify=tls_ca_certificate_pem_path,
     )
 
-    assert resp.status_code == 200
-    assert resp.text == 'Hello world!'
+    if resp.status_code != 200:
+        raise AssertionError
+    if resp.text != 'Hello world!':
+        raise AssertionError
 
 
 @pytest.mark.parametrize(  # noqa: C901  # FIXME
@@ -347,8 +349,10 @@ def test_tls_client_auth(  # noqa: C901  # FIXME
                 pytest.xfail(
                     'OpenSSL 1.0 has problems with verifying client certs',
                 )
-            assert is_req_successful
-            assert resp.text == 'Hello world!'
+            if not is_req_successful:
+                raise AssertionError
+            if resp.text != 'Hello world!':
+                raise AssertionError
             return
 
         # xfail some flaky tests
@@ -437,7 +441,8 @@ def test_tls_client_auth(  # noqa: C901  # FIXME
                 "('Connection aborted.', "
                 "BrokenPipeError(32, 'Broken pipe'))",
             )
-        assert any(e in err_text for e in expected_substrings)
+        if not any(e in err_text for e in expected_substrings):
+            raise AssertionError
 
 
 @pytest.mark.parametrize(  # noqa: C901  # FIXME
@@ -512,34 +517,42 @@ def test_ssl_env(  # noqa: C901  # FIXME
         env = json.loads(resp.content.decode('utf-8'))
 
         # hard coded env
-        assert env['wsgi.url_scheme'] == 'https'
-        assert env['HTTPS'] == 'on'
+        if env['wsgi.url_scheme'] != 'https':
+            raise AssertionError
+        if env['HTTPS'] != 'on':
+            raise AssertionError
 
         # ensure these are present
         for key in {'SSL_VERSION_INTERFACE', 'SSL_VERSION_LIBRARY'}:
-            assert key in env
+            if key not in env:
+                raise AssertionError
 
         # pyOpenSSL generates the env before the handshake completes
         if adapter_type == 'pyopenssl':
             return
 
         for key in {'SSL_PROTOCOL', 'SSL_CIPHER'}:
-            assert key in env
+            if key not in env:
+                raise AssertionError
 
         # client certificate env
         if tls_verify_mode == ssl.CERT_NONE or not use_client_cert:
-            assert env['SSL_CLIENT_VERIFY'] == 'NONE'
+            if env['SSL_CLIENT_VERIFY'] != 'NONE':
+                raise AssertionError
         else:
-            assert env['SSL_CLIENT_VERIFY'] == 'SUCCESS'
+            if env['SSL_CLIENT_VERIFY'] != 'SUCCESS':
+                raise AssertionError
 
             with open(cl_pem, 'rt') as f:
-                assert env['SSL_CLIENT_CERT'] in f.read()
+                if env['SSL_CLIENT_CERT'] not in f.read():
+                    raise AssertionError
 
             for key in {
                 'SSL_CLIENT_M_VERSION', 'SSL_CLIENT_M_SERIAL',
                 'SSL_CLIENT_I_DN', 'SSL_CLIENT_S_DN',
             }:
-                assert key in env
+                if key not in env:
+                    raise AssertionError
 
     # builtin ssl environment generation may use a loopback socket
     # ensure no ResourceWarning was raised during the test
@@ -571,10 +584,11 @@ def test_ssl_env(  # noqa: C901  # FIXME
     # the builtin ssl environment generation uses a thread
     for _, _, trace in thread_exceptions:
         print(trace, file=sys.stderr)
-    assert not thread_exceptions, ': '.join((
-        thread_exceptions[0][0].__name__,
-        thread_exceptions[0][1],
-    ))
+    if thread_exceptions:
+        raise AssertionError(': '.join((
+            thread_exceptions[0][0].__name__,
+            thread_exceptions[0][1],
+        )))
 
 
 @pytest.mark.parametrize(
@@ -599,7 +613,8 @@ def test_https_over_http_error(http_server, ip_addr):
         'wrong version number' if IS_ABOVE_OPENSSL10
         else 'unknown protocol'
     )
-    assert expected_substring in ssl_err.value.args[-1]
+    if expected_substring not in ssl_err.value.args[-1]:
+        raise AssertionError
 
 
 @pytest.mark.parametrize(
@@ -696,11 +711,13 @@ def test_http_over_https_error(
         resp = requests.get(
             'http://{host!s}:{port!s}/'.format(host=fqdn, port=port),
         )
-        assert resp.status_code == 400
-        assert resp.text == (
+        if resp.status_code != 400:
+            raise AssertionError
+        if resp.text != (
             'The client sent a plain HTTP request, '
             'but this server only speaks HTTPS on this port.'
-        )
+        ):
+            raise AssertionError
         return
 
     with pytest.raises(requests.exceptions.ConnectionError) as ssl_err:
@@ -724,8 +741,10 @@ def test_http_over_https_error(
 
     underlying_error = ssl_err.value.args[0].args[-1]
     err_text = str(underlying_error)
-    assert underlying_error.errno == expected_error_code, (
-        'The underlying error is {underlying_error!r}'.
-        format(**locals())
-    )
-    assert expected_error_text in err_text
+    if underlying_error.errno != expected_error_code:
+        raise AssertionError(
+            'The underlying error is {underlying_error!r}'.
+            format(**locals())
+        )
+    if expected_error_text not in err_text:
+        raise AssertionError

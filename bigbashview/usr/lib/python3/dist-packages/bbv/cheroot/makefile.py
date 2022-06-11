@@ -182,7 +182,8 @@ class MakeFile_PY2(getattr(socket, '_fileobject', object)):
                         buf.write(data)
                         del data  # explicit free
                         break
-                    assert n <= left, 'recv(%d) returned %d bytes' % (left, n)
+                    if n > left:
+                        raise AssertionError('recv(%d) returned %d bytes' % (left, n))
                     buf.write(data)
                     buf_len += n
                     del data  # explicit free
@@ -336,7 +337,8 @@ class MakeFile_PY2(getattr(socket, '_fileobject', object)):
                 # Read until \n or EOF, whichever comes first
                 if self._rbufsize <= 1:
                     # Speed up unbuffered case
-                    assert data == ''
+                    if data != '':
+                        raise AssertionError
                     buffers = []
                     while data != '\n':
                         data = self.recv(1)

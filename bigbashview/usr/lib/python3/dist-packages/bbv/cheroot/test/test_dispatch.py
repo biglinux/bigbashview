@@ -46,10 +46,11 @@ def test_dispatch_no_script_name():
             'PATH_INFO': '/foo',
         },
     )
-    assert response == {
+    if response != {
         'status': '200 OK',
         'headers': [
             ('Content-Type', 'text/plain; charset=utf-8'),
         ],
         'body': b'Hello, world!',
-    }
+    }:
+        raise AssertionError

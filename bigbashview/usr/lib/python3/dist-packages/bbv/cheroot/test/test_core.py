@@ -116,15 +116,18 @@ def test_http_connect_request(test_client):
     """Check that CONNECT query results in Method Not Allowed status."""
     status_line = test_client.connect('/anything')[0]
     actual_status = int(status_line[:3])
-    assert actual_status == 405
+    if actual_status != 405:
+        raise AssertionError
 
 
 def test_normal_request(test_client):
     """Check that normal GET query succeeds."""
     status_line, _, actual_resp_body = test_client.get('/hello')
     actual_status = int(status_line[:3])
-    assert actual_status == HTTP_OK
-    assert actual_resp_body == b'Hello world!'
+    if actual_status != HTTP_OK:
+        raise AssertionError
+    if actual_resp_body != b'Hello world!':
+        raise AssertionError
 
 
 def test_query_string_request(test_client):
@@ -133,8 +136,10 @@ def test_query_string_request(test_client):
         '/query_string?test=True',
     )
     actual_status = int(status_line[:3])
-    assert actual_status == HTTP_OK
-    assert actual_resp_body == b'test=True'
+    if actual_status != HTTP_OK:
+        raise AssertionError
+    if actual_resp_body != b'test=True':
+        raise AssertionError
 
 
 @pytest.mark.parametrize(
@@ -151,7 +156,8 @@ def test_parse_acceptable_uri(test_client, uri):
     """Check that server responds with OK to valid GET queries."""
     status_line = test_client.get(uri)[0]
     actual_status = int(status_line[:3])
-    assert actual_status == HTTP_OK
+    if actual_status != HTTP_OK:
+        raise AssertionError
 
 
 @pytest.mark.xfail(six.PY2, reason='Fails on Python 2')
@@ -173,14 +179,17 @@ def test_parse_uri_unsafe_uri(test_client):
     c = test_client.get_connection()
     resource = '/\xa0Ðblah key 0 900 4 data'.encode('latin-1')
     quoted = urllib.parse.quote(resource)
-    assert quoted == '/%A0%D0blah%20key%200%20900%204%20data'
+    if quoted != '/%A0%D0blah%20key%200%20900%204%20data':
+        raise AssertionError
     request = 'GET {quoted} HTTP/1.1'.format(**locals())
     c._output(request.encode('utf-8'))
     c._send_output()
     response = _get_http_response(c, method='GET')
     response.begin()
-    assert response.status == HTTP_OK
-    assert response.read(12) == b'Hello world!'
+    if response.status != HTTP_OK:
+        raise AssertionError
+    if response.read(12) != b'Hello world!':
+        raise AssertionError
     c.close()
 
 
@@ -194,8 +203,10 @@ def test_parse_uri_invalid_uri(test_client):
     c._send_output()
     response = _get_http_response(c, method='GET')
     response.begin()
-    assert response.status == HTTP_BAD_REQUEST
-    assert response.read(21) == b'Malformed Request-URI'
+    if response.status != HTTP_BAD_REQUEST:
+        raise AssertionError
+    if response.read(21) != b'Malformed Request-URI':
+        raise AssertionError
     c.close()
 
 
@@ -215,8 +226,10 @@ def test_parse_no_leading_slash_invalid(test_client, uri):
         urllib.parse.quote(uri),
     )
     actual_status = int(status_line[:3])
-    assert actual_status == HTTP_BAD_REQUEST
-    assert b'starting with a slash' in actual_resp_body
+    if actual_status != HTTP_BAD_REQUEST:
+        raise AssertionError
+    if b'starting with a slash' not in actual_resp_body:
+        raise AssertionError
 
 
 def test_parse_uri_absolute_uri(test_client):
@@ -226,18 +239,22 @@ def test_parse_uri_absolute_uri(test_client):
     """
     status_line, _, actual_resp_body = test_client.get('http://google.com/')
     actual_status = int(status_line[:3])
-    assert actual_status == HTTP_BAD_REQUEST
+    if actual_status != HTTP_BAD_REQUEST:
+        raise AssertionError
     expected_body = b'Absolute URI not allowed if server is not a proxy.'
-    assert actual_resp_body == expected_body
+    if actual_resp_body != expected_body:
+        raise AssertionError
 
 
 def test_parse_uri_asterisk_uri(test_client):
     """Check that server responds with OK to OPTIONS with "*" Absolute URI."""
     status_line, _, actual_resp_body = test_client.options('*')
     actual_status = int(status_line[:3])
-    assert actual_status == HTTP_OK
+    if actual_status != HTTP_OK:
+        raise AssertionError
     expected_body = b'Got asterisk URI path with OPTIONS method'
-    assert actual_resp_body == expected_body
+    if actual_resp_body != expected_body:
+        raise AssertionError
 
 
 def test_parse_uri_fragment_uri(test_client):
@@ -246,9 +263,11 @@ def test_parse_uri_fragment_uri(test_client):
         '/hello?test=something#fake',
     )
     actual_status = int(status_line[:3])
-    assert actual_status == HTTP_BAD_REQUEST
+    if actual_status != HTTP_BAD_REQUEST:
+        raise AssertionError
     expected_body = b'Illegal #fragment in Request-URI.'
-    assert actual_resp_body == expected_body
+    if actual_resp_body != expected_body:
+        raise AssertionError
 
 
 def test_no_content_length(test_client):
@@ -263,8 +282,10 @@ def test_no_content_length(test_client):
     response = c.getresponse()
     actual_resp_body = response.read()
     actual_status = response.status
-    assert actual_status == HTTP_OK
-    assert actual_resp_body == b'Hello world!'
+    if actual_status != HTTP_OK:
+        raise AssertionError
+    if actual_resp_body != b'Hello world!':
+        raise AssertionError
 
 
 def test_content_length_required(test_client):
@@ -279,7 +300,8 @@ def test_content_length_required(test_client):
     response.read()
 
     actual_status = response.status
-    assert actual_status == HTTP_LENGTH_REQUIRED
+    if actual_status != HTTP_LENGTH_REQUIRED:
+        raise AssertionError
 
 
 @pytest.mark.xfail(
@@ -302,7 +324,8 @@ def test_large_request(test_client_with_defaults):
     response = c.getresponse()
     actual_status = response.status
 
-    assert actual_status == HTTP_REQUEST_ENTITY_TOO_LARGE
+    if actual_status != HTTP_REQUEST_ENTITY_TOO_LARGE:
+        raise AssertionError
 
 
 @pytest.mark.parametrize(
@@ -336,8 +359,10 @@ def test_malformed_request_line(
     c._send_output()
     response = _get_http_response(c, method='GET')
     response.begin()
-    assert response.status == status_code
-    assert response.read(len(expected_body)) == expected_body
+    if response.status != status_code:
+        raise AssertionError
+    if response.read(len(expected_body)) != expected_body:
+        raise AssertionError
     c.close()
 
 
@@ -350,9 +375,11 @@ def test_malformed_http_method(test_client):
 
     response = c.getresponse()
     actual_status = response.status
-    assert actual_status == HTTP_BAD_REQUEST
+    if actual_status != HTTP_BAD_REQUEST:
+        raise AssertionError
     actual_resp_body = response.read(21)
-    assert actual_resp_body == b'Malformed method name'
+    if actual_resp_body != b'Malformed method name':
+        raise AssertionError
 
 
 def test_malformed_header(test_client):
@@ -366,9 +393,11 @@ def test_malformed_header(test_client):
 
     response = c.getresponse()
     actual_status = response.status
-    assert actual_status == HTTP_BAD_REQUEST
+    if actual_status != HTTP_BAD_REQUEST:
+        raise AssertionError
     actual_resp_body = response.read(20)
-    assert actual_resp_body == b'Illegal header line.'
+    if actual_resp_body != b'Illegal header line.':
+        raise AssertionError
 
 
 def test_request_line_split_issue_1220(test_client):
@@ -382,10 +411,12 @@ def test_request_line_split_issue_1220(test_client):
         '&intervenant-entreprise-evenement_id=19404'
         '&intervenant-entreprise_id=28092'
     )
-    assert len('GET %s HTTP/1.1\r\n' % Request_URI) == 256
+    if len('GET %s HTTP/1.1\r\n' % Request_URI) != 256:
+        raise AssertionError
 
     actual_resp_body = test_client.get(Request_URI)[2]
-    assert actual_resp_body == b'Hello world!'
+    if actual_resp_body != b'Hello world!':
+        raise AssertionError
 
 
 def test_garbage_in(test_client):
@@ -399,9 +430,11 @@ def test_garbage_in(test_client):
     try:
         response.begin()
         actual_status = response.status
-        assert actual_status == HTTP_BAD_REQUEST
+        if actual_status != HTTP_BAD_REQUEST:
+            raise AssertionError
         actual_resp_body = response.read(22)
-        assert actual_resp_body == b'Malformed Request-Line'
+        if actual_resp_body != b'Malformed Request-Line':
+            raise AssertionError
         c.close()
     except socket.error as ex:
         # "Connection reset by peer" is also acceptable.
@@ -455,4 +488,5 @@ def testing_server_close(wsgi_server_client):
 def test_send_header_before_closing(testing_server_close):
     """Test we are actually sending the headers before calling 'close'."""
     _, _, resp_body = testing_server_close.server_client.get('/')
-    assert resp_body == b'hello'
+    if resp_body != b'hello':
+        raise AssertionError
