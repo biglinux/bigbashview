@@ -148,8 +148,7 @@ def chunked(iterable, n, strict=False):
                 yield chunk
 
         return iter(ret())
-    else:
-        return iterator
+    return iterator
 
 
 def first(iterable, default=_marker):
@@ -196,10 +195,9 @@ def last(iterable, default=_marker):
         if isinstance(iterable, Sequence):
             return iterable[-1]
         # Work around https://bugs.python.org/issue38525
-        elif hasattr(iterable, '__reversed__') and (hexversion != 0x030800F0):
+        if hasattr(iterable, '__reversed__') and (hexversion != 0x030800F0):
             return next(reversed(iterable))
-        else:
-            return deque(iterable, maxlen=1)[-1]
+        return deque(iterable, maxlen=1)[-1]
     except (IndexError, TypeError, StopIteration):
         if default is _marker:
             raise ValueError(
@@ -1151,8 +1149,7 @@ def sliced(seq, n, strict=False):
                 yield _slice
 
         return iter(ret())
-    else:
-        return iterator
+    return iterator
 
 
 def split_at(iterable, pred, maxsplit=-1, keep_separator=False):
@@ -1355,8 +1352,7 @@ def split_into(iterable, sizes):
         if size is None:
             yield list(it)
             return
-        else:
-            yield list(islice(it, size))
+        yield list(islice(it, size))
 
 
 def padded(iterable, fillvalue=None, n=None, next_multiple=False):
@@ -1927,8 +1923,7 @@ class numeric_range(abc.Sequence, abc.Hashable):
     def __bool__(self):
         if self._growing:
             return self._start < self._stop
-        else:
-            return self._start > self._stop
+        return self._start > self._stop
 
     def __contains__(self, elem):
         if self._growing:
@@ -1946,19 +1941,18 @@ class numeric_range(abc.Sequence, abc.Hashable):
             empty_other = not bool(other)
             if empty_self or empty_other:
                 return empty_self and empty_other  # True if both empty
-            else:
-                return (
-                    self._start == other._start
-                    and self._step == other._step
-                    and self._get_by_index(-1) == other._get_by_index(-1)
-                )
+            return (
+                self._start == other._start
+                and self._step == other._step
+                and self._get_by_index(-1) == other._get_by_index(-1)
+            )
         else:
             return False
 
     def __getitem__(self, key):
         if isinstance(key, int):
             return self._get_by_index(key)
-        elif isinstance(key, slice):
+        if isinstance(key, slice):
             step = self._step if key.step is None else key.step * self._step
 
             if key.start is None or key.start <= -self._len:
@@ -1976,24 +1970,21 @@ class numeric_range(abc.Sequence, abc.Hashable):
                 stop = self._get_by_index(key.stop)
 
             return numeric_range(start, stop, step)
-        else:
-            raise TypeError(
-                'numeric range indices must be '
-                'integers or slices, not {}'.format(type(key).__name__)
-            )
+        raise TypeError(
+            'numeric range indices must be '
+            'integers or slices, not {}'.format(type(key).__name__)
+        )
 
     def __hash__(self):
         if self:
             return hash((self._start, self._get_by_index(-1), self._step))
-        else:
-            return self._EMPTY_HASH
+        return self._EMPTY_HASH
 
     def __iter__(self):
         values = (self._start + (n * self._step) for n in count())
         if self._growing:
             return takewhile(partial(gt, self._stop), values)
-        else:
-            return takewhile(partial(lt, self._stop), values)
+        return takewhile(partial(lt, self._stop), values)
 
     def __len__(self):
         return self._len
@@ -2022,10 +2013,9 @@ class numeric_range(abc.Sequence, abc.Hashable):
             return "numeric_range({}, {})".format(
                 repr(self._start), repr(self._stop)
             )
-        else:
-            return "numeric_range({}, {}, {})".format(
-                repr(self._start), repr(self._stop), repr(self._step)
-            )
+        return "numeric_range({}, {}, {})".format(
+            repr(self._start), repr(self._stop), repr(self._step)
+        )
 
     def __reversed__(self):
         return iter(
@@ -3261,9 +3251,8 @@ def sample(iterable, k, weights=None):
     iterable = iter(iterable)
     if weights is None:
         return _sample_unweighted(iterable, k)
-    else:
-        weights = iter(weights)
-        return _sample_weighted(iterable, k, weights)
+    weights = iter(weights)
+    return _sample_weighted(iterable, k, weights)
 
 
 def is_sorted(iterable, key=None, reverse=False):
