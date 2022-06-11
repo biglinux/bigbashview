@@ -124,7 +124,7 @@ class Session(object):
             if self._initializer:
                 if isinstance(self._initializer, dict):
                     self.update(deepcopy(self._initializer))
-                elif hasattr(self._initializer, "__call__"):
+                elif callable(self._initializer):
                     self._initializer()
 
         self.ip = web.ctx.ip

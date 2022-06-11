@@ -1050,7 +1050,7 @@ class Render:
         else:
             self._cache = None
 
-        if base and not hasattr(base, "__call__"):
+        if base and not callable(base):
             # make base a function, so that it can be passed to sub-renders
             self._base = lambda page: self._template(base)(page)
         else:

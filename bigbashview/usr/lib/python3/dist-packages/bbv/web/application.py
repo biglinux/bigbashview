@@ -515,7 +515,7 @@ class application:
             else:
                 cls = fvars[f]
             return handle_class(cls)
-        elif hasattr(f, "__call__"):
+        elif callable(f):
             return f()
         else:
             return web.notfound()
