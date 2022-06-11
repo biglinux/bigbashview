@@ -371,7 +371,7 @@ def test_tls_client_auth(  # noqa: C901  # FIXME
             requests.exceptions.SSLError,
         )
         if IS_WINDOWS or IS_GITHUB_ACTIONS_WORKFLOW:
-            expected_ssl_errors += requests.exceptions.ConnectionError,
+            expected_ssl_errors += (requests.exceptions.ConnectionError,)
         with pytest.raises(expected_ssl_errors) as ssl_err:
             make_https_request()
 
