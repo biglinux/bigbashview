@@ -81,10 +81,12 @@ class Window(Gtk.Window):
         else:
             self.show()
 
-    def run(self):
+    @staticmethod
+    def run():
         Gtk.main()
 
-    def close_window(self, webview):
+    @staticmethod
+    def close_window(webview):
         Gtk.main_quit()
 
     def title_changed(self, webview, title):

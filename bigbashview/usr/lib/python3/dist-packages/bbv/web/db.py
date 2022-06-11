@@ -107,7 +107,8 @@ class SQLParam(object):
     def __init__(self, value):
         self.value = value
 
-    def get_marker(self, paramstyle="pyformat"):
+    @staticmethod
+    def get_marker(paramstyle="pyformat"):
         if paramstyle == "qmark":
             return "?"
         if paramstyle == "numeric":
@@ -580,19 +581,23 @@ class Transaction:
         class transaction_engine:
             """Transaction Engine used in top level transactions."""
 
-            def do_transact(self):
+            @staticmethod
+            def do_transact():
                 ctx.commit(unload=False)
 
-            def do_commit(self):
+            @staticmethod
+            def do_commit():
                 ctx.commit()
 
-            def do_rollback(self):
+            @staticmethod
+            def do_rollback():
                 ctx.rollback()
 
         class subtransaction_engine:
             """Transaction Engine used in sub transactions."""
 
-            def query(self, q):
+            @staticmethod
+            def query(q):
                 db_cursor = ctx.db.cursor()
                 ctx.db_execute(db_cursor, SQLQuery(q % transaction_count))
 
@@ -709,7 +714,8 @@ class DB:
         ctx.commit = commit
         ctx.rollback = rollback
 
-    def _unload_context(self, ctx):
+    @staticmethod
+    def _unload_context(ctx):
         del ctx.db
 
     def _connect(self, keywords):
@@ -792,7 +798,8 @@ class DB:
             where = reparam(where, vars)
         return where
 
-    def _where_dict(self, where):
+    @staticmethod
+    def _where_dict(where):
         where_clauses = []
 
         for k, v in sorted(iteritems(where), key=lambda t: t[0]):
@@ -836,7 +843,8 @@ class DB:
             self.ctx.commit()
         return out
 
-    def create_result_set(self, cursor):
+    @staticmethod
+    def create_result_set(cursor):
         return ResultSet(cursor)
 
     def select(
@@ -914,7 +922,8 @@ class DB:
             where=where,
         )
 
-    def sql_clauses(self, what, tables, where, group, order, limit, offset):
+    @staticmethod
+    def sql_clauses(what, tables, where, group, order, limit, offset):
         return (
             ("SELECT", what),
             ("FROM", sqllist(tables)),
@@ -1010,7 +1019,8 @@ class DB:
 
         return out
 
-    def _get_insert_default_values_query(self, table):
+    @staticmethod
+    def _get_insert_default_values_query(table):
         return "INSERT INTO %s DEFAULT VALUES" % table
 
     def multiple_insert(self, tablename, values, seqname=None, _test=False):
@@ -1166,7 +1176,8 @@ class DB:
             self.ctx.commit()
         return db_cursor.rowcount
 
-    def _process_insert_query(self, query, tablename, seqname):
+    @staticmethod
+    def _process_insert_query(query, tablename, seqname):
         return query
 
     def transaction(self):
@@ -1638,7 +1649,8 @@ class Parser:
             raise _ItplError(self.text, self.pos)
         return match, match.end()
 
-    def is_literal(self, text):
+    @staticmethod
+    def is_literal(text):
         return text and text[0] in "0123456789\"'"
 
     def parse_expr(self):
