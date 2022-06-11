@@ -188,10 +188,7 @@ class Browser(object):
             predicate.append(predicate)
 
         def f(link):
-            for p in predicates:
-                if not p(link):
-                    return False
-            return True
+            return all(p(link) for p in predicates)
 
         return [link for link in links if f(link)]
 
