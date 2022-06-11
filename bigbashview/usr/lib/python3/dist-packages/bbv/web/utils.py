@@ -158,7 +158,7 @@ def storify(mapping, *requireds, **defaults):
 
     # if _unicode is callable object, use it convert a string to unicode.
     to_unicode = safeunicode
-    if _unicode is not False and hasattr(_unicode, "__call__"):
+    if _unicode is not False and callable(_unicode):
         to_unicode = _unicode
 
     def unicodify(s):
@@ -1232,7 +1232,7 @@ def tryall(context, prefix=None):
     context = context.copy()  # vars() would update
     results = {}
     for (key, value) in iteritems(context):
-        if not hasattr(value, "__call__"):
+        if not callable(value):
             continue
         if prefix and not key.startswith(prefix):
             continue
