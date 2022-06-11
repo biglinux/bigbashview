@@ -112,7 +112,7 @@ class Browser(object):
 
     def _get_links(self):
         soup = self.get_soup()
-        return [a for a in soup.findAll(name="a")]
+        return list(soup.findAll(name="a"))
 
     def get_links(
         self, text=None, text_regex=None, url=None, url_regex=None, predicate=None
