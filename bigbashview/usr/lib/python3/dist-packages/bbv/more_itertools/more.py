@@ -762,7 +762,7 @@ def windowed(seq, n, fillvalue=None, step=1):
     if n < 0:
         raise ValueError('n must be >= 0')
     if n == 0:
-        yield tuple()
+        yield ()
         return
     if step < 1:
         raise ValueError('step must be >= 1')
@@ -3540,7 +3540,7 @@ def nth_permutation(iterable, r, index):
         raise IndexError
 
     if c == 0:
-        return tuple()
+        return ()
 
     result = [0] * r
     q = index * factorial(n) // c if r < n else index
