@@ -2893,12 +2893,11 @@ def replace(iterable, pred, substitutes, count=None, window_size=1):
         # For example, if the iterable is (0, 1, 2, 3, 4...)
         # and the window size is 2, we have (0, 1), (1, 2), (2, 3)...
         # If the predicate matches on (0, 1), we need to zap (0, 1) and (1, 2)
-        if pred(*w):
-            if (count is None) or (n < count):
-                n += 1
-                yield from substitutes
-                consume(windows, window_size - 1)
-                continue
+        if pred(*w) and (count is None) or (n < count):
+            n += 1
+            yield from substitutes
+            consume(windows, window_size - 1)
+            continue
 
         # If there was no match (or we've reached the replacement limit),
         # yield the first item from the window.

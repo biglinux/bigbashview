@@ -398,9 +398,12 @@ def test_tls_client_auth(  # noqa: C901  # FIXME
             'sslv3 alert bad certificate' if IS_LIBRESSL_BACKEND
             else 'tlsv1 alert unknown ca',
         )
-        if not six.PY2:
-            if IS_MACOS and IS_PYPY and adapter_type == 'pyopenssl':
-                expected_substrings = ('tlsv1 alert unknown ca',)
+        if (
+            not six.PY2
+            and IS_MACOS and IS_PYPY
+            and adapter_type == 'pyopenssl'
+        ):
+            expected_substrings = ('tlsv1 alert unknown ca',)
         if (
                 tls_verify_mode in (
                     ssl.CERT_REQUIRED,

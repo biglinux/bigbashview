@@ -232,9 +232,12 @@ class SQLQuery:
                 # automatically escape % characters in the query
                 # For backward compatibility, ignore escaping when the query
                 # looks already escaped
-                if paramstyle in ["format", "pyformat"]:
-                    if "%" in x and "%%" not in x:
-                        x = x.replace("%", "%%")
+                if (
+                    paramstyle in ["format", "pyformat"]
+                    and "%" in x
+                    and "%%" not in x
+                ):
+                    x = x.replace("%", "%%")
                 s.append(x)
         return "".join(s)
 

@@ -438,24 +438,26 @@ def rawinput(method=None):
     e = ctx.env.copy()
     a = b = {}
 
-    if method.lower() in ["both", "post", "put", "patch"]:
-        if e["REQUEST_METHOD"] in ["POST", "PUT", "PATCH"]:
-            if e.get("CONTENT_TYPE", "").lower().startswith("multipart/"):
-                # since wsgi.input is directly passed to cgi.FieldStorage,
-                # it can not be called multiple times. Saving the FieldStorage
-                # object in ctx to allow calling web.input multiple times.
-                a = ctx.get("_fieldstorage")
-                if not a:
-                    fp = e["wsgi.input"]
-                    a = cgiFieldStorage(fp=fp, environ=e, keep_blank_values=1)
-                    ctx._fieldstorage = a
-            else:
-                d = data()
-                if isinstance(d, str):
-                    d = d.encode("utf-8")
-                fp = BytesIO(d)
+    if (
+        method.lower() in ["both", "post", "put", "patch"]
+        and e["REQUEST_METHOD"] in ["POST", "PUT", "PATCH"]
+    ):
+        if e.get("CONTENT_TYPE", "").lower().startswith("multipart/"):
+            # since wsgi.input is directly passed to cgi.FieldStorage,
+            # it can not be called multiple times. Saving the FieldStorage
+            # object in ctx to allow calling web.input multiple times.
+            a = ctx.get("_fieldstorage")
+            if not a:
+                fp = e["wsgi.input"]
                 a = cgiFieldStorage(fp=fp, environ=e, keep_blank_values=1)
-            a = dictify(a)
+                ctx._fieldstorage = a
+        else:
+            d = data()
+            if isinstance(d, str):
+                d = d.encode("utf-8")
+            fp = BytesIO(d)
+            a = cgiFieldStorage(fp=fp, environ=e, keep_blank_values=1)
+        a = dictify(a)
 
     if method.lower() in ["both", "get"]:
         e["REQUEST_METHOD"] = "GET"

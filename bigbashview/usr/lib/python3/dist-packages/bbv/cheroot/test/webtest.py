@@ -332,9 +332,12 @@ class WebCase(unittest.TestCase):
         """Fail if (key, [value]) not in self.headers."""
         lowkey = key.lower()
         for k, v in self.headers:
-            if k.lower() == lowkey:
-                if value is None or str(value) == v:
-                    return v
+            if (
+                k.lower() == lowkey
+                and value is None
+                or str(value) == v
+            ):
+                return v
 
         if msg is None:
             if value is None:
