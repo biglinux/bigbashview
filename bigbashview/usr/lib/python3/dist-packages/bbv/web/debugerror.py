@@ -371,7 +371,8 @@ if __name__ == "__main__":
     app.internalerror = debugerror
 
     class index:
-        def GET(self):
+        @staticmethod
+        def GET():
             thisdoesnotexist  # noqa: F821
 
     app.run()

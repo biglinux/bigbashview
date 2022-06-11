@@ -42,7 +42,7 @@ class Main:
             print('For help use -h or --help')
             sys.exit(2)
 
-        if len(args):
+        if args:
             self.url = args[0]
 
         for o, a in opts:
@@ -105,7 +105,7 @@ class Main:
                     print(e)
                     has_gtk = False
 
-            if not(has_qt) and not(has_gtk):
+            if not has_qt and not has_gtk:
                 print(('bbv needs WebKitGtk2 or PySide2 '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
@@ -167,7 +167,8 @@ class Main:
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
-    def help(self):
+    @staticmethod
+    def help():
         helper = r'''
   ____  _       ____            _ __      ___
  |  _ \(_)     |  _ \          | |\ \    / (_)
