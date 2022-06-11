@@ -919,7 +919,7 @@ class bucket:
                     if item_value == value:
                         yield item
                         break
-                    elif self._validator(item_value):
+                    if self._validator(item_value):
                         self._cache[item_value].append(item)
 
     def __iter__(self):
