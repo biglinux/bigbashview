@@ -1,19 +1,5 @@
 #!/usr/bin/env python3
 """web.py: makes web apps (http://webpy.org)"""
-
-from . import (  # noqa: F401
-    db,
-    debugerror,
-    form,
-    http,
-    httpserver,
-    net,
-    session,
-    template,
-    utils,
-    webapi,
-    wsgi,
-)
 from .application import *  # noqa: F401,F403
 from .db import *  # noqa: F401,F403
 from .debugerror import *  # noqa: F401,F403
