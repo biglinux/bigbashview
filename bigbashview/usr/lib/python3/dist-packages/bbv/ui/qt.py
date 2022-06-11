@@ -88,7 +88,7 @@ class Window(QWidget):
         script = '''
         function _run(run){
             // https://dmitripavlutin.com/javascript-fetch-async-await/#4-canceling-a-fetch-request
-            
+
             // Step 1: instantiate the abort controller
             const controller = new AbortController();
 
