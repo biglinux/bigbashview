@@ -168,7 +168,7 @@ class Main:
             self.window = qt.Window()
 
     def help(self):
-        helper = '''
+        helper = r'''
   ____  _       ____            _ __      ___
  |  _ \(_)     |  _ \          | |\ \    / (_)
  | |_) |_  __ _| |_) | __ _ ___| |_\ \  / / _  _____      __
