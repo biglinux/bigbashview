@@ -46,7 +46,8 @@ class Browser(object):
         """Clears all cookies and history."""
         self.cookiejar.clear()
 
-    def build_opener(self):
+    @staticmethod
+    def build_opener():
         """Builds the opener using (urllib2/urllib.request).build_opener.
         Subclasses can override this function to prodive custom openers.
         """
@@ -163,8 +164,8 @@ class Browser(object):
         )
         return links[0] if links else None
 
+    @staticmethod
     def _filter_links(
-        self,
         links,
         text=None,
         text_regex=None,
@@ -280,7 +281,8 @@ class AppHandler(HTTPHandler):
     def https_open(self, req):
         return self.http_open(req)
 
-    def _make_response(self, result, url):
+    @staticmethod
+    def _make_response(result, url):
 
         data = "\r\n".join(["%s: %s" % (k, v) for k, v in result.header_items])
 
