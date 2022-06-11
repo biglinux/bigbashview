@@ -148,8 +148,7 @@ class Browser(object):
 
         if link:
             return self.open(link["href"])
-        else:
-            raise BrowserError("No link found")
+        raise BrowserError("No link found")
 
     def find_link(
         self, text=None, text_regex=None, url=None, url_regex=None, predicate=None
@@ -218,8 +217,7 @@ class Browser(object):
         if forms:
             self.form = forms[index]
             return self.form
-        else:
-            raise BrowserError("No form selected.")
+        raise BrowserError("No form selected.")
 
     def submit(self, **kw):
         """submits the currently selected form."""
