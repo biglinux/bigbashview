@@ -77,9 +77,8 @@ def modified(date=None, etag=None):
     )
     m = net.parsehttpdate(web.ctx.env.get("HTTP_IF_MODIFIED_SINCE", "").split(";")[0])
     validate = False
-    if etag:
-        if "*" in n or etag in n:
-            validate = True
+    if etag and "*" in n or etag in n:
+        validate = True
     if date and m:
         # we subtract a second because
         # HTTP dates don't have sub-second precision

@@ -320,9 +320,11 @@ def test_streaming_11(test_client, set_cl):
 
         chunked_response = False
         for k, v in actual_headers:
-            if k.lower() == 'transfer-encoding':
-                if str(v) == 'chunked':
-                    chunked_response = True
+            if (
+                k.lower() == 'transfer-encoding'
+                and str(v) == 'chunked'
+            ):
+                chunked_response = True
 
         if chunked_response:
             if header_has_value('Connection', 'close', actual_headers):

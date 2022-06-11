@@ -139,9 +139,12 @@ class Session(object):
 
     def _validate_ip(self):
         # check for change of IP
-        if self.session_id and self.get("ip", None) != web.ctx.ip:
-            if not self._config.ignore_change_ip:
-                return self.expired()
+        if (
+            self.session_id
+            and self.get("ip", None) != web.ctx.ip
+            and not self._config.ignore_change_ip
+        ):
+            return self.expired()
 
     def _save(self):
         current_values = dict(self._data)
