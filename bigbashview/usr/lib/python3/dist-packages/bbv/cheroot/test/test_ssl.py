@@ -300,7 +300,6 @@ def test_tls_client_auth(  # noqa: C901  # FIXME
             # FIXME: change to issue_cert once new trustme is out
             ntou(tls_client_identity),
         )
-        del client_cert_root_ca
 
     with client_cert.private_key_and_cert_chain_pem.tempfile() as cl_pem:
         tls_adapter_cls = get_ssl_adapter_class(name=adapter_type)
