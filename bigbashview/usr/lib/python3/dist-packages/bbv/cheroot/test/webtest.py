@@ -89,8 +89,10 @@ class NonDataProperty:
 
     def __init__(self, fget):
         """Initialize a non-data property."""
-        assert fget is not None, 'fget cannot be none'
-        assert callable(fget), 'fget must be callable'
+        if fget is None:
+            raise AssertionError('fget cannot be none')
+        if not callable(fget):
+            raise AssertionError('fget must be callable')
         self.fget = fget
 
     def __get__(self, obj, objtype=None):

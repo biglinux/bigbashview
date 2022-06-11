@@ -20,7 +20,8 @@ from cheroot._compat import extract_bytes, memoryview, ntob, ntou, bton
 )
 def test_compat_functions_positive(func, inp, out):
     """Check that compatibility functions work with correct input."""
-    assert func(inp, encoding='utf-8') == out
+    if func(inp, encoding='utf-8') != out:
+        raise AssertionError
 
 
 @pytest.mark.parametrize(
@@ -41,7 +42,8 @@ def test_ntou_escape():
     """Check that ``ntou`` supports escape-encoding under Python 2."""
     expected = u'hišřії'
     actual = ntou('hi\u0161\u0159\u0456\u0457', encoding='escape')
-    assert actual == expected
+    if actual != expected:
+        raise AssertionError
 
 
 @pytest.mark.parametrize(
@@ -53,7 +55,8 @@ def test_ntou_escape():
 )
 def test_extract_bytes(input_argument, expected_result):
     """Check that legitimate inputs produce bytes."""
-    assert extract_bytes(input_argument) == expected_result
+    if extract_bytes(input_argument) != expected_result:
+        raise AssertionError
 
 
 def test_extract_bytes_invalid():

@@ -1104,7 +1104,8 @@ def nthstr(n):
 
     """
 
-    assert n >= 0
+    if n < 0:
+        raise AssertionError
     if n % 100 in [11, 12, 13]:
         return "%sth" % n
     return {1: "%sst", 2: "%snd", 3: "%srd"}.get(n % 10, "%sth") % n
@@ -1600,10 +1601,12 @@ class _EmailMessage:
 
         sendmail = webapi.config.get("sendmail_path", "/usr/sbin/sendmail")
 
-        assert not self.from_address.startswith("-"), "security"
+        if self.from_address.startswith("-"):
+            raise AssertionError("security")
 
         for r in self.recipients:
-            assert not r.startswith("-"), "security"
+            if r.startswith("-"):
+                raise AssertionError("security")
 
         cmd = [sendmail, "-f", self.from_address] + self.recipients
 

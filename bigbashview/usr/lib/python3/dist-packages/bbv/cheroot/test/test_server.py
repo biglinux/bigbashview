@@ -80,20 +80,27 @@ def test_prepare_makes_server_ready():
         gateway=Gateway,
     )
 
-    assert not httpserver.ready
-    assert not httpserver.requests._threads
+    if httpserver.ready:
+        raise AssertionError
+    if httpserver.requests._threads:
+        raise AssertionError
 
     httpserver.prepare()
 
-    assert httpserver.ready
-    assert httpserver.requests._threads
+    if not httpserver.ready:
+        raise AssertionError
+    if not httpserver.requests._threads:
+        raise AssertionError
     for thr in httpserver.requests._threads:
-        assert thr.ready
+        if not thr.ready:
+            raise AssertionError
 
     httpserver.stop()
 
-    assert not httpserver.requests._threads
-    assert not httpserver.ready
+    if httpserver.requests._threads:
+        raise AssertionError
+    if httpserver.ready:
+        raise AssertionError
 
 
 def test_stop_interrupts_serve():
@@ -108,12 +115,14 @@ def test_stop_interrupts_serve():
     serve_thread.start()
 
     serve_thread.join(0.5)
-    assert serve_thread.is_alive()
+    if not serve_thread.is_alive():
+        raise AssertionError
 
     httpserver.stop()
 
     serve_thread.join(0.5)
-    assert not serve_thread.is_alive()
+    if serve_thread.is_alive():
+        raise AssertionError
 
 
 def test_serving_is_false_and_stop_returns_after_ctrlc():
@@ -136,9 +145,11 @@ def test_serving_is_false_and_stop_returns_after_ctrlc():
 
     # The thread should exit right away due to the interrupt.
     serve_thread.join(0.5)
-    assert not serve_thread.is_alive()
+    if serve_thread.is_alive():
+        raise AssertionError
 
-    assert not httpserver.serving
+    if httpserver.serving:
+        raise AssertionError
     httpserver.stop()
 
 
@@ -153,8 +164,10 @@ def test_bind_addr_inet(http_server, ip_addr):
     """Check that bound IP address is stored in server."""
     httpserver = http_server.send((ip_addr, EPHEMERAL_PORT))
 
-    assert httpserver.bind_addr[0] == ip_addr
-    assert httpserver.bind_addr[1] != EPHEMERAL_PORT
+    if httpserver.bind_addr[0] != ip_addr:
+        raise AssertionError
+    if httpserver.bind_addr[1] == EPHEMERAL_PORT:
+        raise AssertionError
 
 
 @unix_only_sock_test
@@ -162,7 +175,8 @@ def test_bind_addr_unix(http_server, unix_sock_file):
     """Check that bound UNIX socket address is stored in server."""
     httpserver = http_server.send(unix_sock_file)
 
-    assert httpserver.bind_addr == unix_sock_file
+    if httpserver.bind_addr != unix_sock_file:
+        raise AssertionError
 
 
 @unix_only_sock_test
@@ -170,7 +184,8 @@ def test_bind_addr_unix_abstract(http_server, unix_abstract_sock):
     """Check that bound UNIX abstract socket address is stored in server."""
     httpserver = http_server.send(unix_abstract_sock)
 
-    assert httpserver.bind_addr == unix_abstract_sock
+    if httpserver.bind_addr != unix_abstract_sock:
+        raise AssertionError
 
 
 PEERCRED_IDS_URI = '/peer_creds/ids'
@@ -226,10 +241,12 @@ def test_peercreds_unix_sock(peercreds_enabled_server):
     with requests_unixsocket.monkeypatch():
         peercreds_resp = requests.get(unix_base_uri + PEERCRED_IDS_URI)
         peercreds_resp.raise_for_status()
-        assert peercreds_resp.text == expected_peercreds
+        if peercreds_resp.text != expected_peercreds:
+            raise AssertionError
 
         peercreds_text_resp = requests.get(unix_base_uri + PEERCRED_TEXTS_URI)
-        assert peercreds_text_resp.status_code == 500
+        if peercreds_text_resp.status_code != 500:
+            raise AssertionError
 
 
 @pytest.mark.skipif(
@@ -262,7 +279,8 @@ def test_peercreds_unix_sock_with_lookup(peercreds_enabled_server):
     with requests_unixsocket.monkeypatch():
         peercreds_text_resp = requests.get(unix_base_uri + PEERCRED_TEXTS_URI)
         peercreds_text_resp.raise_for_status()
-        assert peercreds_text_resp.text == expected_textcreds
+        if peercreds_text_resp.text != expected_textcreds:
+            raise AssertionError
 
 
 @pytest.mark.skipif(
@@ -306,7 +324,8 @@ def test_high_number_of_file_descriptors(resource_limit):
         # We use closing here for py2-compat
         with closing(socket.socket()) as sock:
             # Check new sockets created are still above our target number
-            assert sock.fileno() >= resource_limit
+            if sock.fileno() < resource_limit:
+                raise AssertionError
     finally:
         # Stop our server
         httpserver.stop()
@@ -360,7 +379,8 @@ def many_open_sockets(resource_limit):
                 break
         # Check we opened enough descriptors to reach a high number
         the_highest_fileno = test_sockets[-1].fileno()
-        assert the_highest_fileno >= resource_limit
+        if the_highest_fileno < resource_limit:
+            raise AssertionError
         yield the_highest_fileno
     finally:
         # Close our open resources

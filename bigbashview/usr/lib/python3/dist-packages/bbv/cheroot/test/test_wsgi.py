@@ -55,4 +55,5 @@ def test_connection_keepalive(simple_wsgi_server):
         ]
         failures = sum(task.result() for task in tasks)
 
-    assert not failures
+    if failures:
+        raise AssertionError
