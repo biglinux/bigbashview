@@ -285,14 +285,6 @@ class Parser:
             else:
                 return
 
-        def attr_access():
-            from token import NAME  # python token constants
-
-            if tokens.lookahead2().type == NAME:
-                next(tokens)  # consume dot
-                identifier()
-                extended_expr()
-
         def paren_expr():
             begin = next(tokens).value
             end = parens[begin]
