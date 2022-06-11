@@ -62,8 +62,6 @@ sqlite_drivers = ("sqlite3", "pysqlite2.dbapi2", "sqlite")
 class UnknownDB(Exception):
     """raised for unsupported dbms"""
 
-    pass
-
 
 class _ItplError(ValueError):
     def __init__(self, text, pos):
@@ -85,8 +83,6 @@ class UnknownParamstyle(Exception):
 
     (currently supported: qmark, numeric, format, pyformat)
     """
-
-    pass
 
 
 class SQLParam(object):
@@ -1327,7 +1323,6 @@ class FirebirdDB(DB):
             import kinterbasdb as db
         except Exception:
             db = None
-            pass
         if "pw" in keywords:
             keywords["password"] = keywords.pop("pw")
         keywords["database"] = keywords.pop("db")
@@ -1396,7 +1391,6 @@ class MSSQLDB(DB):
         >>> db.select('foo', limit=4, _test=True)
         <sql: 'SELECT * TOP 4 FROM foo'>
         """
-        pass
 
 
 class OracleDB(DB):
