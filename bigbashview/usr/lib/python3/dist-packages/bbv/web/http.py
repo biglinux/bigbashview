@@ -111,7 +111,7 @@ def urlencode(query, doseq=0):
         else:
             return utils.safestr(value)
 
-    query = dict([(k, convert(v, doseq)) for k, v in query.items()])
+    query = {k: convert(v, doseq) for k, v in query.items()}
     return urllib_urlencode(query, doseq=doseq)
 
 
