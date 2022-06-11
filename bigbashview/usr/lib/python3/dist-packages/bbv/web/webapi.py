@@ -87,7 +87,9 @@ A configuration object for various aspects of web.py.
 
 
 class HTTPError(Exception):
-    def __init__(self, status, headers={}, data=""):
+    def __init__(self, status, headers=None, data=""):
+        if headers is None:
+            headers = {}
         ctx.status = status
         for k, v in headers.items():
             header(k, v)
@@ -103,7 +105,9 @@ def _status_code(status, data=None, classname=None, docstring=None):
     )  # 304 Not Modified -> NotModified
     docstring = docstring or "`%s` status" % status
 
-    def __init__(self, data=data, headers={}):
+    def __init__(self, data=data, headers=None):
+        if headers is None:
+            headers = {}
         HTTPError.__init__(self, status, headers, data)
 
     # trick to create class dynamically with dynamic docstring.
