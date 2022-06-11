@@ -713,7 +713,6 @@ else:
             _globs_ = frame.f_globals
             if _locs_ is None:
                 _locs_ = frame.f_locals
-            del frame
         elif _locs_ is None:
             _locs_ = _globs_
         exec("""exec _code_ in _globs_, _locs_""")

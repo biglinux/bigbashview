@@ -119,9 +119,6 @@ class MakeFile_PY2(getattr(socket, '_fileobject', object)):
         socket._fileobject(FauxSocket())._rbuf, six.string_types,
     )
 
-    # FauxSocket is no longer needed
-    del FauxSocket
-
     if not _fileobject_uses_str_type:  # noqa: C901  # FIXME
         def read(self, size=-1):
             """Read data from the socket to buffer."""
@@ -180,13 +177,11 @@ class MakeFile_PY2(getattr(socket, '_fileobject', object)):
                         return data
                     if n == left:
                         buf.write(data)
-                        del data  # explicit free
                         break
                     if n > left:
                         raise AssertionError('recv(%d) returned %d bytes' % (left, n))
                     buf.write(data)
                     buf_len += n
-                    del data  # explicit free
                     # assert buf_len == buf.tell()
                 return buf.getvalue()
 
@@ -202,7 +197,6 @@ class MakeFile_PY2(getattr(socket, '_fileobject', object)):
                     self._rbuf = io.BytesIO()
                     self._rbuf.write(buf.read())
                     return bline
-                del bline
             if size < 0:
                 # Read until \n or EOF, whichever comes first
                 if self._rbufsize <= 1:
@@ -232,7 +226,6 @@ class MakeFile_PY2(getattr(socket, '_fileobject', object)):
                         nl += 1
                         buf.write(data[:nl])
                         self._rbuf.write(data[nl:])
-                        del data
                         break
                     buf.write(data)
                 return buf.getvalue()
