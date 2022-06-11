@@ -684,7 +684,7 @@ def intersperse(e, iterable, n=1):
     """
     if n == 0:
         raise ValueError('n must be > 0')
-    elif n == 1:
+    if n == 1:
         # interleave(repeat(e), iterable) -> e, x_0, e, e, x_1, e, x_2...
         # islice(..., 1, None) -> x_0, e, e, x_1, e, x_2...
         return islice(interleave(repeat(e), iterable), 1, None)
@@ -2960,7 +2960,7 @@ def set_partitions(iterable, k=None):
             raise ValueError(
                 "Can't partition in a negative or zero number of groups"
             )
-        elif k > n:
+        if k > n:
             return
 
     def set_partitions_helper(L, k):
@@ -3105,7 +3105,7 @@ def distinct_combinations(iterable, r):
     """
     if r < 0:
         raise ValueError('r must be non-negative')
-    elif r == 0:
+    if r == 0:
         yield ()
     else:
         pool = tuple(iterable)
