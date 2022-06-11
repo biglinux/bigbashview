@@ -72,8 +72,10 @@ class Browser(object):
 
         return self.get_response()
 
-    def open(self, url, data=None, headers={}):
+    def open(self, url, data=None, headers=None):
         """Opens the specified url."""
+        if headers is None:
+            headers = {}
         url = urljoin(self.url, url)
         req = Request(url, data, headers)
 
