@@ -160,7 +160,7 @@ class Browser(object):
             url_regex=url_regex,
             predicate=predicate,
         )
-        return links and links[0] or None
+        return links[0] if links else None
 
     def _filter_links(
         self,
