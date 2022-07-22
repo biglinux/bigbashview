@@ -124,7 +124,7 @@ class Main:
                 os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
                 self.window = gtk.Window()
                 if globaldata.TITLE:
-                    self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
+                    self.window.set_role(globaldata.TITLE)
 
         elif self.toolkit == "gtk":
             try:
@@ -144,7 +144,7 @@ class Main:
             os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
             self.window = gtk.Window()
             if globaldata.TITLE:
-                self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
+                self.window.set_role(globaldata.TITLE)
 
         elif self.toolkit == "qt":
             try:
