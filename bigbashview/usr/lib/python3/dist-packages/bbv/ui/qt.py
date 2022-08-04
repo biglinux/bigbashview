@@ -94,7 +94,7 @@ class Window(QWidget):
             const timeoutId = setTimeout(() => controller.abort(), 1000);
 
             // Step 2: make the fetch() aware of controller.signal
-            fetch('/execute'+run, { signal: controller.signal });
+            fetch('/execute$'+run, { signal: controller.signal });
         };
         '''
 
