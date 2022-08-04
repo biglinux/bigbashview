@@ -21,7 +21,7 @@
 import sys
 import os
 import getopt
-
+from dotenv import load_dotenv
 from bbv import globaldata
 from bbv.server.bbv2server import run_server
 
@@ -35,8 +35,12 @@ class Main:
 
     def __init__(self):
         try:
-            opts, args = getopt.gnu_getopt(sys.argv[1:], 'hs:vn:w:i:c:t:', ['help', 'size=', 'version', "name=",
-                                                                          'window_state=', 'icon=', 'color=', 'toolkit='])
+            opts, args = getopt.gnu_getopt(
+                sys.argv[1:],
+                'hs:vn:w:i:c:t:',
+                ['help', 'size=', 'version', "name=",
+                 'window_state=', 'icon=', 'color=', 'toolkit=']
+            )
         except getopt.error as msg:
             print(msg)
             print('For help use -h or --help')
@@ -106,22 +110,15 @@ class Main:
                     has_gtk = False
 
             if not has_qt and not has_gtk:
-                print(('bbv needs WebKitGtk2 or PySide2 '
+                print(('bbv needs WebKitGtk2 or PySide6 '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
                 sys.exit(1)
 
             elif has_qt:
-                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
-                os.environ['QT_QUICK_BACKEND'] = 'software'
-                os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
-                os.environ['QSG_RENDER_LOOP'] = 'basic'
-                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
                 self.window = qt.Window()
 
             elif has_gtk:
-                os.environ['GDK_BACKEND'] = 'x11'
-                os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
                 self.window = gtk.Window()
                 if globaldata.TITLE:
                     self.window.set_role(globaldata.TITLE)
@@ -140,8 +137,7 @@ class Main:
                        'the latest stable version'), file=sys.stderr)
 
                 sys.exit(1)
-            os.environ['GDK_BACKEND'] = 'x11'
-            os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
+
             self.window = gtk.Window()
             if globaldata.TITLE:
                 self.window.set_role(globaldata.TITLE)
@@ -155,16 +151,12 @@ class Main:
                 has_qt = False
 
             if not has_qt:
-                print(('bbv needs PySide2 '
+                print(('bbv needs PySide6 '
                        'to run. Please install '
                        'the latest stable version'), file=sys.stderr)
 
                 sys.exit(1)
-            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
-            os.environ['QT_QUICK_BACKEND'] = 'software'
-            os.environ['QSG_RENDER_LOOP'] = 'basic'
-            os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
-            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+
             self.window = qt.Window()
 
     @staticmethod
@@ -229,6 +221,10 @@ Executable Extensions: .sh     |.run     Shell Script
         sys.exit()
 
     def run(self, start_server=True):
+        #load environment variables
+        load_dotenv()
+        
+        #start server
         server = run_server() if start_server else None
 
         if self.url.find('://') == -1:
