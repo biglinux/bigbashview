@@ -21,7 +21,7 @@ import sys
 import os
 from PySide6.QtCore import QUrl, Qt
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication
-from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut
+from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
 from PySide6.QtWebEngineWidgets import QWebEngineView
 
 from bbv.globaldata import ICON, TITLE
@@ -88,7 +88,7 @@ class Window(QWidget):
         script = '''
         function _run(run){
             // https://dmitripavlutin.com/javascript-fetch-async-await/#4-canceling-a-fetch-request
-            
+
             // Step 1: instantiate the abort controller
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 1000);
@@ -141,7 +141,7 @@ class Window(QWidget):
         self.web.load(self.url)
 
     def set_size(self, width, height, window_state):
-        display = self.app.primaryScreen()
+        display = self.app.screenAt(QCursor().pos())
         size = display.availableGeometry()
         if width <= 0:
             width = size.width()/2
