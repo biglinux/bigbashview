@@ -67,7 +67,6 @@ class Server(threading.Thread):
 
     def stop(self):
         print('Waiting for server to shutdown...')
-        self.app.stop()
         os.kill(os.getpid(), 15)
 
 def run_server(ip='127.0.0.1', background=True):
