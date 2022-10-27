@@ -59,6 +59,12 @@ class url_handler(object):
     def called(self, options, content, query):
         raise NotImplementedError
 
+class favicon_handler(url_handler):
+    __url__ = '/favicon.ico'
+
+    def called(self, options, content, query):
+        return
+
 class content_handler(url_handler):
     __url__ = '/content(.*)'
 
