@@ -32,6 +32,7 @@ class Window(QWidget):
         super().__init__()
         self.web = QWebEngineView()
         self.inspector = QWebEngineView()
+        self.inspector.page().windowCloseRequested.connect(self.devpage)
         self.setWindowIcon(QIcon(ICON))
         if TITLE:
             self.app.setApplicationName(TITLE)
