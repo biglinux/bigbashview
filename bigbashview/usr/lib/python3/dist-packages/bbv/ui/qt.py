@@ -23,8 +23,8 @@ from PySide6.QtCore import QUrl, Qt
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication
 from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
 from PySide6.QtWebEngineWidgets import QWebEngineView
-
 from bbv.globaldata import ICON, TITLE
+
 
 class Window(QWidget):
     def __init__(self):
@@ -40,7 +40,8 @@ class Window(QWidget):
         else:
             self.web.titleChanged.connect(self.title_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
-        self.web.page().featurePermissionRequested.connect(self.onFeaturePermissionRequested)
+        self.web.page().featurePermissionRequested.connect(self.onFeature)
+        self.web.iconChanged.connect(self.icon_changed)
         self.web.loadFinished.connect(self.add_script)
         self.key_f5 = QShortcut(QKeySequence(Qt.Key_F5), self.web)
         self.key_f5.activated.connect(self.web.reload)
@@ -49,22 +50,30 @@ class Window(QWidget):
 
         # pagesplitter
         self.hbox = QHBoxLayout(self)
-        self.hbox.setContentsMargins(0,0,0,0)
+        self.hbox.setContentsMargins(0, 0, 0, 0)
         self.splitter = QSplitter(Qt.Horizontal)
         self.splitter.addWidget(self.web)
         self.splitter2 = QSplitter(Qt.Horizontal)
         self.hbox.addWidget(self.splitter)
         self.setLayout(self.hbox)
 
-    def onFeaturePermissionRequested(self, url, feature):
+    def onFeature(self, url, feature):
         if feature in (
             self.web.page().MediaAudioCapture,
             self.web.page().MediaVideoCapture,
             self.web.page().MediaAudioVideoCapture,
         ):
-            self.web.page().setFeaturePermission(url, feature, self.web.page().PermissionGrantedByUser)
+            self.web.page().setFeaturePermission(
+                url,
+                feature,
+                self.web.page().PermissionGrantedByUser
+            )
         else:
-            self.web.page().setFeaturePermission(url, feature, self.web.page().PermissionDeniedByUser)
+            self.web.page().setFeaturePermission(
+                url,
+                feature,
+                self.web.page().PermissionDeniedByUser
+            )
 
     def devpage(self):
         if self.splitter.count() == 1 or self.splitter2.count() == 1:
@@ -86,7 +95,7 @@ class Window(QWidget):
     def add_script(self, event):
         script = '''
         function _run(run){
-            // https://dmitripavlutin.com/javascript-fetch-async-await/#4-canceling-a-fetch-request
+        //https://dmitripavlutin.com/javascript-fetch-async-await/#4-canceling-a-fetch-request
 
             // Step 1: instantiate the abort controller
             const controller = new AbortController();
@@ -96,7 +105,6 @@ class Window(QWidget):
             fetch('/execute$'+run, { signal: controller.signal });
         };
         '''
-
 
         if event:
             self.web.page().runJavaScript(script)
@@ -116,7 +124,7 @@ class Window(QWidget):
             self.setWindowFlags(Qt.FramelessWindowHint)
             self.show()
         elif window_state == "framelessTop":
-            self.setWindowFlags(Qt.FramelessWindowHint|Qt.WindowStaysOnTopHint)
+            self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
             self.show()
         elif window_state == "fixedTop":
             self.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -131,9 +139,12 @@ class Window(QWidget):
         self.app.quit()
 
     def title_changed(self, title):
-        os.system('''xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)" \
+        os.system('''xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f2)" \
                     -f WM_CLASS 8s -set WM_CLASS "%s"''' % title)
         self.setWindowTitle(title)
+
+    def icon_changed(self, icon):
+        self.setWindowIcon(QIcon(icon))
 
     def load_url(self, url):
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
@@ -173,7 +184,7 @@ class Window(QWidget):
                 b = float(int(b)/255)
                 self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1))
             else:
-               self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
+                self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
 
         else:
             self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
