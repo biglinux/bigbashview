@@ -105,7 +105,6 @@ class Window(QWidget):
             fetch('/execute$'+run, { signal: controller.signal });
         };
         '''
-
         if event:
             self.web.page().runJavaScript(script)
 
@@ -139,8 +138,9 @@ class Window(QWidget):
         self.app.quit()
 
     def title_changed(self, title):
-        os.system('''xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f2)" \
-                    -f WM_CLASS 8s -set WM_CLASS "%s"''' % title)
+        os.system('''
+        xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f2)" \
+              -f WM_CLASS 8s -set WM_CLASS "%s"''' % title)
         self.setWindowTitle(title)
 
     def icon_changed(self, icon):
@@ -185,6 +185,5 @@ class Window(QWidget):
                 self.web.page().setBackgroundColor(QColor.fromRgbF(r, g, b, 1))
             else:
                 self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
-
         else:
             self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))

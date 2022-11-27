@@ -19,12 +19,11 @@
 import os
 
 APP_NAME = "BigBashView"
-APP_VERSION = "3.6.6"
+APP_VERSION = "3.6.8"
 PROGDIR = os.path.dirname(os.path.realpath(__file__))
 ICON = os.sep.join((PROGDIR, "img", "icone.png"))
 LOGO = os.sep.join((PROGDIR, "img", "logo.png"))
 TITLE = None
 ROOT_FILE = False
-
-def ADDRESS(): return '127.0.0.1'
-def PORT(): return 9000
+ADDRESS = '127.0.0.1'
+PORT = 19000
