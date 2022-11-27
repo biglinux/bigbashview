@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+from bbv import globaldata
 import web
 import sys
 import socket
@@ -24,7 +24,6 @@ import time
 from . import views
 import os
 
-from bbv import globaldata
 
 class Server(threading.Thread):
     def _get_subclasses(self, classes=None):
@@ -55,8 +54,8 @@ class Server(threading.Thread):
 
     def run(self):
         """ Run the webserver """
-        ip = globaldata.ADDRESS()
-        port = globaldata.PORT()
+        ip = globaldata.ADDRESS
+        port = globaldata.PORT
         sys.argv = [sys.argv[0], '']
         sys.argv[1] = ':'.join((ip, str(port)))
 
@@ -66,8 +65,8 @@ class Server(threading.Thread):
         self.app.run()
 
     def stop(self):
-        print('Waiting for server to shutdown...')
         os.kill(os.getpid(), 15)
+
 
 def run_server(ip='127.0.0.1', background=True):
     soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -82,8 +81,8 @@ def run_server(ip='127.0.0.1', background=True):
                 raise socket.error(e)
             print('Port %d already in use, trying next one' % port)
 
-    globaldata.ADDRESS = lambda: ip
-    globaldata.PORT = lambda: port
+    globaldata.ADDRESS = ip
+    globaldata.PORT = port
 
     server = Server()
 
@@ -107,6 +106,7 @@ def run_server(ip='127.0.0.1', background=True):
             time.sleep(0.1)
 
     return server
+
 
 if __name__ == "__main__":
     run_server(background=False)

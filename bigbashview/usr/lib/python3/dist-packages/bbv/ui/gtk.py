@@ -14,15 +14,14 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+# along with this program.  If not, see <http://www.gnu.org/licenses/>
 import os
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('WebKit2', '4.1')
 from gi.repository import Gtk, WebKit2, Gdk
-
 from bbv.globaldata import ICON, TITLE
+
 
 class Window(Gtk.Window):
     def __init__(self):
@@ -37,7 +36,10 @@ class Window(Gtk.Window):
             self.webview.connect("notify::title", self.title_changed)
         self.webview.connect("load-changed", self.add_script)
         self.webview.connect("close", self.close_window)
-        self.webview.get_settings().set_property("enable-developer-extras",True)
+        self.webview.get_settings().set_property(
+            "enable-developer-extras",
+            True
+        )
         self.connect("destroy", Gtk.main_quit)
         self.connect("key-press-event", self.key)
 
@@ -54,7 +56,7 @@ class Window(Gtk.Window):
             fetch("/execute$"+run);
         };
         '''
-        if event.FINISHED:
+        if event == WebKit2.LoadEvent.FINISHED:
             self.webview.run_javascript(script)
 
     def viewer(self, window_state):
@@ -91,8 +93,9 @@ class Window(Gtk.Window):
 
     def title_changed(self, webview, title):
         title = self.webview.get_title()
-        os.system('''xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)" \
-                    -f WM_CLASS 8s -set WM_CLASS "%s"''' % title)
+        os.system('''
+        xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)" \
+              -f WM_CLASS 8s -set WM_CLASS "%s" ''' % title)
         self.set_title(title)
 
     def load_url(self, url):
@@ -114,7 +117,10 @@ class Window(Gtk.Window):
     def style(self, colorful):
 
         if colorful == 'black':
-            self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 1))
+            self.override_background_color(
+                Gtk.StateFlags.NORMAL,
+                Gdk.RGBA(0, 0, 0, 1)
+            )
             self.webview.set_background_color(Gdk.RGBA(0, 0, 0, 1))
 
         elif colorful == 'none':
@@ -122,7 +128,10 @@ class Window(Gtk.Window):
             visual = screen.get_rgba_visual()
             if visual is not None and screen.is_composited():
                 self.set_visual(visual)
-                self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0))
+                self.override_background_color(
+                    Gtk.StateFlags.NORMAL,
+                    Gdk.RGBA(0, 0, 0, 0)
+                )
                 self.webview.set_background_color(Gdk.RGBA(0, 0, 0, 0))
 
         elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
@@ -133,14 +142,16 @@ class Window(Gtk.Window):
                 r = float(int(r)/255)
                 g = float(int(g)/255)
                 b = float(int(b)/255)
-                self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(r, g, b, 1))
+                self.override_background_color(
+                    Gtk.StateFlags.NORMAL,
+                    Gdk.RGBA(r, g, b, 1)
+                )
                 self.webview.set_background_color(Gdk.RGBA(r, g, b, 1))
             else:
-                color = Gtk.Window().get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
+                color = self.get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
                 self.override_background_color(Gtk.StateFlags.NORMAL, color)
                 self.webview.set_background_color(color)
-
         else:
-            color = Gtk.Window().get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
+            color = self.get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
             self.override_background_color(Gtk.StateFlags.NORMAL, color)
             self.webview.set_background_color(color)
