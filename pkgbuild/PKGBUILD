@@ -1,5 +1,5 @@
 pkgname=bigbashview
-pkgver=$(curl https://raw.githubusercontent.com/biglinux/bigbashview/master/bigbashview/usr/lib/python3/dist-packages/bbv/globaldata.py | grep APP_VERSION  | cut -f2 -d\")_$(date +"%Y_%m_%d")
+pkgver=$(curl https://raw.githubusercontent.com/biglinux/bigbashview/master/bigbashview/usr/lib/python3/dist-packages/bbv/globaldata.py | grep APP_VERSION  | cut -f2 -d\")_$(date +"%Y_%m_%d_%H_%M")
 pkgrel=2
 arch=('any')
 license=('GPL')
@@ -15,4 +15,5 @@ package() {
     mv "${pkgdir}/usr/lib/python3/dist-packages/bbv/" "${pkgdir}/usr/lib/bbv/"
     rm -Rf "${pkgdir}/usr/lib/python3"
     sed -i 's|/usr/lib/python3/dist-packages/bbv/|/usr/lib/bbv/|g' "${pkgdir}/usr/bin/bigbashview"
+    ln -s "${pkgdir}/usr/bin/bigbashview" "${pkgdir}/usr/bin/bbv"
 }
