@@ -15,5 +15,4 @@ package() {
     mv "${pkgdir}/usr/lib/python3/dist-packages/bbv/" "${pkgdir}/usr/lib/bbv/"
     rm -Rf "${pkgdir}/usr/lib/python3"
     sed -i 's|/usr/lib/python3/dist-packages/bbv/|/usr/lib/bbv/|g' "${pkgdir}/usr/bin/bigbashview"
-    ln -s "${pkgdir}/usr/bin/bigbashview" "${pkgdir}/usr/bin/bbv"
 }
