@@ -23,6 +23,7 @@ from PySide6.QtCore import QUrl, Qt
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication
 from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
 from PySide6.QtWebEngineWidgets import QWebEngineView
+from PySide6.QtWebEngineCore import QWebEnginePage
 from bbv.globaldata import ICON, TITLE
 
 
@@ -59,20 +60,20 @@ class Window(QWidget):
 
     def onFeature(self, url, feature):
         if feature in (
-            self.web.page().MediaAudioCapture,
-            self.web.page().MediaVideoCapture,
-            self.web.page().MediaAudioVideoCapture,
+            QWebEnginePage.MediaAudioCapture,
+            QWebEnginePage.MediaVideoCapture,
+            QWebEnginePage.MediaAudioVideoCapture,
         ):
             self.web.page().setFeaturePermission(
                 url,
                 feature,
-                self.web.page().PermissionGrantedByUser
+                QWebEnginePage.PermissionGrantedByUser
             )
         else:
             self.web.page().setFeaturePermission(
                 url,
                 feature,
-                self.web.page().PermissionDeniedByUser
+                QWebEnginePage.PermissionDeniedByUser
             )
 
     def devpage(self):
