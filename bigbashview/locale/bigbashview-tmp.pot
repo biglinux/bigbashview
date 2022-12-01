@@ -53,6 +53,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
@@ -66,6 +69,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
@@ -79,6 +85,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
@@ -92,6 +101,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
@@ -105,6 +117,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
@@ -118,6 +133,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
@@ -131,6 +149,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
@@ -138,14 +159,23 @@ msgstr  ""
 msgid   "Copiar endereço da imagem"
 msgstr  ""
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 16
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 16
 msgid   "Bem-vindo ao BigBashView"
 msgstr  ""
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 17
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 17
 msgid   "Nome do Host"
 msgstr  ""
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 18
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 18
 msgid   "Ambiente de Trabalho"
 msgstr  ""
