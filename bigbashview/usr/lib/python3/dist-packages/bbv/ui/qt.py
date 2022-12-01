@@ -3,7 +3,7 @@
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #  Copyright (C) 2009  Bruno Goncalves Araujo
-#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
+#  Copyright (C) 2022 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,11 +20,29 @@
 import sys
 import os
 from PySide6.QtCore import QUrl, Qt
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication
-from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
+from PySide6.QtWidgets import (
+    QWidget, QHBoxLayout,
+    QSplitter, QApplication
+)
+from PySide6.QtGui import (
+    QIcon, QColor, QKeySequence,
+    QShortcut, QCursor
+)
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWebEngineCore import QWebEnginePage
+from PySide6.QtWebEngineCore import QWebEnginePage as QEP
 from bbv.globaldata import ICON, TITLE
+
+# Import gettext module
+import gettext
+lang_translations = gettext.translation(
+    'bigbashview',
+    localedir='/usr/share/locale',
+    fallback=True
+)
+lang_translations.install()
+
+# define _ shortcut for translations
+_ = lang_translations.gettext
 
 
 class Window(QWidget):
@@ -49,6 +67,34 @@ class Window(QWidget):
         self.key_f12 = QShortcut(QKeySequence(Qt.Key_F12), self.web)
         self.key_f12.activated.connect(self.devpage)
 
+        # contextmenu translations
+        back = self.web.pageAction(QEP.Back)
+        back.setText(_('Voltar'))
+        forward = self.web.pageAction(QEP.Forward)
+        forward.setText(_('Avançar'))
+        update = self.web.pageAction(QEP.Reload)
+        update.setText(_('Recarregar'))
+        copy_link = self.web.pageAction(QEP.CopyLinkToClipboard)
+        copy_link.setText(_('Copiar endereço do link'))
+        inspect_element = self.web.pageAction(QEP.InspectElement)
+        inspect_element.setText(_('Inspecionar'))
+        copy_img = self.web.pageAction(QEP.CopyImageToClipboard)
+        copy_img.setText(_('Copiar imagem'))
+        copy_link_img = self.web.pageAction(QEP.CopyImageUrlToClipboard)
+        copy_link_img.setText(_('Copiar endereço da imagem'))
+        save_page = self.web.pageAction(QEP.SavePage)
+        save_page.setVisible(False)
+        view_source = self.web.pageAction(QEP.ViewSource)
+        view_source.setVisible(False)
+        open_new_tab = self.web.pageAction(QEP.OpenLinkInNewTab)
+        open_new_tab.setVisible(False)
+        open_new_window = self.web.pageAction(QEP.OpenLinkInNewWindow)
+        open_new_window.setVisible(False)
+        save_link = self.web.pageAction(QEP.DownloadLinkToDisk)
+        save_link.setVisible(False)
+        save_img = self.web.pageAction(QEP.DownloadImageToDisk)
+        save_img.setVisible(False)
+
         # pagesplitter
         self.hbox = QHBoxLayout(self)
         self.hbox.setContentsMargins(0, 0, 0, 0)
@@ -60,20 +106,20 @@ class Window(QWidget):
 
     def onFeature(self, url, feature):
         if feature in (
-            QWebEnginePage.MediaAudioCapture,
-            QWebEnginePage.MediaVideoCapture,
-            QWebEnginePage.MediaAudioVideoCapture,
+            QEP.MediaAudioCapture,
+            QEP.MediaVideoCapture,
+            QEP.MediaAudioVideoCapture,
         ):
             self.web.page().setFeaturePermission(
                 url,
                 feature,
-                QWebEnginePage.PermissionGrantedByUser
+                QEP.PermissionGrantedByUser
             )
         else:
             self.web.page().setFeaturePermission(
                 url,
                 feature,
-                QWebEnginePage.PermissionDeniedByUser
+                QEP.PermissionDeniedByUser
             )
 
     def devpage(self):
@@ -124,7 +170,9 @@ class Window(QWidget):
             self.setWindowFlags(Qt.FramelessWindowHint)
             self.show()
         elif window_state == "framelessTop":
-            self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+            self.setWindowFlags(
+                Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
+            )
             self.show()
         elif window_state == "fixedTop":
             self.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -176,7 +224,9 @@ class Window(QWidget):
             self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
 
         elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
-            rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
+            rgb = os.popen('''
+            kreadconfig5 --group WM --key activeBackground
+            ''').read().split(',')
 
             if len(rgb) > 1:
                 r, g, b = rgb if len(rgb) == 3 else rgb[:-1]
