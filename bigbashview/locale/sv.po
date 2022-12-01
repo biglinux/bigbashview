@@ -1,0 +1,70 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bigbashview package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bigbashview\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "License: "
+msgstr "Licens: "
+
+msgid "Created by:"
+msgstr "Skapad av:"
+
+msgid "Date:"
+msgstr "Datum:"
+
+msgid "Code URL:"
+msgstr "Kod-URL:"
+
+msgid "Project URL:"
+msgstr "Projektets URL:"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
+msgid "Voltar"
+msgstr "Kom tillbaka"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
+msgid "Avançar"
+msgstr "Förskott"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
+msgid "Recarregar"
+msgstr "Reload"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
+msgid "Copiar endereço do link"
+msgstr "Kopiera länkadress"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
+msgid "Inspecionar"
+msgstr "Inspektera"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
+msgid "Copiar imagem"
+msgstr "Kopiera bild"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
+msgid "Copiar endereço da imagem"
+msgstr "Kopiera bildadress"
