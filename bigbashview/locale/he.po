@@ -68,3 +68,18 @@ msgstr "העתקת תמונה"
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
 msgid "Copiar endereço da imagem"
 msgstr "העתק כתובת תמונה"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "ברוכים הבאים לביגבאשוויו"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "שם מחשב מארח"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "סביבת עבודה"

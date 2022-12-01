@@ -68,3 +68,18 @@ msgstr "Kopioi kuva"
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
 msgid "Copiar endereço da imagem"
 msgstr "Kopioi kuvan osoite"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Tervetuloa BigBashView'hun"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Isännän nimi"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Työympäristö"

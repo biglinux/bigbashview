@@ -68,3 +68,18 @@ msgstr "Kopiuj obraz"
 # File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
 msgid "Copiar endereço da imagem"
 msgstr "Skopiuj adres obrazu"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Witamy w BigBashView"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Nazwa hosta"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Środowisko pracy"
