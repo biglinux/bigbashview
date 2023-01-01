@@ -74,6 +74,20 @@ class Window(QWidget):
         forward.setText(_('Avançar'))
         update = self.web.pageAction(QEP.Reload)
         update.setText(_('Recarregar'))
+        copy = self.web.pageAction(QEP.Copy)
+        copy.setText(_('Copiar'))
+        cut = self.web.pageAction(QEP.Cut)
+        cut.setText(_('Recortar'))
+        paste = self.web.pageAction(QEP.Paste)
+        paste.setText(_('Colar'))
+        select_all = self.web.pageAction(QEP.SelectAll)
+        select_all.setText(_('Selecionar tudo'))
+        undo = self.web.pageAction(QEP.Undo)
+        undo.setText(_('Desfazer'))
+        redo = self.web.pageAction(QEP.Redo)
+        redo.setText(_('Refazer'))
+        paste_style = self.web.pageAction(QEP.PasteAndMatchStyle)
+        paste_style.setVisible(False)
         copy_link = self.web.pageAction(QEP.CopyLinkToClipboard)
         copy_link.setText(_('Copiar endereço do link'))
         inspect_element = self.web.pageAction(QEP.InspectElement)
@@ -146,7 +160,7 @@ class Window(QWidget):
 
             // Step 1: instantiate the abort controller
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 1000);
+            setTimeout(() => controller.abort(), 1000);
 
             // Step 2: make the fetch() aware of controller.signal
             fetch('/execute$'+run, { signal: controller.signal });
