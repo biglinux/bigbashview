@@ -66,18 +66,10 @@ class Window(Gtk.Window):
         elif window_state == "fullscreen":
             self.fullscreen()
             self.show()
-        elif window_state == "maximizedTop":
-            self.maximize()
-            self.set_keep_above(True)
-            self.show()
         elif window_state == "frameless":
             self.set_decorated(False)
             self.show()
-        elif window_state == "framelessTop":
-            self.set_decorated(False)
-            self.set_keep_above(True)
-            self.show()
-        elif window_state == "fixedTop":
+        elif window_state == "alwaystop":
             self.set_keep_above(True)
             self.show()
         else:
@@ -93,9 +85,7 @@ class Window(Gtk.Window):
 
     def title_changed(self, webview, title):
         title = self.webview.get_title()
-        os.system('''
-        xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)" \
-              -f WM_CLASS 8s -set WM_CLASS "%s" ''' % title)
+        os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS \"{title}\"")
         self.set_title(title)
 
     def load_url(self, url):
@@ -111,11 +101,10 @@ class Window(Gtk.Window):
 
         self.set_size_request(width, height)
         self.set_position(Gtk.WindowPosition.CENTER)
-        if window_state in ("fixed", "fixedTop"):
+        if window_state == "fixed":
             self.set_resizable(False)
 
     def style(self, colorful):
-
         if colorful == 'black':
             self.override_background_color(
                 Gtk.StateFlags.NORMAL,

@@ -22,7 +22,7 @@ import sys
 import os
 from bbv import globaldata
 from bbv.server.bbv2server import run_server
-
+from setproctitle import setproctitle
 
 class Main:
     """Start bbv"""
@@ -72,32 +72,37 @@ class Main:
             help='BigBashView Version')
         parser.add_argument(
             '-c', '--color', default=None,
-            help='Background Color: "black" or "none"')
+            help='Background Color: black or none')
         parser.add_argument(
             '-i', '--icon', default=globaldata.ICON,
             help='Window Icon: /path/to/image')
-        parser.add_argument('-n', '--name', help='Window Title: "Title"')
+        parser.add_argument(
+            '-n', '--name', default=None,
+            help='Window Title: "Title"')
+        parser.add_argument(
+            '-p', '--process', default=None,
+            help='Process name: "Name"')
         parser.add_argument(
             '-s', '--size', default='0x0',
             help='Window Size: [width]x[height](800x600)')
         parser.add_argument(
-            '-t', '--toolkit',
-            default='auto',
+            '-t', '--toolkit', default='auto',
             help='Rendering by QtWebEngine or WebKitGTK2: qt or gtk')
         parser.add_argument(
             '-w', '--window_state', default=None,
-            help='''Window state: fullscreen, maximized, maximizedTop,
-              fixed, fixedTop, frameless, framelessTop''')
+            help='''Window state: fullscreen, maximized, fixed,
+              frameless, alwaystop''')
 
         args = parser.parse_args()
         self.url = args.url
-        globaldata.TITLE = args.name
+
         geom = args.size.split('x')
         try:
             width, height = geom
             self.width = int(width)
             self.height = int(height)
-        except Exception:
+        except ValueError as e:
+            print(e)
             parser.print_help()
             sys.exit(1)
 
@@ -118,31 +123,46 @@ class Main:
 
         if args.window_state in [
             'fullscreen', 'maximized',
-            'maximizedTop', 'fixed',
-            'fixedTop', 'frameless',
-            'framelessTop', None
+            'fixed', 'frameless',
+            'alwaystop', None
         ]:
             self.window_state = args.window_state
         else:
             parser.print_help()
             sys.exit(1)
 
+        if args.name is not None:
+            globaldata.TITLE = args.name
+
+        if args.process:
+            setproctitle(args.process)
+
+        check_qt = check_gtk = False
         # construct window
         if self.toolkit == "auto":
             try:
                 from bbv.ui import qt
                 self.toolkit = 'qt'
+                check_qt = True
             except ImportError as e:
                 print(e)
-                self.toolkit = 'gtk'
+                try:
+                    from bbv.ui import gtk
+                    self.toolkit = 'gtk'
+                    check_gtk = True
+                except ImportError as e:
+                    print(e)
+                    print('Please install WebKitGtk2 or PySide6')
+                    sys.exit(1)
 
         if self.toolkit == "gtk":
-            try:
-                from bbv.ui import gtk
-            except ImportError as e:
-                print(e)
-                print('Please install WebKitGtk2')
-                sys.exit(1)
+            if not check_gtk:
+                try:
+                    from bbv.ui import gtk
+                except ImportError as e:
+                    print(e)
+                    print('Please install WebKitGtk2')
+                    sys.exit(1)
             os.environ['GDK_BACKEND'] = 'x11'
             os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
             self.window = gtk.Window()
@@ -150,12 +170,13 @@ class Main:
                 self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
 
         if self.toolkit == "qt":
-            try:
-                from bbv.ui import qt
-            except ImportError as e:
-                print(e)
-                print('Please install PySide6')
-                sys.exit(1)
+            if not check_qt:
+                try:
+                    from bbv.ui import qt
+                except ImportError as e:
+                    print(e)
+                    print('Please install PySide6')
+                    sys.exit(1)
             os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
             os.environ['QT_QUICK_BACKEND'] = 'software'
             os.environ['QSG_RENDER_LOOP'] = 'basic'
