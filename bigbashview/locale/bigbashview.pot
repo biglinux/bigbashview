@@ -11,142 +11,23 @@ msgstr  "Project-Id-Version: bigbashview\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
         "Language: \n"
         "MIME-Version: 1.0\n"
-        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#
 msgid   "Information"
 msgstr  ""
 
-#
 msgid   "License: "
 msgstr  ""
 
-#
 msgid   "Created by:"
 msgstr  ""
 
-#
 msgid   "Date:"
 msgstr  ""
 
-#
 msgid   "Code URL:"
 msgstr  ""
 
-#
 msgid   "Project URL:"
-msgstr  ""
-
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 72
-msgid   "Voltar"
-msgstr  ""
-
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 74
-msgid   "Avançar"
-msgstr  ""
-
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 76
-msgid   "Recarregar"
-msgstr  ""
-
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 78
-msgid   "Copiar endereço do link"
-msgstr  ""
-
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 80
-msgid   "Inspecionar"
-msgstr  ""
-
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 82
-msgid   "Copiar imagem"
-msgstr  ""
-
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/ui/qt.py, line: 84
-msgid   "Copiar endereço da imagem"
-msgstr  ""
-
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 16
-msgid   "Bem-vindo ao BigBashView"
-msgstr  ""
-
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 17
-msgid   "Nome do Host"
-msgstr  ""
-
-#
-# File: bigbashview/bigbashview/usr/lib/python3/dist-packages/bbv/server/html.py, line: 18
-msgid   "Ambiente de Trabalho"
 msgstr  ""
