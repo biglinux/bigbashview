@@ -176,19 +176,10 @@ class Window(QWidget):
         elif window_state == "fullscreen":
             self.setWindowState(Qt.WindowFullScreen)
             self.show()
-        elif window_state == "maximizedTop":
-            self.setWindowState(Qt.WindowMaximized)
-            self.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.show()
         elif window_state == "frameless":
             self.setWindowFlags(Qt.FramelessWindowHint)
             self.show()
-        elif window_state == "framelessTop":
-            self.setWindowFlags(
-                Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
-            )
-            self.show()
-        elif window_state == "fixedTop":
+        elif window_state == "alwaystop":
             self.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.show()
         else:
@@ -201,9 +192,7 @@ class Window(QWidget):
         self.app.quit()
 
     def title_changed(self, title):
-        os.system('''
-        xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f2)" \
-              -f WM_CLASS 8s -set WM_CLASS "%s"''' % title)
+        os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS \"{title}\"")
         self.setWindowTitle(title)
 
     def icon_changed(self, icon):
@@ -226,7 +215,7 @@ class Window(QWidget):
         cp = display.availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-        if window_state in ("fixed", "fixedTop"):
+        if window_state == "fixed":
             self.setFixedSize(width, height)
 
     def style(self, colorful):
