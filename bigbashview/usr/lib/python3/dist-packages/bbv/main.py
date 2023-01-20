@@ -74,6 +74,9 @@ class Main:
             '-c', '--color', default=None,
             help='Background Color: black or none')
         parser.add_argument(
+            '-d', '--directory', default=None,
+            help='Work Directory: /path/to/directory')
+        parser.add_argument(
             '-i', '--icon', default=globaldata.ICON,
             help='Window Icon: /path/to/image')
         parser.add_argument(
@@ -96,18 +99,26 @@ class Main:
         args = parser.parse_args()
         self.url = args.url
 
+        if args.directory and os.path.isdir(args.directory):
+            os.chdir(args.directory)
+
+        if args.name:
+            globaldata.TITLE = args.name
+
+        if os.path.exists(args.icon):
+            globaldata.ICON = args.icon
+
+        if args.process:
+            setproctitle(args.process)
+
         geom = args.size.split('x')
         try:
             width, height = geom
             self.width = int(width)
             self.height = int(height)
-        except ValueError as e:
-            print(e)
+        except ValueError:
             parser.print_help()
             sys.exit(1)
-
-        if os.path.exists(args.icon):
-            globaldata.ICON = args.icon
 
         if args.color in ['black', 'none', None]:
             self.color = args.color
@@ -130,12 +141,6 @@ class Main:
         else:
             parser.print_help()
             sys.exit(1)
-
-        if args.name is not None:
-            globaldata.TITLE = args.name
-
-        if args.process:
-            setproctitle(args.process)
 
         check_qt = check_gtk = False
         # construct window
