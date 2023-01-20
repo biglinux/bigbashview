@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-python3 /usr/lib/python3/dist-packages/bbv/bigbashview.py "$@"
+exec python3 /usr/lib/python3/dist-packages/bbv/bigbashview.py "$@"
