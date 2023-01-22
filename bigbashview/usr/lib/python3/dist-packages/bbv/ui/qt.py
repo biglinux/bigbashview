@@ -35,8 +35,8 @@ from bbv.globaldata import ICON, TITLE
 # Import gettext module
 import gettext
 lang_translations = gettext.translation(
-    'bigbashview',
-    localedir='/usr/share/locale',
+    "bigbashview",
+    localedir="/usr/share/locale",
     fallback=True
 )
 lang_translations.install()
@@ -69,33 +69,33 @@ class Window(QWidget):
 
         # contextmenu translations
         back = self.web.pageAction(QEP.Back)
-        back.setText(_('Voltar'))
+        back.setText(_("Voltar"))
         forward = self.web.pageAction(QEP.Forward)
-        forward.setText(_('Avançar'))
+        forward.setText(_("Avançar"))
         update = self.web.pageAction(QEP.Reload)
-        update.setText(_('Recarregar'))
+        update.setText(_("Recarregar"))
         copy = self.web.pageAction(QEP.Copy)
-        copy.setText(_('Copiar'))
+        copy.setText(_("Copiar"))
         cut = self.web.pageAction(QEP.Cut)
-        cut.setText(_('Recortar'))
+        cut.setText(_("Recortar"))
         paste = self.web.pageAction(QEP.Paste)
-        paste.setText(_('Colar'))
+        paste.setText(_("Colar"))
         select_all = self.web.pageAction(QEP.SelectAll)
-        select_all.setText(_('Selecionar tudo'))
+        select_all.setText(_("Selecionar tudo"))
         undo = self.web.pageAction(QEP.Undo)
-        undo.setText(_('Desfazer'))
+        undo.setText(_("Desfazer"))
         redo = self.web.pageAction(QEP.Redo)
-        redo.setText(_('Refazer'))
+        redo.setText(_("Refazer"))
         paste_style = self.web.pageAction(QEP.PasteAndMatchStyle)
         paste_style.setVisible(False)
         copy_link = self.web.pageAction(QEP.CopyLinkToClipboard)
-        copy_link.setText(_('Copiar endereço do link'))
+        copy_link.setText(_("Copiar endereço do link"))
         inspect_element = self.web.pageAction(QEP.InspectElement)
-        inspect_element.setText(_('Inspecionar'))
+        inspect_element.setText(_("Inspecionar"))
         copy_img = self.web.pageAction(QEP.CopyImageToClipboard)
-        copy_img.setText(_('Copiar imagem'))
+        copy_img.setText(_("Copiar imagem"))
         copy_link_img = self.web.pageAction(QEP.CopyImageUrlToClipboard)
-        copy_link_img.setText(_('Copiar endereço da imagem'))
+        copy_link_img.setText(_("Copiar endereço da imagem"))
         save_page = self.web.pageAction(QEP.SavePage)
         save_page.setVisible(False)
         view_source = self.web.pageAction(QEP.ViewSource)
@@ -154,7 +154,7 @@ class Window(QWidget):
             self.setLayout(self.hbox)
 
     def add_script(self, event):
-        script = '''
+        script = """
         function _run(run){
         //https://dmitripavlutin.com/javascript-fetch-async-await/#4-canceling-a-fetch-request
 
@@ -165,7 +165,7 @@ class Window(QWidget):
             // Step 2: make the fetch() aware of controller.signal
             fetch('/execute$'+run, { signal: controller.signal });
         };
-        '''
+        """
         if event:
             self.web.page().runJavaScript(script)
 
@@ -192,7 +192,7 @@ class Window(QWidget):
         self.app.quit()
 
     def title_changed(self, title):
-        os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS \"{title}\"")
+        os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS '{title}'")
         self.setWindowTitle(title)
 
     def icon_changed(self, icon):
@@ -219,17 +219,15 @@ class Window(QWidget):
             self.setFixedSize(width, height)
 
     def style(self, colorful):
-        if colorful == 'black':
+        if colorful == "black":
             self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 1))
 
-        elif colorful == 'none':
+        elif colorful == "transparent":
             self.setAttribute(Qt.WA_TranslucentBackground)
             self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
 
-        elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
-            rgb = os.popen('''
-            kreadconfig5 --group WM --key activeBackground
-            ''').read().split(',')
+        elif os.environ.get("XDG_CURRENT_DESKTOP") == "KDE":
+            rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(",")
 
             if len(rgb) > 1:
                 r, g, b = rgb if len(rgb) == 3 else rgb[:-1]

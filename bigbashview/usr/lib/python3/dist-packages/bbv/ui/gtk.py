@@ -17,8 +17,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 import os
 import gi
-gi.require_version('Gtk', '3.0')
-gi.require_version('WebKit2', '4.1')
+gi.require_version("Gtk", "3.0")
+gi.require_version("WebKit2", "4.1")
 from gi.repository import Gtk, WebKit2, Gdk
 from bbv.globaldata import ICON, TITLE
 
@@ -51,11 +51,7 @@ class Window(Gtk.Window):
             inspector.show()
 
     def add_script(self, webview, event):
-        script = '''
-        function _run(run){
-            fetch("/execute$"+run);
-        };
-        '''
+        script = "function _run(run){fetch('/execute$'+run);}"
         if event == WebKit2.LoadEvent.FINISHED:
             self.webview.run_javascript(script)
 
@@ -85,7 +81,7 @@ class Window(Gtk.Window):
 
     def title_changed(self, webview, title):
         title = self.webview.get_title()
-        os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS \"{title}\"")
+        os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS '{title}'")
         self.set_title(title)
 
     def load_url(self, url):
@@ -105,14 +101,14 @@ class Window(Gtk.Window):
             self.set_resizable(False)
 
     def style(self, colorful):
-        if colorful == 'black':
+        if colorful == "black":
             self.override_background_color(
                 Gtk.StateFlags.NORMAL,
                 Gdk.RGBA(0, 0, 0, 1)
             )
             self.webview.set_background_color(Gdk.RGBA(0, 0, 0, 1))
 
-        elif colorful == 'none':
+        elif colorful == "transparent":
             screen = self.get_screen()
             visual = screen.get_rgba_visual()
             if visual is not None and screen.is_composited():
@@ -123,8 +119,8 @@ class Window(Gtk.Window):
                 )
                 self.webview.set_background_color(Gdk.RGBA(0, 0, 0, 0))
 
-        elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
-            rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
+        elif os.environ.get("XDG_CURRENT_DESKTOP") == "KDE":
+            rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(",")
 
             if len(rgb) > 1:
                 r, g, b = rgb if len(rgb) == 3 else rgb[:-1]

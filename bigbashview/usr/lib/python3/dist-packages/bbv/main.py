@@ -25,7 +25,7 @@ from bbv.server.bbv2server import run_server
 from setproctitle import setproctitle
 
 class Main:
-    """Start bbv"""
+    # Start bbv #
     def __init__(self):
         def formatter(prog):
             return argparse.RawTextHelpFormatter(
@@ -72,10 +72,7 @@ class Main:
             help='BigBashView Version')
         parser.add_argument(
             '-c', '--color', default=None,
-            help='Background Color: black or none')
-        parser.add_argument(
-            '-d', '--directory', default=None,
-            help='Work Directory: /path/to/directory')
+            help='Background Color: "black" or "transparent"')
         parser.add_argument(
             '-i', '--icon', default=globaldata.ICON,
             help='Window Icon: /path/to/image')
@@ -87,7 +84,7 @@ class Main:
             help='Process name: "Name"')
         parser.add_argument(
             '-s', '--size', default='0x0',
-            help='Window Size: [width]x[height](800x600)')
+            help='Window Size: [width]x[height]')
         parser.add_argument(
             '-t', '--toolkit', default='auto',
             help='Rendering by QtWebEngine or WebKitGTK2: qt or gtk')
@@ -99,8 +96,10 @@ class Main:
         args = parser.parse_args()
         self.url = args.url
 
-        if args.directory and os.path.isdir(args.directory):
-            os.chdir(args.directory)
+        if os.path.isfile(args.url):
+            directory = os.path.dirname(args.url)
+            if directory:
+                os.chdir(directory)
 
         if args.name:
             globaldata.TITLE = args.name
@@ -120,7 +119,7 @@ class Main:
             parser.print_help()
             sys.exit(1)
 
-        if args.color in ['black', 'none', None]:
+        if args.color in ['black', 'transparent', None]:
             self.color = args.color
         else:
             parser.print_help()
@@ -144,7 +143,7 @@ class Main:
 
         check_qt = check_gtk = False
         # construct window
-        if self.toolkit == "auto":
+        if self.toolkit == 'auto':
             try:
                 from bbv.ui import qt
                 self.toolkit = 'qt'
@@ -160,7 +159,7 @@ class Main:
                     print('Please install WebKitGtk2 or PySide6')
                     sys.exit(1)
 
-        if self.toolkit == "gtk":
+        if self.toolkit == 'gtk':
             if not check_gtk:
                 try:
                     from bbv.ui import gtk
@@ -174,7 +173,7 @@ class Main:
             if globaldata.TITLE:
                 self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
 
-        if self.toolkit == "qt":
+        if self.toolkit == 'qt':
             if not check_qt:
                 try:
                     from bbv.ui import qt
@@ -195,7 +194,7 @@ class Main:
         if self.url.find('://') == -1:
             if not self.url.startswith('/'):
                 self.url = '/'+self.url
-            self.url = "http://%s:%s%s" % (
+            self.url = 'http://%s:%s%s' % (
                 globaldata.ADDRESS,
                 globaldata.PORT,
                 self.url)
