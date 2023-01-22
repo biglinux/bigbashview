@@ -58,7 +58,7 @@ HTML = '''
             background: #FFF;
             position: absolute;
             z-index: 2;
-            top: 50%%;
+            top: 58%%;
             margin-top: 0px;
             left: 50%%;
             margin-left: -160px;
@@ -151,13 +151,13 @@ HTML = '''
                 opacity: 1;
                 filter: alpha(opacity=100);
                 width: 320px;
-                height: 450px;
-                margin-top: -210px;
+                height: 350px;
+                margin-top: -225px;
             }
         }
         .avatar{
             width: 110px;
-            height: 110px;
+            height: 82px;
             background: url(%s) no-repeat center center #FFF;
             background-size: 90%%;
             background-position-y: 5px;
@@ -184,7 +184,7 @@ HTML = '''
             animation-delay: 1s;
             -webkit-transition-timing-function: ease-in-out;
             transition-timing-function: ease-in-out;
-            margin-top: -75px;
+            margin-top: -110px;
         }
         @-webkit-keyframes avatar{
             0%%{
@@ -261,7 +261,7 @@ HTML = '''
                 left: 50%%;
                 margin-left: -250px;
                 width: 500px;
-                height: 500px;
+                height: 400px;
             }
         }
         @keyframes cover{
@@ -281,15 +281,15 @@ HTML = '''
                 left: 50%%;
                 margin-left: -250px;
                 width: 500px;
-                height: 500px;
+                height: 400px;
             }
         }
         .userinfomain{
             width: 320px;
-            height: 450px;
+            height: 290px;
             background: #FFF;
             position: absolute;
-            top: 90px;
+            top: 53px;
             left: 0;
             z-index: 2;
         }
@@ -308,7 +308,7 @@ HTML = '''
             filter: alpha(opacity=0);
             z-index: 2;
             position: absolute;
-            top: 60px;
+            margin-top: -25px;
             width: 100%%;
             -webkit-animation: heading1 0.6s forwards;
             -webkit-animation-iteration-count: 1;
@@ -357,6 +357,7 @@ HTML = '''
             z-index: 2;
             position: absolute;
             width: 100%%;
+            margin-top: -20px;
             -webkit-animation: heading2 0.6s forwards;
             -webkit-animation-iteration-count: 1;
             -webkit-animation-delay: 2.2s;
@@ -399,7 +400,7 @@ HTML = '''
             height: 1px;
             background: #EAEAEA;
             position: relative;
-            top: 230px;
+            top: 160px;
             left: 50%%;
             z-index: 4;
             opacity: 0;
@@ -453,6 +454,7 @@ HTML = '''
             left: 40px;
             z-index: 3;
             opacity: 0;
+            top: 172px;
             filter: alpha(opacity=0);
             -webkit-animation: socialinfo 0.6s forwards;
             -webkit-animation-iteration-count: 1;
