@@ -74,6 +74,9 @@ class Main:
             '-c', '--color', default=None,
             help='Background Color: "black" or "transparent"')
         parser.add_argument(
+            '-d', '--directory', default=None,
+            help='Work Directory: /path/to/directory')
+        parser.add_argument(
             '-i', '--icon', default=globaldata.ICON,
             help='Window Icon: /path/to/image')
         parser.add_argument(
@@ -96,10 +99,8 @@ class Main:
         args = parser.parse_args()
         self.url = args.url
 
-        if os.path.isfile(args.url):
-            directory = os.path.dirname(args.url)
-            if directory:
-                os.chdir(directory)
+        if args.directory and os.path.isdir(args.directory):
+            os.chdir(args.directory)
 
         if args.name:
             globaldata.TITLE = args.name
