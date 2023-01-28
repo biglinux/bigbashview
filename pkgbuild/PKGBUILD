@@ -1,5 +1,5 @@
 pkgname=bigbashview
-pkgver=$(curl https://raw.githubusercontent.com/biglinux/bigbashview/master/bigbashview/usr/lib/python3/dist-packages/bbv/globaldata.py | grep APP_VERSION  | cut -f2 -d\")_$(date +"%Y_%m_%d_%H_%M")
+pkgver=$(curl https://raw.githubusercontent.com/biglinux/bigbashview/master/bigbashview/usr/lib/bbv/globaldata.py | grep APP_VERSION  | cut -f2 -d\")_$(date +"%Y_%m_%d_%H_%M")
 pkgrel=2
 arch=('any')
 license=('GPL')
