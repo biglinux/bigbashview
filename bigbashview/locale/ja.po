@@ -33,3 +33,83 @@ msgstr "コードのリンク:"
 
 msgid "Project URL:"
 msgstr "プロジェクトの URL:"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
+msgid "Voltar"
+msgstr "戻ってきます"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 74
+msgid "Avançar"
+msgstr "前進"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 76
+msgid "Recarregar"
+msgstr "積み直す"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 78
+msgid "Copiar"
+msgstr "写し"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 80
+msgid "Recortar"
+msgstr "切る"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
+msgid "Colar"
+msgstr "首飾り"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
+msgid "Selecionar tudo"
+msgstr "すべて選択"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
+msgid "Desfazer"
+msgstr "外す"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
+msgid "Refazer"
+msgstr "やり直す"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
+msgid "Copiar endereço do link"
+msgstr "リンクアドレスをコピー"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
+msgid "Inspecionar"
+msgstr "検査する"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
+msgid "Copiar imagem"
+msgstr "画像をコピー"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
+msgid "Copiar endereço da imagem"
+msgstr "画像アドレスをコピー"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "ビッグバッシュビューへようこそ"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "ホスト名"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "働く環境"

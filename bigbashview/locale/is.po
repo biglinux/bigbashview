@@ -33,3 +33,83 @@ msgstr "Vefslóð:"
 
 msgid "Project URL:"
 msgstr "Vefslóð verkefnis:"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
+msgid "Voltar"
+msgstr "Komdu aftur"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 74
+msgid "Avançar"
+msgstr "Fyrirfram"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 76
+msgid "Recarregar"
+msgstr "Endurhlaða"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 78
+msgid "Copiar"
+msgstr "Afrit"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 80
+msgid "Recortar"
+msgstr "Skera"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
+msgid "Colar"
+msgstr "Hálsfesti"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
+msgid "Selecionar tudo"
+msgstr "Velja allt"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
+msgid "Desfazer"
+msgstr "Afturkalla"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
+msgid "Refazer"
+msgstr "Endurgera"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
+msgid "Copiar endereço do link"
+msgstr "Afrita heimilisfang tengils"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
+msgid "Inspecionar"
+msgstr "Skoða"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
+msgid "Copiar imagem"
+msgstr "Afrita mynd"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
+msgid "Copiar endereço da imagem"
+msgstr "Afrita heimilisfang myndar"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Velkomin á BigBashView"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Nafn gestgjafa"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Vinnuumhverfi"

@@ -33,3 +33,83 @@ msgstr "Kod URL'si:"
 
 msgid "Project URL:"
 msgstr "Proje URL'si:"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
+msgid "Voltar"
+msgstr "Gene gel"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 74
+msgid "Avançar"
+msgstr "İlerlemek"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 76
+msgid "Recarregar"
+msgstr "Yeni -den yükle"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 78
+msgid "Copiar"
+msgstr "Kopya etmek"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 80
+msgid "Recortar"
+msgstr "Kesmek"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
+msgid "Colar"
+msgstr "Kolye"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
+msgid "Selecionar tudo"
+msgstr "Tümünü seç"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
+msgid "Desfazer"
+msgstr "Geri almak"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
+msgid "Refazer"
+msgstr "Yinele"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
+msgid "Copiar endereço do link"
+msgstr "Bağlantı adresini kopyala"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
+msgid "Inspecionar"
+msgstr "Incelemek"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
+msgid "Copiar imagem"
+msgstr "Resmi kopyala"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
+msgid "Copiar endereço da imagem"
+msgstr "Resim adresini kopyala"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "BigBashView'e Hoş Geldiniz"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Ana Bilgisayar Adı"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Çalışma Ortamı"
