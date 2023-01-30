@@ -40,81 +40,129 @@ msgid "Project URL:"
 msgstr "Project URL:"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
 msgid "Voltar"
 msgstr "Voltar"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 74
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
 msgid "Avançar"
 msgstr "Avançar"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 76
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
 msgid "Recarregar"
 msgstr "Recarregar"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 78
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
 msgid "Copiar"
 msgstr "Copiar"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 80
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 90
 msgid "Recortar"
 msgstr "Recortar"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
 msgid "Colar"
 msgstr "Colar"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
 msgid "Selecionar tudo"
 msgstr "Selecionar tudo"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
 msgid "Desfazer"
 msgstr "Desfazer"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Refazer"
 msgstr "Refazer"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 102
 msgid "Copiar endereço do link"
 msgstr "Copiar endereço do link"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 104
 msgid "Inspecionar"
 msgstr "Inspecionar"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 106
 msgid "Copiar imagem"
 msgstr "Copiar imagem"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 108
 msgid "Copiar endereço da imagem"
 msgstr "Copiar endereço da imagem"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
 msgid "Bem-vindo ao BigBashView"
 msgstr "Bem-vindo ao BigBashView"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
 msgid "Nome do Host"
 msgstr "Nome do Host"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "Ambiente de Trabalho"
