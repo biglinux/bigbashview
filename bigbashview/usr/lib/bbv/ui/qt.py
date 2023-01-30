@@ -19,18 +19,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os
-from PySide6.QtCore import QUrl, Qt
-from PySide6.QtWidgets import (
-    QWidget, QHBoxLayout,
-    QSplitter, QApplication
-)
-from PySide6.QtGui import (
-    QIcon, QColor, QKeySequence,
-    QShortcut, QCursor
-)
-from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWebEngineCore import QWebEnginePage as QEP
+from PyQt5.QtCore import QUrl, Qt
 from bbv.globaldata import ICON, TITLE
+
+from PyQt5.QtWidgets import (
+    QWidget,
+    QHBoxLayout,
+    QShortcut,
+    QSplitter,
+    QApplication
+)
+
+from PyQt5.QtGui import (
+    QIcon,
+    QColor,
+    QKeySequence,
+    QCursor
+)
+
+from PyQt5.QtWebEngineWidgets import (
+    QWebEngineView,
+    QWebEnginePage as QEP
+)
 
 # Import gettext module
 import gettext
@@ -142,7 +152,7 @@ class Window(QWidget):
             self.splitter2.hide()
             self.splitter.addWidget(self.web)
             self.splitter.addWidget(self.inspector)
-            self.splitter.setSizes([(self.width()/3)*2, self.width()/3])
+            self.splitter.setSizes([(int(self.width()/3))*2, int(self.width()/3)])
             self.splitter.show()
             self.hbox.addWidget(self.splitter)
             self.setLayout(self.hbox)
@@ -206,9 +216,9 @@ class Window(QWidget):
         display = self.app.screenAt(QCursor().pos())
         size = display.availableGeometry()
         if width <= 0:
-            width = size.width()/2
+            width = int(size.width()/2)
         if height <= 0:
-            height = size.height()/2
+            height = int(size.height()/2)
 
         self.resize(width, height)
         qr = self.frameGeometry()
