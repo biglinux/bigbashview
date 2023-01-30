@@ -33,3 +33,83 @@ msgstr "כתובת URL של קוד:"
 
 msgid "Project URL:"
 msgstr "כתובת האתר של הפרויקט:"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
+msgid "Voltar"
+msgstr "תחזור"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 74
+msgid "Avançar"
+msgstr "התקדם"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 76
+msgid "Recarregar"
+msgstr "טען מחדש"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 78
+msgid "Copiar"
+msgstr "עותק"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 80
+msgid "Recortar"
+msgstr "חתך"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
+msgid "Colar"
+msgstr "שרשרת"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
+msgid "Selecionar tudo"
+msgstr "בחר הכל"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
+msgid "Desfazer"
+msgstr "לבטל"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
+msgid "Refazer"
+msgstr "ביצוע חוזר"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
+msgid "Copiar endereço do link"
+msgstr "העתק כתובת קישור"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
+msgid "Inspecionar"
+msgstr "לבדוק"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
+msgid "Copiar imagem"
+msgstr "העתקת תמונה"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
+msgid "Copiar endereço da imagem"
+msgstr "העתק כתובת תמונה"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "ברוכים הבאים לביגבאשוויו"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "שם מחשב מארח"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "סביבת עבודה"

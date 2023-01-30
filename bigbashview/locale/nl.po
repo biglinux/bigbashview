@@ -33,3 +33,83 @@ msgstr "Code URL:"
 
 msgid "Project URL:"
 msgstr "Url van het project:"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
+msgid "Voltar"
+msgstr "Kom terug"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 74
+msgid "Avançar"
+msgstr "Voorschot"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 76
+msgid "Recarregar"
+msgstr "Herladen"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 78
+msgid "Copiar"
+msgstr "Kopiëren"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 80
+msgid "Recortar"
+msgstr "Snijden"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
+msgid "Colar"
+msgstr "Halssnoer"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
+msgid "Selecionar tudo"
+msgstr "Alles selecteren"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
+msgid "Desfazer"
+msgstr "Ongedaan maken"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
+msgid "Refazer"
+msgstr "Opnieuw"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
+msgid "Copiar endereço do link"
+msgstr "Linkadres kopiëren"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
+msgid "Inspecionar"
+msgstr "Inspecteren"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
+msgid "Copiar imagem"
+msgstr "Afbeelding kopiëren"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
+msgid "Copiar endereço da imagem"
+msgstr "Afbeeldingsadres kopiëren"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Welkom bij BigBashView"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Hostnaam"
+
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Werkomgeving"
