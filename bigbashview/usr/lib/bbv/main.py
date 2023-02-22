@@ -187,7 +187,6 @@ class Main:
             os.environ['QSG_RENDER_LOOP'] = 'basic'
             os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
             os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
-            os.environ['QT_LOGGING_RULES'] = '*=false'
             self.window = qt.Window()
 
     def run(self, start_server=True):
