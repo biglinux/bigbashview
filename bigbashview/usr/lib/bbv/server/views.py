@@ -135,7 +135,7 @@ class default_handler(url_handler):
     def bbv_compat_mode(self, options, content, query):
         execute_ext = ('.sh', '.sh.html', '.sh.htm', '.sh.php',
                        '.sh.py', '.sh.lua', '.sh.rb', '.sh.pl',
-                       '.sh.lisp', '.sh.jl', '.run')
+                       '.sh.lisp', '.sh.jl', '.run', '.sh.js')
         content_ext = ('.htm', '.html')
         content_plain_ext = ('.txt')
         content_css_ext = ('.css')
