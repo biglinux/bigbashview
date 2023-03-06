@@ -48,10 +48,16 @@ class Main:
  BigBashView is a script to run Bash+HTML in a Desktop WebView.
             ''',
             epilog='''
+ File names that autoload with the -d/--directory option:
+
+ index.sh     | main.sh     | index.run     | main.run
+ index.htm    | main.htm    | index.html    | main.html
+ index.sh.htm | main.sh.htm | index.sh.html | main.sh.html
+ ----------------------------------------------------------
  PlainText Extension:   .txt              Text Content
- --------------------------------------------------------
+ ----------------------------------------------------------
  HTML Extensions:       .html   |.htm     HTML Content
- --------------------------------------------------------
+ ----------------------------------------------------------
  Executable Extensions: .sh     |.run     Shell Script
                         .sh.html|.sh.htm  Html Markup
                         .sh.php           PHP Script
@@ -62,8 +68,9 @@ class Main:
                         .sh.lisp          Lisp Script
                         .sh.jl            Julia Script
                         .sh.js            Node Script
- --------------------------------------------------------
-     Note: All executable files must have the shebang''',
+ ----------------------------------------------------------
+     Note: All executable files must have the shebang
+            ''',
             formatter_class=formatter)
 
         parser.add_argument('url', default='/', nargs='?', help='URL/File')
@@ -102,6 +109,18 @@ class Main:
 
         if args.directory and os.path.isdir(args.directory):
             os.chdir(args.directory)
+            if self.url == '/':
+                files = list(filter(os.path.isfile, os.listdir()))
+                if files:
+                    for file in files:
+                        if file in [
+                            'index.sh', 'index.sh.htm', 'index.sh.html',
+                            'index.htm', 'index.html', 'main.sh.html',
+                            'main.htm', 'main.sh', 'main.sh.htm',
+                            'main.html', 'index.run'
+                        ]:
+                            self.url = f'./{file}'
+                            break
 
         if args.name:
             globaldata.TITLE = args.name
