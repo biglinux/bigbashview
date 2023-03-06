@@ -61,6 +61,7 @@ class Main:
                         .sh.pl            Perl Script
                         .sh.lisp          Lisp Script
                         .sh.jl            Julia Script
+                        .sh.js            Node Script
  --------------------------------------------------------
      Note: All executable files must have the shebang''',
             formatter_class=formatter)
