@@ -59,7 +59,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
@@ -81,7 +84,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 74
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
@@ -103,7 +109,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 76
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
@@ -125,7 +134,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 78
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
@@ -147,7 +159,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 80
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 90
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 90
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 90
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 90
@@ -169,7 +184,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 82
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
@@ -191,7 +209,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 84
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
@@ -213,7 +234,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 86
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
@@ -235,7 +259,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 88
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
@@ -257,7 +284,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 92
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 102
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 102
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 102
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 102
@@ -279,7 +309,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 94
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 104
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 104
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 104
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 104
@@ -301,7 +334,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 96
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 106
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 106
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 106
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 106
@@ -323,7 +359,10 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
+# File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 108
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 108
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 108
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 108
@@ -345,6 +384,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
@@ -367,6 +409,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
@@ -389,6 +434,9 @@ msgstr  ""
 #
 # #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
