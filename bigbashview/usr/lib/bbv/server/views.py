@@ -25,6 +25,7 @@ from bbv import globaldata
 import subprocess
 import os
 import web
+from shutil import which
 
 
 class url_handler(object):
@@ -97,8 +98,11 @@ class execute_handler(url_handler):
                 env=env
             )
         else:
+            bash_bin = which("bash")
+            bash_bin = bash_bin if bash_bin is not None else "/bin/bash"
+
             po = subprocess.Popen(
-                '/bin/bash {}'.format(command),
+                f'{bash_bin} {command}',
                 stdin=None,
                 stdout=subprocess.PIPE,
                 shell=True,
