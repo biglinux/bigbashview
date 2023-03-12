@@ -19,7 +19,7 @@
 import os
 
 APP_NAME = "BigBashView"
-APP_VERSION = "3.8.0"
+APP_VERSION = "3.8.1"
 PROGDIR = os.path.dirname(os.path.realpath(__file__))
 ICON = os.sep.join((PROGDIR, "img", "icone.png"))
 LOGO = os.sep.join((PROGDIR, "img", "logo.png"))

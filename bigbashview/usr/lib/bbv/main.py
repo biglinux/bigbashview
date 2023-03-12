@@ -48,7 +48,7 @@ class Main:
  BigBashView is a script to run Bash+HTML in a Desktop WebView.
             ''',
             epilog='''
- File names that autoload with the -d/--directory option:
+ Filenames that autoload with the -d/--directory option:
 
  index.sh     | main.sh     | index.run     | main.run
  index.htm    | main.htm    | index.html    | main.html
@@ -114,10 +114,9 @@ class Main:
                 if files:
                     for file in files:
                         if file in [
-                            'index.sh', 'index.sh.htm', 'index.sh.html',
-                            'index.htm', 'index.html', 'main.sh.html',
-                            'main.htm', 'main.sh', 'main.sh.htm',
-                            'main.html', 'index.run'
+                            'index.sh'    , 'main.sh'    , 'index.run'    , 'main.run' ,
+                            'index.htm'   , 'main.htm'   , 'index.html'   , 'main.html',
+                            'index.sh.htm', 'main.sh.htm', 'index.sh.html', 'main.sh.html'
                         ]:
                             self.url = f'./{file}'
                             break
