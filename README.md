@@ -1,8 +1,10 @@
-<img align="center" src="https://raw.githubusercontent.com/biglinux/bigbashview/main/bigbashview/usr/share/bigbashview/demos/documentation_images/bigbashview_logo.png" alt="Logo BigBashView" />
+# BigBashView
+
+<img align="center" src="assets/bigbashview-logo.png" alt="Logo do BigBashView">
 
 Graphical Frontends for ShellScripts using HTML/JS/CSS
 
-**BigBashView** is a interface for rendering bash output using QWebEngine or WebKitGtk2.
+Is a interface for rendering bash output using QWebEngine or WebKitGtk2.
 It rendering also supports a wide variety of languages, such as Python, Ruby, Perl and PHP.
 
 ## Advantages
@@ -11,22 +13,39 @@ It rendering also supports a wide variety of languages, such as Python, Ruby, Pe
 - Demo for all functions available!
 - Smooth learning curve!
 
-## Installing
+## Pré-requisites
+
+- Python >= 3.0
+- Git >= 2.0
+
+## Install
 
 ### Arch Based
 
 ```sh
-sudo pacman -S bigbashview
+# Python dependencies
+pip install web.py
+pip install setproctitle
+pip install PyQt6-WebEngine
+pip install PyQtWebEngine
+
+# Clone project
+git clone git@github.com:biglinux/bigbashview.git
+cd bigbashview/pkgbuild/
+
+# Remove broken dependencies
+sed -Ei 's/depends/\#depends/' PKGBUILD
+
+# Compile and install
+makepkg -si
+
+# Test
+bigbashview 'execute$echo Hello World!'
 ```
 
-### No Arch Based
-
-You just need to download and extract the package:
-
-- [python 3.x](http://www.python.org/)
-- [WebPy](http://webpy.org/)
-- [PyQT5](http://www.riverbankcomputing.co.uk/software/pyqt/intro)
-- [Gtk3](https://www.gtk.org/)
+<p align="center">
+  <img align="center" src="assets/bigbashview-splash-screen.png" alt="Tela de boas vidas do BigBashView" />
+</p>
 
 ## Usage
 
@@ -78,7 +97,9 @@ To create a hello world window, just call BigBashView as follows:
 ./bigbashview.py 'execute$echo Hello World!'
 ```
 
-<img align="center" src="https://raw.githubusercontent.com/thor27/bigbashview/python3/demos/documentation_images/hello01.png" alt="Janela exibindo um Hellow Word!" />
+<p align="center">
+  <img align="center" src="assets/bigbashview-hello-world.png" alt="Janela exibindo um Hellow Word!">
+</p>
 
 To create a more fancy hello world, you coud try to create a script and call it, as follows:
 
@@ -125,7 +146,7 @@ The available commands are:
   </tr>
   <tr>
     <td><code>execute</code></td>
-    <td>execute `<value>` in your shell environment, and returns to the page everything that was printed to stdout</td>
+    <td>execute <code>value</code> in your shell environment, and returns to the page everything that was printed to stdout</td>
   </tr>
   <tr>
     <td><code>content</code></td>
@@ -146,7 +167,7 @@ The available options are:
   </tr>
   <tr>
     <td><code>close</code></td>
-    <td>_only for execute command_ Closes BigBashView after `<value>` execution</td>
+    <td>_only for execute command_ Closes BigBashView after <code>value</code> execution</td>
   </tr>
 </table>
 
