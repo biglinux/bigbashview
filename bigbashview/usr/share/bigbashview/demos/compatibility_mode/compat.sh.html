@@ -1,4 +1,6 @@
-URL=`pwd`
+#!/usr/bin/env bash
+
+URL=$(pwd)
 echo '
 <html>
     <head>
@@ -11,7 +13,5 @@ echo "
         <a href='test.sh'> execute test.sh (with relative path)</a><br/>
         <a href='./test.html'> show html content of test.html (with relative path)</a><br/>
         <a href='$URL/test.txt'> show text plain content of test.txt</a><br/>
-        
-        
     </body>
 </html>"

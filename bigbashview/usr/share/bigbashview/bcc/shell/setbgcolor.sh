@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-if [ "$1" = "true" ]; then
-    echo '1' > ~/.config/bigbashview_lightmode
+if [[ "$1" = "true" ]]; then
+	echo '1' >~/.config/bigbashview_lightmode
 else
-    echo '0' > ~/.config/bigbashview_lightmode
+	echo '0' >~/.config/bigbashview_lightmode
 fi
