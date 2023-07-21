@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+readonly red=$(tput setaf 124)
+readonly green=$(tput setaf 2)
+readonly pink=$(tput setaf 129)
+readonly reset=$(tput sgr0)
+
+function sh_debug {
+   export PS4='${red}${0##*/}${green}[$FUNCNAME]${pink}[$LINENO]${reset} '
+   set -x
+   #set -e
+   shopt -s extglob
+   #Only to debug
+   #rm -R "$HOME/.config/bigcontrolcenter/"
+   #Don't group windows
+   #xprop -id "$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)" -f WM_CLASS 8s -set WM_CLASS "$$"
+}
+
 function sh_getbgcolor {
 	local cfile="$HOME/.config/bigbashview_lightmode"
 	local lightmode=0
