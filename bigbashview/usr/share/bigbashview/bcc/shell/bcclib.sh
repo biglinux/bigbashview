@@ -53,7 +53,7 @@ function sh_setbgcolor {
 	echo "$lightmode" >"$cfile"
 }
 
-function sh_language_hebraico {
+function sh_lang_he {
 	grep ^he <<< "$LANG"
 	return "$?"
 }
@@ -81,5 +81,39 @@ function sh_catprintf {
 
 function sh_printfile {
 	sh_catecho "$1"
+}
+
+function sh_installed_pkgs {
+	echo $(pacman -Q | cut -f1 -d" ")
+}
+
+function sh_info_msg {
+	printf "\033[1m$@\n\033[m"
+}
+
+function sh_get_greeting_message {
+   local hora_atual=$(date +%H)
+   local greeting_message
+
+   if (( hora_atual >= 6 && hora_atual < 12 )); then
+      greeting_message=$"Bom dia"
+   elif (( hora_atual >= 12 && hora_atual < 18 )); then
+      greeting_message=$"Boa tarde"
+   else
+      greeting_message=$"Boa noite"
+   fi
+   echo "$greeting_message"
+}
+
+function sh_get_user {
+	[[ "$USER" != "biglinux" ]] && echo " $USER"
+}
+
+function sh_get_lang {
+	echo "$LANG"
+}
+
+function sh_get_locale {
+	echo "$(grep _ <(locale -a) | head -1 | cut -c1-5)"
 }
 
