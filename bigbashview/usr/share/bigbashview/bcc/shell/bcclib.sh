@@ -9,7 +9,7 @@ function sh_debug {
    export PS4='${red}${0##*/}${green}[$FUNCNAME]${pink}[$LINENO]${reset} '
    set -x
    #set -e
-   shopt -s extglob
+	#shopt -s extglob
    #Only to debug
    #rm -R "$HOME/.config/bigcontrolcenter/"
    #Don't group windows
@@ -92,7 +92,7 @@ function sh_info_msg {
 }
 
 function sh_get_greeting_message {
-   local hora_atual=$(date +%H)
+   local -i hora_atual=$(date +%k)
    local greeting_message
 
    if (( hora_atual >= 6 && hora_atual < 12 )); then
