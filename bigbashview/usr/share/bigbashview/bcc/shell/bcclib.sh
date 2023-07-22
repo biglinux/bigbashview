@@ -117,3 +117,7 @@ function sh_get_locale {
 	echo "$(grep _ <(locale -a) | head -1 | cut -c1-5)"
 }
 
+function sh_ignore_error {
+	"$@" 2>/dev/null
+	return 0
+}
