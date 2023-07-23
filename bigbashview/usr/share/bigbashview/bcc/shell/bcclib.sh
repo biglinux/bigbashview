@@ -121,3 +121,40 @@ function sh_ignore_error {
 	"$@" 2>/dev/null
 	return 0
 }
+
+function sh_div_lang {
+	if grep ^he <<< "$LANG"; then
+		echo '<div class="wrapper" style="flex-direction: row-reverse;">'
+	else
+		echo '<div class="wrapper">'
+	fi
+}
+
+function info {
+	whiptail                   \
+      --fb                    \
+      --clear                 \
+      --backtitle "[debug]$0" \
+      --title     "[debug]$0" \
+      --yesno     "${*}\n" \
+   0 40
+   result=$?
+   if (( $result )); then
+      exit
+   fi
+   return $result
+}
+
+function sh_splitarray {
+	local str=("$1")
+	local pos="$2"
+	local sep="${3:-'|'}"
+	local array
+
+	[[ $# -eq 3 && "$pos" = "|" && "$sep" =~ ^[0-9]+$ ]] && { sep="$2"; pos="$3";}
+	[[ $# -eq 2 && "$pos" = "$sep"                    ]] && { sep="$pos"; pos=1;}
+	[[ $# -eq 1 || ! "$pos" =~ ^[0-9]+$               ]] && { pos=1; }
+
+	IFS="$sep" read -r -a array <<< "${str[@]}"
+	echo "${array[pos-1]}"
+}
