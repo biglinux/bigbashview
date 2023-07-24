@@ -158,3 +158,13 @@ function sh_splitarray {
 	IFS="$sep" read -r -a array <<< "${str[@]}"
 	echo "${array[pos-1]}"
 }
+
+function sh_linuxHardware {
+	if [ $# -gt 0 ]; then
+		xdg-open https://linux-hardware.org/?id=$*
+	fi
+}
+
+function sh_linuxHardware_run { sh_linuxHardware "$@"; }
+function sh_linuxhardware_run { sh_linuxHardware "$@"; }
+function sh_linuxhardware     { sh_linuxHardware "$@"; }
