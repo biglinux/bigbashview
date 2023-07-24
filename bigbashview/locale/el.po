@@ -113,3 +113,12 @@ msgstr "Όνομα κεντρικού υπολογιστή"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "Εργασιακό Περιβάλλον"
+
+msgid "Bom dia"
+msgstr "Καλημέρα"
+
+msgid "Boa tarde"
+msgstr "Καλό απόγευμα"
+
+msgid "Boa noite"
+msgstr "Καληνύχτα"

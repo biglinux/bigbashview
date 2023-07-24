@@ -113,3 +113,12 @@ msgstr "호스트 이름"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "작업 환경"
+
+msgid "Bom dia"
+msgstr "안녕하세요"
+
+msgid "Boa tarde"
+msgstr "안녕하세요"
+
+msgid "Boa noite"
+msgstr "안녕히 주무세요"
