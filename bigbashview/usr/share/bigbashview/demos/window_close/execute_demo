@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 python3 ../../bigbashview.py 'content$close.html'
 
