@@ -113,3 +113,12 @@ msgstr "Vertsnavn"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "Arbeidsmiljø"
+
+msgid "Bom dia"
+msgstr "God morgen"
+
+msgid "Boa tarde"
+msgstr "God ettermiddag"
+
+msgid "Boa noite"
+msgstr "God natt"

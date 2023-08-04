@@ -113,3 +113,12 @@ msgstr "Nombre de host"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "Ambiente laboral"
+
+msgid "Bom dia"
+msgstr "Buenos días"
+
+msgid "Boa tarde"
+msgstr "Buenas tardes"
+
+msgid "Boa noite"
+msgstr "Buenas noches"

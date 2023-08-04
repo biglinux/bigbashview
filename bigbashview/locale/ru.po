@@ -113,3 +113,12 @@ msgstr "Имя хоста"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "Рабочая среда"
+
+msgid "Bom dia"
+msgstr "Доброе утро"
+
+msgid "Boa tarde"
+msgstr "Добрый день"
+
+msgid "Boa noite"
+msgstr "Спокойной ночи"

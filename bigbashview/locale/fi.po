@@ -113,3 +113,12 @@ msgstr "Isännän nimi"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "Työympäristö"
+
+msgid "Bom dia"
+msgstr "Hyvää huomenta"
+
+msgid "Boa tarde"
+msgstr "Hyvää iltapäivää"
+
+msgid "Boa noite"
+msgstr "Hyvää yötä"

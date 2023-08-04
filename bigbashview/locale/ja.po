@@ -113,3 +113,12 @@ msgstr "ホスト名"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "働く環境"
+
+msgid "Bom dia"
+msgstr "おはようございます"
+
+msgid "Boa tarde"
+msgstr "こんにちは"
+
+msgid "Boa noite"
+msgstr "おやすみなさい"

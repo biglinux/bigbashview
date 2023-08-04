@@ -113,3 +113,12 @@ msgstr "Ana Bilgisayar Adı"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "Çalışma Ortamı"
+
+msgid "Bom dia"
+msgstr "Günaydın"
+
+msgid "Boa tarde"
+msgstr "İyi günler"
+
+msgid "Boa noite"
+msgstr "İyi geceler"
