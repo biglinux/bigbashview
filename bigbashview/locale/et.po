@@ -113,3 +113,12 @@ msgstr "Hosti nimi"
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid "Ambiente de Trabalho"
 msgstr "Töökeskkond"
+
+msgid "Bom dia"
+msgstr "Tere hommikust"
+
+msgid "Boa tarde"
+msgstr "Tere päevast"
+
+msgid "Boa noite"
+msgstr "Head ööd"
