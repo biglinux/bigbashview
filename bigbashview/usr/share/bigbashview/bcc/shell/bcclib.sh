@@ -33,10 +33,21 @@
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 #  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+APP="${0##*/}"
+_VERSION_="1.0.0-20230726"
 red=$(tput setaf 124)
 green=$(tput setaf 2)
 pink=$(tput setaf 129)
 reset=$(tput sgr0)
+
+function sh_diahora {
+	DIAHORA=$(date +"%d%m%Y-%T" | sed 's/://g')
+	printf "%s\n" "$DIAHORA"
+}
+export -f sh_diahora
+
+BOOTLOG="/tmp/$APP-$(sh_diahora).log"
+LOGGER='/dev/tty8'
 
 function sh_debug {
 	export PS4='${red}${0##*/}${green}[$FUNCNAME]${pink}[$LINENO]${reset} '
@@ -268,12 +279,6 @@ function sh_with_cat {
 }
 export -f sh_with_cat
 
-function sh_diahora {
-	DIAHORA=$(date +"%d%m%Y-%T" | sed 's/://g')
-	printf "%s\n" "$DIAHORA"
-}
-export -f sh_diahora
-
 function sh_window_id {
 	xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2
 }
@@ -305,12 +310,12 @@ function cmdlogger {
    local error_output
    local script_name="${0##*/}[${FUNCNAME[1]}]"
 
-   error_output=$( "$@" 2>&1 )
+	error_output=$( "$@" 2>&1 )
 #  status="${PIPESTATUS[0]}"
    status="$?"
    if [ $status -ne 0 ]; then
-      error_output=$(echo "$error_output" | cut -d':' -f3-)
-      log_error "$script_name" "$line_number" "$lastcmd" "$error_output"
+		error_output=$(echo "$error_output" | cut -d':' -f3-)
+		log_error "$script_name" "$line_number" "$lastcmd" "$error_output"
    fi
    return $status
 }
@@ -329,18 +334,4 @@ function sh_kscreen_clean {
 }
 export -f sh_kscreen_clean
 
-function sh_reset_gwenview {
-	if pidof gwenview; then #program running
-		return
-	fi
-	cmdlogger rm -r ~/.local/share/kxmlgui5/gwenview
-	cmdlogger rm -r ~/.local/share/gwenview
-	cmdlogger rm ~/.config/gwenviewrc
-	if [[ "$1" = "skel" ]]; then
-		cmdlogger cp -r /etc/skel/.local/share/kxmlgui5/gwenview ~/.local/share/kxmlgui5/gwenview
-		cmdlogger cp -r /etc/skel/.local/share/gwenview ~/.local/share/gwenview
-		cmdlogger cp -f /etc/skel/.config/gwenviewrc ~/.config/gwenviewrc
-	fi
-	echo -n "#"
-}
-export -f sh_reset_gwenview
+#sh_debug
