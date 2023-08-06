@@ -6,7 +6,7 @@
 #  Description: Control Center to help usage of BigLinux
 #
 #  Created: 2022/02/28
-#  Altered: 2023/07/26
+#  Altered: 2023/08/06
 #
 #  Copyright (c) 2023-2023, Vilmar Catafesta <vcatafesta@gmail.com>
 #                2022-2023, Bruno Gonçalves <www.biglinux.com.br>
@@ -34,7 +34,7 @@
 #  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 APP="${0##*/}"
-_VERSION_="1.0.0-20230726"
+_VERSION_="1.0.0-20230806"
 BOOTLOG="/tmp/bigcontrolcenter-$(date +"%d%m%Y").log"
 LOGGER='/dev/tty8'
 
@@ -189,7 +189,7 @@ function sh_ignore_error {
 export -f sh_ignore_error
 
 function sh_div_lang {
-	if grep ^he <<<"$LANG"; then
+	if grep -q ^he <<<"$LANG"; then
 		echo '<div class="wrapper" style="flex-direction: row-reverse;">'
 	else
 		echo '<div class="wrapper">'
