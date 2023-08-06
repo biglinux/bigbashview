@@ -35,6 +35,9 @@
 
 APP="${0##*/}"
 _VERSION_="1.0.0-20230726"
+BOOTLOG="/tmp/bigcontrolcenter-$(date +"%d%m%Y").log"
+LOGGER='/dev/tty8'
+
 red=$(tput setaf 124)
 green=$(tput setaf 2)
 pink=$(tput setaf 129)
@@ -45,9 +48,6 @@ function sh_diahora {
 	printf "%s\n" "$DIAHORA"
 }
 export -f sh_diahora
-
-BOOTLOG="/tmp/$APP-$(sh_diahora).log"
-LOGGER='/dev/tty8'
 
 function sh_debug {
 	export PS4='${red}${0##*/}${green}[$FUNCNAME]${pink}[$LINENO]${reset} '
@@ -297,25 +297,24 @@ function xdebug {
 export -f xdebug
 
 function log_error {
-#	echo "Erro ocorreu no script: $1, linha: $2, erro: $3" | tee -i -a "$BOOTLOG" > "$LOGGER"
-#	echo "$1:$2] => $3" >> "$BOOTLOG"
-	printf "%30s:%-06d] : %s => %s\n" "$1" "$2" "$3 $4" >> "$BOOTLOG"
+	printf "%s %-s->%-s->%-s : %s => %s\n" "$(date +"%H:%M:%S")" "$1" "$2" "$3" "$4" "$5" >> "$BOOTLOG"
 }
 export -f log_error
 
 function cmdlogger {
    local lastcmd="$@"
-   local line_number=${BASH_LINENO[0]}
    local status
    local error_output
-   local script_name="${0##*/}[${FUNCNAME[1]}]"
+   local script_name0="${0##*/}[${FUNCNAME[0]}]:${BASH_LINENO[0]}"
+   local script_name1="${0##*/}[${FUNCNAME[1]}]:${BASH_LINENO[1]}"
+   local script_name2="${0##*/}[${FUNCNAME[2]}]:${BASH_LINENO[2]}"
 
 	error_output=$( "$@" 2>&1 )
 #  status="${PIPESTATUS[0]}"
    status="$?"
    if [ $status -ne 0 ]; then
 		error_output=$(echo "$error_output" | cut -d':' -f3-)
-		log_error "$script_name" "$line_number" "$lastcmd" "$error_output"
+		log_error "$script_name2" "$script_name1" "$script_name0" "$lastcmd" "$error_output"
    fi
    return $status
 }
