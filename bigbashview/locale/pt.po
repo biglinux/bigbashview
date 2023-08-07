@@ -122,3 +122,9 @@ msgstr "Boa tarde"
 
 msgid "Boa noite"
 msgstr "Boa noite"
+
+msgid "Configurações da tela"
+msgstr "Configurações da tela"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "As configurações da tela foram resetadas."
