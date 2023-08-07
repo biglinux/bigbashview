@@ -122,3 +122,9 @@ msgstr "God eftermiddag"
 
 msgid "Boa noite"
 msgstr "God natt"
+
+msgid "Configurações da tela"
+msgstr "Inställningar för skärm"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Skärminställningarna har återställts."

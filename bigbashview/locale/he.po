@@ -122,3 +122,9 @@ msgstr "אחר צוהריים טובים"
 
 msgid "Boa noite"
 msgstr "לילה טוב"
+
+msgid "Configurações da tela"
+msgstr "הגדרות מסך"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "הגדרות המסך אופסו."

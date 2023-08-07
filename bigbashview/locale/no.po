@@ -122,3 +122,9 @@ msgstr "God ettermiddag"
 
 msgid "Boa noite"
 msgstr "God natt"
+
+msgid "Configurações da tela"
+msgstr "Skjerminnstillinger"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Skjerminnstillingene er tilbakestilt."

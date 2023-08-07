@@ -122,3 +122,9 @@ msgstr "こんにちは"
 
 msgid "Boa noite"
 msgstr "おやすみなさい"
+
+msgid "Configurações da tela"
+msgstr "画面設定"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "画面設定がリセットされました。"

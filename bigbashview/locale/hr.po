@@ -122,3 +122,9 @@ msgstr "Dobar dan"
 
 msgid "Boa noite"
 msgstr "Laku noć"
+
+msgid "Configurações da tela"
+msgstr "Postavke zaslona"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Postavke zaslona su vraćene na izvorno."

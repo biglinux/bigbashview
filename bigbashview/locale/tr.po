@@ -122,3 +122,9 @@ msgstr "İyi günler"
 
 msgid "Boa noite"
 msgstr "İyi geceler"
+
+msgid "Configurações da tela"
+msgstr "Ekran ayarları"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Ekran ayarları sıfırlandı."

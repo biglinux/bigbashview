@@ -122,3 +122,9 @@ msgstr "Dzień dobry"
 
 msgid "Boa noite"
 msgstr "Dobranoc"
+
+msgid "Configurações da tela"
+msgstr "Ustawienia ekranu"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Ustawienia ekranu zostały zresetowane."
