@@ -122,3 +122,9 @@ msgstr "안녕하세요"
 
 msgid "Boa noite"
 msgstr "안녕히 주무세요"
+
+msgid "Configurações da tela"
+msgstr "화면 설정"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "화면 설정이 초기화되었습니다."

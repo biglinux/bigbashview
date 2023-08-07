@@ -122,3 +122,9 @@ msgstr "Καλό απόγευμα"
 
 msgid "Boa noite"
 msgstr "Καληνύχτα"
+
+msgid "Configurações da tela"
+msgstr "Ρυθμίσεις οθόνης"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Έγινε επαναφορά των ρυθμίσεων οθόνης."

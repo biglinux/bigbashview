@@ -122,3 +122,9 @@ msgstr "下午好"
 
 msgid "Boa noite"
 msgstr "晚安"
+
+msgid "Configurações da tela"
+msgstr "屏幕设置"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "屏幕设置已重置。"

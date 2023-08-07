@@ -122,3 +122,9 @@ msgstr "Jó napot"
 
 msgid "Boa noite"
 msgstr "Jó éjszakát"
+
+msgid "Configurações da tela"
+msgstr "Képernyő beállítások"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "A képernyő beállításai visszaálltak."

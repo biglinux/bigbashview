@@ -122,3 +122,9 @@ msgstr "Hyvää iltapäivää"
 
 msgid "Boa noite"
 msgstr "Hyvää yötä"
+
+msgid "Configurações da tela"
+msgstr "Näytön asetukset"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Näytön asetukset on nollattu."

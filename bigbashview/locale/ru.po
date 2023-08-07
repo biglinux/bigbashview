@@ -122,3 +122,9 @@ msgstr "Добрый день"
 
 msgid "Boa noite"
 msgstr "Спокойной ночи"
+
+msgid "Configurações da tela"
+msgstr "Настройки экрана"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Настройки экрана были сброшены."
