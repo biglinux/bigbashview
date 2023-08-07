@@ -122,3 +122,9 @@ msgstr "Tere päevast"
 
 msgid "Boa noite"
 msgstr "Head ööd"
+
+msgid "Configurações da tela"
+msgstr "Ekraani seaded"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Ekraani seaded on lähtestatud."

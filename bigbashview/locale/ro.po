@@ -122,3 +122,9 @@ msgstr "Bună ziua"
 
 msgid "Boa noite"
 msgstr "Noapte bună"
+
+msgid "Configurações da tela"
+msgstr "Setările ecranului"
+
+msgid "As configurações da tela foram resetadas."
+msgstr "Setările ecranului au fost resetate."
