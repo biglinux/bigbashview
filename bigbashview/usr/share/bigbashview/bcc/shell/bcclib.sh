@@ -6,7 +6,7 @@
 #  Description: Control Center to help usage of BigLinux
 #
 #  Created: 2022/02/28
-#  Altered: 2023/08/07
+#  Altered: 2023/08/08
 #
 #  Copyright (c) 2023-2023, Vilmar Catafesta <vcatafesta@gmail.com>
 #                2022-2023, Bruno Gonçalves <www.biglinux.com.br>
@@ -34,7 +34,7 @@
 #  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 APP="${0##*/}"
-_VERSION_="1.0.0-20230807"
+_VERSION_="1.0.0-20230808"
 BOOTLOG="/tmp/bigcontrolcenter-$USER-$(date +"%d%m%Y").log"
 LOGGER='/dev/tty8'
 
@@ -285,10 +285,10 @@ function sh_window_id {
 export -f sh_window_id
 
 function xdebug {
-#	yad --title="[debug]$0" --text="${*}\n" --width=400 --window-icon="$xicon" --button="Sim:1" --button="Não:2"
-#	result=$?
-#	(( result -eq 2 )) && exit 1
-#	return $result
+	#	yad --title="[debug]$0" --text="${*}\n" --width=400 --window-icon="$xicon" --button="Sim:1" --button="Não:2"
+	#	result=$?
+	#	(( result -eq 2 )) && exit 1
+	#	return $result
 	kdialog --title "[debug]$0" --yesno "\n${*}\n" --icon dialog-information
 	result=$?
 	((result)) && exit 1
@@ -297,27 +297,27 @@ function xdebug {
 export -f xdebug
 
 function log_error {
-#	printf "%s %-s->%-s->%-s : %s => %s\n" "$(date +"%H:%M:%S")" "$1" "$2" "$3" "$4" "$5" >> "$BOOTLOG"
+	#	printf "%s %-s->%-s->%-s : %s => %s\n" "$(date +"%H:%M:%S")" "$1" "$2" "$3" "$4" "$5" >> "$BOOTLOG"
 	printf "%s %-s->%-s->%-s : %s => %s\n" "$(date +"%H:%M:%S")" "$1" "$2" "$3" "$4" "$5" | tee -i -a "$BOOTLOG" >$LOGGER
 }
 export -f log_error
 
 function cmdlogger {
-   local lastcmd="$@"
-   local status
-   local error_output
-   local script_name0="${0##*/}[${FUNCNAME[0]}]:${BASH_LINENO[0]}"
-   local script_name1="${0##*/}[${FUNCNAME[1]}]:${BASH_LINENO[1]}"
-   local script_name2="${0##*/}[${FUNCNAME[2]}]:${BASH_LINENO[2]}"
+	local lastcmd="$@"
+	local status
+	local error_output
+	local script_name0="${0##*/}[${FUNCNAME[0]}]:${BASH_LINENO[0]}"
+	local script_name1="${0##*/}[${FUNCNAME[1]}]:${BASH_LINENO[1]}"
+	local script_name2="${0##*/}[${FUNCNAME[2]}]:${BASH_LINENO[2]}"
 
-	error_output=$( "$@" 2>&1 )
-#  status="${PIPESTATUS[0]}"
-   status="$?"
-   if [ $status -ne 0 ]; then
+	error_output=$("$@" 2>&1)
+	#  status="${PIPESTATUS[0]}"
+	status="$?"
+	if [ $status -ne 0 ]; then
 		error_output=$(echo "$error_output" | cut -d':' -f3-)
 		log_error "$script_name2" "$script_name1" "$script_name0" "$lastcmd" "$error_output"
-   fi
-   return $status
+	fi
+	return $status
 }
 export -f cmdlogger
 
@@ -327,11 +327,162 @@ function sh_kscreen_clean {
 	local xmsgbox=$"As configurações da tela foram resetadas."
 
 	cmdlogger rm -Rf ~/.local/share/kscreen
-#	kdialog --msgbox "$xmsgbox" --title "$xtitle" --icon "$xicon" &
+	#	kdialog --msgbox "$xmsgbox" --title "$xtitle" --icon "$xicon" &
 	yad --title="$xtitle" --text="\n$xmsgbox" --width=400 --window-icon="$xicon" --button="OK:0" &
 	sleep 5
 	wmctrl -c "$xtitle"
 }
 export -f sh_kscreen_clean
+
+function sh_get_current_desktop {
+	echo "$XDG_CURRENT_DESKTOP"
+}
+export -f sh_get_current_desktop
+
+function sh_get_wm {
+	local ps_flags=(-e)
+
+	if [[ -O "${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY:-wayland-0}" ]]; then
+		if tmp_pid="$(lsof -t "${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY:-wayland-0}" 2>&1)" ||
+			tmp_pid="$(fuser "${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY:-wayland-0}" 2>&1)"; then
+			wm="$(ps -p "${tmp_pid}" -ho comm=)"
+		else
+			# lsof may not exist, or may need root on some systems. Similarly fuser.
+			# On those systems we search for a list of known window managers, this can mistakenly
+			# match processes for another user or session and will miss unlisted window managers.
+			wm=$(ps "${ps_flags[@]}" | grep -m 1 -o -F \
+				-e arcan \
+				-e asc \
+				-e clayland \
+				-e dwc \
+				-e fireplace \
+				-e gnome-shell \
+				-e greenfield \
+				-e grefsen \
+				-e hikari \
+				-e kwin \
+				-e lipstick \
+				-e maynard \
+				-e mazecompositor \
+				-e motorcar \
+				-e orbital \
+				-e orbment \
+				-e perceptia \
+				-e river \
+				-e rustland \
+				-e sway \
+				-e ulubis \
+				-e velox \
+				-e wavy \
+				-e way-cooler \
+				-e wayfire \
+				-e wayhouse \
+				-e westeros \
+				-e westford \
+				-e weston)
+		fi
+
+	elif [[ $DISPLAY && $os != "Mac OS X" && $os != "macOS" && $os != FreeMiNT ]]; then
+		# non-EWMH WMs.
+		wm=$(ps "${ps_flags[@]}" | grep -m 1 -o \
+			-e "[s]owm" \
+			-e "[c]atwm" \
+			-e "[f]vwm" \
+			-e "[d]wm" \
+			-e "[2]bwm" \
+			-e "[m]onsterwm" \
+			-e "[t]inywm" \
+			-e "[x]11fs" \
+			-e "[x]monad")
+
+		[[ -z $wm ]] && type -p xprop &>/dev/null && {
+			id=$(xprop -root -notype _NET_SUPPORTING_WM_CHECK)
+			id=${id##* }
+			wm=$(xprop -id "$id" -notype -len 100 -f _NET_WM_NAME 8t)
+			wm=${wm/*WM_NAME = /}
+			wm=${wm/\"/}
+			wm=${wm/\"*/}
+		}
+	fi
+	[[ $wm == *WINDOWMAKER* ]] && wm=wmaker
+	[[ $wm == *GNOME*Shell* ]] && wm=Mutter
+}
+export -f sh_get_wm
+
+function sh_get_de {
+	sh_get_wm
+	# Temporary support for Regolith Linux
+	if [[ $DESKTOP_SESSION == *regolith ]]; then
+		de=Regolith
+
+	elif [[ $XDG_CURRENT_DESKTOP ]]; then
+		de=${XDG_CURRENT_DESKTOP/X\-/}
+		de=${de/Budgie:GNOME/Budgie}
+		de=${de/:Unity7:ubuntu/}
+
+	elif [[ $DESKTOP_SESSION ]]; then
+		de=${DESKTOP_SESSION##*/}
+
+	elif [[ $GNOME_DESKTOP_SESSION_ID ]]; then
+		de=GNOME
+
+	elif [[ $MATE_DESKTOP_SESSION_ID ]]; then
+		de=MATE
+
+	elif [[ $TDE_FULL_SESSION ]]; then
+		de=Trinity
+	fi
+
+	[[ $de == "$wm" ]] && {
+		unset -v de
+		return
+	}
+	# Fallback to using xprop.
+	[[ $DISPLAY && -z $de ]] && type -p xprop &>/dev/null &&
+		de=$(xprop -root | awk '/KDE_SESSION_VERSION|^_MUFFIN|xfce4|xfce5/')
+
+	# Format strings.
+	case $de in
+	KDE_SESSION_VERSION*) de=KDE${de/* = /} ;;
+	*xfce4*) de=Xfce4 ;;
+	*xfce5*) de=Xfce5 ;;
+	*xfce*) de=Xfce ;;
+	*mate*) de=MATE ;;
+	*GNOME*) de=GNOME ;;
+	*MUFFIN*) de=Cinnamon ;;
+	esac
+
+	((${KDE_SESSION_VERSION:-0} >= 4)) && de=${de/KDE/Plasma}
+
+	if [[ $de_version == on && $de ]]; then
+		case $de in
+		Plasma*) de_ver=$(plasmashell --version) ;;
+		MATE*) de_ver=$(mate-session --version) ;;
+		Xfce*) de_ver=$(xfce4-session --version) ;;
+		GNOME*) de_ver=$(gnome-shell --version) ;;
+		Cinnamon*) de_ver=$(cinnamon --version) ;;
+		Deepin*) de_ver=$(awk -F'=' '/MajorVersion/ {print $2}' /etc/os-version) ;;
+		Budgie*) de_ver=$(budgie-desktop --version) ;;
+		LXQt*) de_ver=$(lxqt-session --version) ;;
+		Lumina*) de_ver=$(lumina-desktop --version 2>&1) ;;
+		Trinity*) de_ver=$(tde-config --version) ;;
+		Unity*) de_ver=$(unity --version) ;;
+		esac
+
+		de_ver=${de_ver/*TDE:/}
+		de_ver=${de_ver/tde-config*/}
+		de_ver=${de_ver/liblxqt*/}
+		de_ver=${de_ver/Copyright*/}
+		de_ver=${de_ver/)*/}
+		de_ver=${de_ver/* /}
+		de_ver=${de_ver//\"/}
+
+		de+=" $de_ver"
+	fi
+
+	[[ $de && $WAYLAND_DISPLAY ]] && de+=" (Wayland)"
+	echo $de
+}
+export -f sh_get_de
 
 #sh_debug
