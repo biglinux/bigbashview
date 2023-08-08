@@ -334,4 +334,9 @@ function sh_kscreen_clean {
 }
 export -f sh_kscreen_clean
 
+function sh_get_current_desktop {
+	echo "$XDG_CURRENT_DESKTOP"
+}
+export -f sh_get_current_desktop
+
 #sh_debug
