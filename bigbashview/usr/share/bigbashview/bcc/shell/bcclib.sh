@@ -285,13 +285,22 @@ function sh_window_id {
 export -f sh_window_id
 
 function xdebug {
-	#	yad --title="[debug]$0" --text="${*}\n" --width=400 --window-icon="$xicon" --button="Sim:1" --button="Não:2"
-	#	result=$?
-	#	(( result -eq 2 )) && exit 1
-	#	return $result
-	kdialog --title "[debug]$0" --yesno "\n${*}\n" --icon dialog-information
+	local script_name0="${0##*/}[${FUNCNAME[0]}]:${BASH_LINENO[0]}"
+	local script_name1="${0##*/}[${FUNCNAME[1]}]:${BASH_LINENO[1]}"
+	local script_name2="${0##*/}[${FUNCNAME[2]}]:${BASH_LINENO[2]}"
+#	kdialog --title "[xdebug (kdialog)]$0" --yesno "\n${*}\n" --icon dialog-information
+#	result=$?
+#	((result)) && exit 1
+#	return $result
+
+	yad --title="[xdebug (yad)]$script_name1"	\
+		--text="${*}\n"						\
+		--width=400								\
+		--window-icon="$xicon"				\
+		--button="Sim:1"						\
+		--button="Não:2"
 	result=$?
-	((result)) && exit 1
+	[[ $result -eq 2 ]] && exit 1
 	return $result
 }
 export -f xdebug
