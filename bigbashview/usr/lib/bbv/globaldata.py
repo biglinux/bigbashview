@@ -21,8 +21,8 @@ import os
 APP_NAME = "BigBashView"
 APP_VERSION = "3.8.1"
 PROGDIR = os.path.dirname(os.path.realpath(__file__))
-ICON = os.sep.join((PROGDIR, "img", "icone.png"))
-LOGO = os.sep.join((PROGDIR, "img", "logo.png"))
+ICON = os.sep.join((PROGDIR, "img", "bigbashview.svg"))
+LOGO = os.sep.join((PROGDIR, "img", "bigbashview.svg"))
 TITLE = None
 ROOT_FILE = False
 ADDRESS = '127.0.0.1'
