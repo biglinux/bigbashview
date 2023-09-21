@@ -194,6 +194,8 @@ class Main:
                     sys.exit(1)
             os.environ['GDK_BACKEND'] = 'x11'
             os.environ['WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS'] = '1'
+            os.environ['WEBKIT_DISABLE_COMPOSITING_MODE'] = '1'
+            os.environ['WEBKIT_HARDWARE_ACCELERATION_POLICY_NEVER'] = '1'
             self.window = gtk.Window()
             if globaldata.TITLE:
                 self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
