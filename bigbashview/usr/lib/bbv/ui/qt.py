@@ -189,11 +189,15 @@ class Window(QWidget):
         elif window_state == "frameless":
             self.setWindowFlags(Qt.FramelessWindowHint)
             self.show()
+        elif window_state == "alwaystop":
+            self.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.show()
         elif window_state == "framelesstop":
             self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
             self.show()
-        elif window_state == "alwaystop":
-            self.setWindowFlags(Qt.WindowStaysOnTopHint)
+        elif window_state == "maximizedframelesstop":
+            self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+            self.setWindowState(Qt.WindowMaximized)
             self.show()
         else:
             self.show()

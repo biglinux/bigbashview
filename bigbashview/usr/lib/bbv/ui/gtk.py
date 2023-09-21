@@ -69,6 +69,11 @@ class Window(Gtk.Window):
             self.set_decorated(False)
             self.set_keep_above(True)
             self.show()
+        elif window_state == "maximizedframelesstop":
+            self.set_decorated(False)
+            self.set_keep_above(True)
+            self.maximize()
+            self.show()
         elif window_state == "alwaystop":
             self.set_keep_above(True)
             self.show()

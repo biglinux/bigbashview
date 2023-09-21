@@ -102,7 +102,7 @@ class Main:
         parser.add_argument(
             '-w', '--window_state', default=None,
             help='''Window state: fullscreen, maximized, fixed,
-              frameless, framelesstop, alwaystop''')
+              frameless, alwaystop, framelesstop, maximizedframelesstop''')
 
         args = parser.parse_args()
         self.url = args.url
@@ -153,8 +153,8 @@ class Main:
 
         if args.window_state in [
             'fullscreen', 'maximized',
-            'fixed', 'frameless', 'framelesstop',
-            'alwaystop', None
+            'fixed', 'frameless',
+            'alwaystop', 'framelesstop', 'maximizedframelesstop', None
         ]:
             self.window_state = args.window_state
         else:
@@ -201,11 +201,6 @@ class Main:
                     print(e)
                     print('Please install PyQt5')
                     sys.exit(1)
-            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
-            os.environ['QT_QUICK_BACKEND'] = 'software'
-            os.environ['QSG_RENDER_LOOP'] = 'basic'
-            os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
-            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
     def run(self, start_server=True):
