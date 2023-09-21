@@ -102,7 +102,7 @@ class Main:
         parser.add_argument(
             '-w', '--window_state', default=None,
             help='''Window state: fullscreen, maximized, fixed,
-              frameless, alwaystop''')
+              frameless, framelesstop, alwaystop''')
 
         args = parser.parse_args()
         self.url = args.url
@@ -153,7 +153,7 @@ class Main:
 
         if args.window_state in [
             'fullscreen', 'maximized',
-            'fixed', 'frameless',
+            'fixed', 'frameless', 'framelesstop',
             'alwaystop', None
         ]:
             self.window_state = args.window_state

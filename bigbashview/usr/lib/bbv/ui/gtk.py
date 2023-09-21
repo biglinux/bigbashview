@@ -65,6 +65,10 @@ class Window(Gtk.Window):
         elif window_state == "frameless":
             self.set_decorated(False)
             self.show()
+        elif window_state == "framelesstop":
+            self.set_decorated(False)
+            self.set_keep_above(True)
+            self.show()
         elif window_state == "alwaystop":
             self.set_keep_above(True)
             self.show()
