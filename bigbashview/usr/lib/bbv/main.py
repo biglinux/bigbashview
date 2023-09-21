@@ -178,6 +178,11 @@ class Main:
                     print(e)
                     print('Please install WebKitGtk2 or PyQt5')
                     sys.exit(1)
+            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
+            os.environ['QT_QUICK_BACKEND'] = 'software'
+            os.environ['QSG_RENDER_LOOP'] = 'basic'
+            os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
+            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
 
         if self.toolkit == 'gtk':
             if not check_gtk:
