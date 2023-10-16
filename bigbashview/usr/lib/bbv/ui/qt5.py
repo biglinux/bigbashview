@@ -3,7 +3,7 @@
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #  Copyright (C) 2009  Bruno Goncalves Araujo
-#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
+#  Copyright (C) 2022 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,13 +19,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os
-from PySide6.QtCore import QUrl, Qt
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication
-from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
-from PySide6.QtWebEngineWidgets import QWebEngineView
-
+from PyQt5.QtCore import QUrl, Qt
 from bbv.globaldata import ICON, TITLE
 
+from PyQt5.QtWidgets import (
+    QWidget,
+    QHBoxLayout,
+    QShortcut,
+    QSplitter,
+    QApplication
+)
+
+from PyQt5.QtGui import (
+    QIcon,
+    QColor,
+    QKeySequence,
+    QCursor
+)
+
+from PyQt5.QtWebEngineWidgets import (
+    QWebEngineView,
+    QWebEnginePage as QEP
+)
 
 # Import gettext module
 import gettext
@@ -40,17 +55,13 @@ lang_translations.install()
 _ = lang_translations.gettext
 
 
-
-
-
 class Window(QWidget):
     def __init__(self):
         self.app = QApplication(sys.argv)
         super().__init__()
         self.web = QWebEngineView()
         self.inspector = QWebEngineView()
-        # self.web.settings().setAttribute(
-                # self.web.settings().AutoLoadIconsForPage, False)
+        self.inspector.page().windowCloseRequested.connect(self.devpage)
         self.setWindowIcon(QIcon(ICON))
         if TITLE:
             self.app.setApplicationName(TITLE)
@@ -59,7 +70,7 @@ class Window(QWidget):
             self.web.titleChanged.connect(self.title_changed)
         self.web.page().windowCloseRequested.connect(self.close_window)
         self.web.page().featurePermissionRequested.connect(self.onFeature)
-        # self.web.iconChanged.connect(self.icon_changed)
+        self.web.iconChanged.connect(self.icon_changed)
         self.web.loadFinished.connect(self.add_script)
         self.key_f5 = QShortcut(QKeySequence(Qt.Key_F5), self.web)
         self.key_f5.activated.connect(self.web.reload)
@@ -67,46 +78,46 @@ class Window(QWidget):
         self.key_f12.activated.connect(self.devpage)
 
         # contextmenu translations
-        # back = self.web.pageAction(QWebEngineView.Back)
-        # back.setText(_("Voltar"))
-        # forward = self.web.pageAction(QWebEngineView.Forward)
-        # forward.setText(_("Avançar"))
-        # update = self.web.pageAction(QWebEngineView.Reload)
-        # update.setText(_("Recarregar"))
-        # copy = self.web.pageAction(QWebEngineView.Copy)
-        # copy.setText(_("Copiar"))
-        # cut = self.web.pageAction(QWebEngineView.Cut)
-        # cut.setText(_("Recortar"))
-        # paste = self.web.pageAction(QWebEngineView.Paste)
-        # paste.setText(_("Colar"))
-        # select_all = self.web.pageAction(QWebEngineView.SelectAll)
-        # select_all.setText(_("Selecionar tudo"))
-        # undo = self.web.pageAction(QWebEngineView.Undo)
-        # undo.setText(_("Desfazer"))
-        # redo = self.web.pageAction(QWebEngineView.Redo)
-        # redo.setText(_("Refazer"))
-        # paste_style = self.web.pageAction(QWebEngineView.PasteAndMatchStyle)
-        # paste_style.setVisible(False)
-        # copy_link = self.web.pageAction(QWebEngineView.CopyLinkToClipboard)
-        # copy_link.setText(_("Copiar endereço do link"))
-        # inspect_element = self.web.pageAction(QWebEngineView.InspectElement)
-        # inspect_element.setText(_("Inspecionar"))
-        # copy_img = self.web.pageAction(QWebEngineView.CopyImageToClipboard)
-        # copy_img.setText(_("Copiar imagem"))
-        # copy_link_img = self.web.pageAction(QWebEngineView.CopyImageUrlToClipboard)
-        # copy_link_img.setText(_("Copiar endereço da imagem"))
-        # save_page = self.web.pageAction(QWebEngineView.SavePage)
-        # save_page.setVisible(False)
-        # view_source = self.web.pageAction(QWebEngineView.ViewSource)
-        # view_source.setVisible(False)
-        # open_new_tab = self.web.pageAction(QWebEngineView.OpenLinkInNewTab)
-        # open_new_tab.setVisible(False)
-        # open_new_window = self.web.pageAction(QWebEngineView.OpenLinkInNewWindow)
-        # open_new_window.setVisible(False)
-        # save_link = self.web.pageAction(QWebEngineView.DownloadLinkToDisk)
-        # save_link.setVisible(False)
-        # save_img = self.web.pageAction(QWebEngineView.DownloadImageToDisk)
-        # save_img.setVisible(False)
+        back = self.web.pageAction(QEP.Back)
+        back.setText(_("Voltar"))
+        forward = self.web.pageAction(QEP.Forward)
+        forward.setText(_("Avançar"))
+        update = self.web.pageAction(QEP.Reload)
+        update.setText(_("Recarregar"))
+        copy = self.web.pageAction(QEP.Copy)
+        copy.setText(_("Copiar"))
+        cut = self.web.pageAction(QEP.Cut)
+        cut.setText(_("Recortar"))
+        paste = self.web.pageAction(QEP.Paste)
+        paste.setText(_("Colar"))
+        select_all = self.web.pageAction(QEP.SelectAll)
+        select_all.setText(_("Selecionar tudo"))
+        undo = self.web.pageAction(QEP.Undo)
+        undo.setText(_("Desfazer"))
+        redo = self.web.pageAction(QEP.Redo)
+        redo.setText(_("Refazer"))
+        paste_style = self.web.pageAction(QEP.PasteAndMatchStyle)
+        paste_style.setVisible(False)
+        copy_link = self.web.pageAction(QEP.CopyLinkToClipboard)
+        copy_link.setText(_("Copiar endereço do link"))
+        inspect_element = self.web.pageAction(QEP.InspectElement)
+        inspect_element.setText(_("Inspecionar"))
+        copy_img = self.web.pageAction(QEP.CopyImageToClipboard)
+        copy_img.setText(_("Copiar imagem"))
+        copy_link_img = self.web.pageAction(QEP.CopyImageUrlToClipboard)
+        copy_link_img.setText(_("Copiar endereço da imagem"))
+        save_page = self.web.pageAction(QEP.SavePage)
+        save_page.setVisible(False)
+        view_source = self.web.pageAction(QEP.ViewSource)
+        view_source.setVisible(False)
+        open_new_tab = self.web.pageAction(QEP.OpenLinkInNewTab)
+        open_new_tab.setVisible(False)
+        open_new_window = self.web.pageAction(QEP.OpenLinkInNewWindow)
+        open_new_window.setVisible(False)
+        save_link = self.web.pageAction(QEP.DownloadLinkToDisk)
+        save_link.setVisible(False)
+        save_img = self.web.pageAction(QEP.DownloadImageToDisk)
+        save_img.setVisible(False)
 
         # pagesplitter
         self.hbox = QHBoxLayout(self)
@@ -119,22 +130,21 @@ class Window(QWidget):
 
     def onFeature(self, url, feature):
         if feature in (
-            QWebEngineView.MediaAudioCapture,
-            QWebEngineView.MediaVideoCapture,
-            QWebEngineView.MediaAudioVideoCapture,
+            QEP.MediaAudioCapture,
+            QEP.MediaVideoCapture,
+            QEP.MediaAudioVideoCapture,
         ):
             self.web.page().setFeaturePermission(
                 url,
                 feature,
-                QWebEngineView.PermissionGrantedByUser
+                QEP.PermissionGrantedByUser
             )
         else:
             self.web.page().setFeaturePermission(
                 url,
                 feature,
-                QWebEngineView.PermissionDeniedByUser
+                QEP.PermissionDeniedByUser
             )
-
 
     def devpage(self):
         if self.splitter.count() == 1 or self.splitter2.count() == 1:
@@ -202,6 +212,9 @@ class Window(QWidget):
         os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS '{title}'")
         self.setWindowTitle(title)
 
+    def icon_changed(self, icon):
+        self.setWindowIcon(QIcon(icon))
+
     def load_url(self, url):
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
         self.web.load(self.url)
@@ -223,15 +236,15 @@ class Window(QWidget):
             self.setFixedSize(width, height)
 
     def style(self, colorful):
-        if colorful == 'black':
+        if colorful == "black":
             self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 1))
 
         elif colorful == "transparent":
             self.setAttribute(Qt.WA_TranslucentBackground)
             self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0))
 
-        elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
-            rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
+        elif os.environ.get("XDG_CURRENT_DESKTOP") == "KDE":
+            rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(",")
 
             if len(rgb) > 1:
                 r, g, b = rgb if len(rgb) == 3 else rgb[:-1]

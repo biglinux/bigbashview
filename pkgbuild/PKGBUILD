@@ -5,7 +5,7 @@ arch=('any')
 license=('GPL')
 url="https://github.com/biglinux/bigbashview"
 pkgdesc="BigBashView is a python app to run Bash+HTML in a Desktop WebView"
-depends=('python-pyqt5-webengine' 'python-six' 'webkit2gtk-4.1' 'ttf-lato' 'python-setproctitle' 'bbv-webpy' 'bootstrap')
+depends=('pyside6' 'python-six' 'webkit2gtk-4.1' 'qt6-webengine' 'ttf-lato' 'python-setproctitle' 'bbv-webpy')
 source=("git+https://github.com/biglinux/bigbashview.git")
 md5sums=(SKIP)
 
