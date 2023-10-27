@@ -1,29 +1,96 @@
-# -*- coding: utf-8 -*-
-#
-#  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from bbv import globaldata
 import web
 import sys
 import socket
 import threading
 import time
+import json
 from . import views
 import os
 
+class FileHandler(views.url_handler):
+    __url__ = "/api/file"
+
+    def resolve_filename(self, filename):
+        """Resolve $HOME to the home directory."""
+        home_dir = os.path.expanduser("~")
+        return filename.replace("$HOME", home_dir)
+
+    def handle_request(self, method):
+        params = web.input()
+        filename = params.get('filename')
+        if not filename:
+            web.ctx.status = '400 Bad Request'
+            return json.dumps({"error": "No filename specified"})
+        
+        filename = self.resolve_filename(filename)  # Resolve $HOME
+
+        # Delegate to the actual HTTP method
+        return method(filename)
+
+    def GET(self):
+        def method(filename):
+            try:
+                with open(filename, 'r') as f:
+                    data = json.load(f)
+                return json.dumps(data)
+            except FileNotFoundError:
+                web.ctx.status = '404 Not Found'
+                return json.dumps({"error": f"File {filename} not found"})
+            except json.JSONDecodeError:
+                web.ctx.status = '400 Bad Request'
+                return json.dumps({"error": f"Could not decode JSON in {filename}"})
+            except Exception as e:
+                web.ctx.status = '500 Internal Server Error'
+                return json.dumps({"error": str(e)})
+        return self.handle_request(method)
+
+    def POST(self):
+        def method(filename):
+            data = json.loads(web.data().decode())
+            try:
+                with open(filename, 'w') as f:
+                    json.dump(data, f)
+                return json.dumps({"success": True})
+            except Exception as e:
+                web.ctx.status = '500 Internal Server Error'
+                return json.dumps({"error": str(e)})
+        return self.handle_request(method)
+
+    def PUT(self):
+        def method(filename):
+            data = json.loads(web.data().decode())
+            try:
+                with open(filename, 'r+') as f:
+                    existing_data = json.load(f)
+                    existing_data.update(data)
+                    f.seek(0)
+                    json.dump(existing_data, f)
+                    f.truncate()
+                return json.dumps({"success": True})
+            except FileNotFoundError:
+                web.ctx.status = '404 Not Found'
+                return json.dumps({"error": f"File {filename} not found"})
+            except json.JSONDecodeError:
+                web.ctx.status = '400 Bad Request'
+                return json.dumps({"error": f"Could not decode JSON in {filename}"})
+            except Exception as e:
+                web.ctx.status = '500 Internal Server Error'
+                return json.dumps({"error": str(e)})
+        return self.handle_request(method)
+
+    def DELETE(self):
+        def method(filename):
+            try:
+                os.remove(filename)
+                return json.dumps({"success": True})
+            except FileNotFoundError:
+                web.ctx.status = '404 Not Found'
+                return json.dumps({"error": f"File {filename} not found"})
+            except Exception as e:
+                web.ctx.status = '500 Internal Server Error'
+                return json.dumps({"error": str(e)})
+        return self.handle_request(method)
 
 class Server(threading.Thread):
     def _get_subclasses(self, classes=None):
@@ -38,7 +105,7 @@ class Server(threading.Thread):
     def get_urls(self):
         """ Return supported URLs. """
         classes = self._get_subclasses()
-        result = []
+        result = ["/api/file", "FileHandler"]
         for cls in classes:
             result.append(cls.__url__)
             result.append(cls.__name__)
@@ -47,6 +114,7 @@ class Server(threading.Thread):
     def get_classes(self):
         """ Return all view classes. """
         classes = self._get_subclasses()
+        classes.append(FileHandler)  # Adicionar a nova classe
         result = {}
         for cls in classes:
             result[cls.__name__] = cls

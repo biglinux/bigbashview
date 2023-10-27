@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>File API Example</title>
+</head>
+<body>
+
+<h1>File API Example</h1>
+
+<!-- Input field for filename -->
+<label for="filename">Filename:</label>
+<input type="text" id="filename" name="filename" value="$HOME/example.json"><br><br>
+
+<!-- Input field for file content -->
+<label for="filecontent">File Content (JSON):</label><br>
+<textarea id="filecontent" rows="4" cols="50">
+{
+    "key": "value"
+}
+</textarea><br><br>
+
+<!-- Buttons to perform actions -->
+<button onclick="createFile()">Create File</button>
+<button onclick="readFile()">Read File</button>
+<button onclick="updateFile()">Update File</button>
+<button onclick="deleteFile()">Delete File</button>
+
+<!-- Display result -->
+<h2>Result:</h2>
+<pre id="result">
+</pre>
+
+<script>
+    const apiUrl = "/api/file";
+
+    async function fetchApi(method, filename, body=null) {
+        const options = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body ? JSON.stringify(body) : null
+        };
+
+        const response = await fetch(`${apiUrl}?filename=${filename}`, options);
+        const data = await response.json();
+
+        document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    }
+
+    function createFile() {
+        const filename = document.getElementById('filename').value;
+        const filecontent = JSON.parse(document.getElementById('filecontent').value);
+        fetchApi('POST', filename, filecontent);
+    }
+
+    function readFile() {
+        const filename = document.getElementById('filename').value;
+        fetchApi('GET', filename);
+    }
+
+    function updateFile() {
+        const filename = document.getElementById('filename').value;
+        const filecontent = JSON.parse(document.getElementById('filecontent').value);
+        fetchApi('PUT', filename, filecontent);
+    }
+
+    function deleteFile() {
+        const filename = document.getElementById('filename').value;
+        fetchApi('DELETE', filename);
+    }
+</script>
+
+</body>
+</html>
