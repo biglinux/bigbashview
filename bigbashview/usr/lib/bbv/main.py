@@ -59,6 +59,8 @@ class Main:
  ----------------------------------------------------------
  Executable Extensions: .sh     |.run     Shell Script
                         .sh.html|.sh.htm  Html Markup
+                        .sh.js            Shell with js output
+                        .sh.css           Shell with css output
                         .sh.php           PHP Script
                         .sh.py            Python Script
                         .sh.lua           Lua Script
@@ -200,7 +202,7 @@ class Main:
                 print(e)
                 print('Please install PyQt5')
                 sys.exit(1)
-            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none'
+            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --disable-breakpad --skia-resource-cache-limit-mb=1'
             os.environ['QT_QUICK_BACKEND'] = 'software'
             os.environ['QSG_RENDER_LOOP'] = 'basic'
             os.environ['QT_XCB_GL_INTEGRATION'] = 'none'

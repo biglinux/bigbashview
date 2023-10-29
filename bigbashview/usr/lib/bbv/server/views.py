@@ -131,11 +131,10 @@ class default_handler(url_handler):
     def parse_and_call(self, qs, name):
         self.original_qs = to_s(qs)
         return url_handler.parse_and_call(self, qs, name)
-
     def bbv_compat_mode(self, options, content, query):
         execute_ext = ('.sh', '.sh.html', '.sh.htm', '.sh.php',
-                       '.sh.py', '.sh.lua', '.sh.rb', '.sh.pl',
-                       '.sh.lisp', '.sh.jl', '.run', '.sh.js')
+                    '.sh.py', '.sh.lua', '.sh.rb', '.sh.pl',
+                    '.sh.lisp', '.sh.jl', '.run', '.sh.js', '.sh.css', '.sh.js')  # Adicione .sh.js aqui
         content_ext = ('.htm', '.html')
         content_plain_ext = ('.txt')
         content_css_ext = ('.css')
@@ -154,6 +153,14 @@ class default_handler(url_handler):
                 os.chmod(content, os.stat(content).st_mode | stat.S_IEXEC)
             except Exception:
                 globaldata.ROOT_FILE = True
+        if content.endswith('.sh.css'):  # Já existente para .sh.css
+            web.header('Content-Type', 'text/css; charset=UTF-8')
+            execute_content = " ".join((content, unquote(self.original_qs)))
+            return execute_handler().called(options, execute_content, query)
+        if content.endswith('.sh.js'):  # Nova condição para .sh.js
+            web.header('Content-Type', 'text/javascript; charset=UTF-8')
+            execute_content = " ".join((content, unquote(self.original_qs)))
+            return execute_handler().called(options, execute_content, query)
         if content.endswith(content_plain_ext):
             web.header('Content-Type', 'text/plain; charset=UTF-8')
             return content_handler().called(options, content, query)
@@ -174,3 +181,4 @@ class default_handler(url_handler):
             return content_handler().called(options, content, query)
         # Default option
         return content_handler().called(options, content, query)
+
