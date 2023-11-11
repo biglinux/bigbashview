@@ -23,6 +23,7 @@ from PySide6.QtCore import QUrl, Qt
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication
 from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
 from PySide6.QtWebEngineWidgets import QWebEngineView
+from PySide6.QtWebEngineCore import QWebEnginePage
 
 from bbv.globaldata import ICON, TITLE
 
@@ -38,9 +39,6 @@ lang_translations.install()
 
 # define _ shortcut for translations
 _ = lang_translations.gettext
-
-
-
 
 
 class Window(QWidget):
@@ -66,48 +64,6 @@ class Window(QWidget):
         self.key_f12 = QShortcut(QKeySequence(Qt.Key_F12), self.web)
         self.key_f12.activated.connect(self.devpage)
 
-        # contextmenu translations
-        # back = self.web.pageAction(QWebEngineView.Back)
-        # back.setText(_("Voltar"))
-        # forward = self.web.pageAction(QWebEngineView.Forward)
-        # forward.setText(_("Avançar"))
-        # update = self.web.pageAction(QWebEngineView.Reload)
-        # update.setText(_("Recarregar"))
-        # copy = self.web.pageAction(QWebEngineView.Copy)
-        # copy.setText(_("Copiar"))
-        # cut = self.web.pageAction(QWebEngineView.Cut)
-        # cut.setText(_("Recortar"))
-        # paste = self.web.pageAction(QWebEngineView.Paste)
-        # paste.setText(_("Colar"))
-        # select_all = self.web.pageAction(QWebEngineView.SelectAll)
-        # select_all.setText(_("Selecionar tudo"))
-        # undo = self.web.pageAction(QWebEngineView.Undo)
-        # undo.setText(_("Desfazer"))
-        # redo = self.web.pageAction(QWebEngineView.Redo)
-        # redo.setText(_("Refazer"))
-        # paste_style = self.web.pageAction(QWebEngineView.PasteAndMatchStyle)
-        # paste_style.setVisible(False)
-        # copy_link = self.web.pageAction(QWebEngineView.CopyLinkToClipboard)
-        # copy_link.setText(_("Copiar endereço do link"))
-        # inspect_element = self.web.pageAction(QWebEngineView.InspectElement)
-        # inspect_element.setText(_("Inspecionar"))
-        # copy_img = self.web.pageAction(QWebEngineView.CopyImageToClipboard)
-        # copy_img.setText(_("Copiar imagem"))
-        # copy_link_img = self.web.pageAction(QWebEngineView.CopyImageUrlToClipboard)
-        # copy_link_img.setText(_("Copiar endereço da imagem"))
-        # save_page = self.web.pageAction(QWebEngineView.SavePage)
-        # save_page.setVisible(False)
-        # view_source = self.web.pageAction(QWebEngineView.ViewSource)
-        # view_source.setVisible(False)
-        # open_new_tab = self.web.pageAction(QWebEngineView.OpenLinkInNewTab)
-        # open_new_tab.setVisible(False)
-        # open_new_window = self.web.pageAction(QWebEngineView.OpenLinkInNewWindow)
-        # open_new_window.setVisible(False)
-        # save_link = self.web.pageAction(QWebEngineView.DownloadLinkToDisk)
-        # save_link.setVisible(False)
-        # save_img = self.web.pageAction(QWebEngineView.DownloadImageToDisk)
-        # save_img.setVisible(False)
-
         # pagesplitter
         self.hbox = QHBoxLayout(self)
         self.hbox.setContentsMargins(0, 0, 0, 0)
@@ -119,20 +75,20 @@ class Window(QWidget):
 
     def onFeature(self, url, feature):
         if feature in (
-            QWebEngineView.MediaAudioCapture,
-            QWebEngineView.MediaVideoCapture,
-            QWebEngineView.MediaAudioVideoCapture,
+            QWebEnginePage.Feature.MediaAudioCapture,
+            QWebEnginePage.Feature.MediaVideoCapture,
+            QWebEnginePage.Feature.MediaAudioVideoCapture,
         ):
             self.web.page().setFeaturePermission(
                 url,
                 feature,
-                QWebEngineView.PermissionGrantedByUser
+                QWebEnginePage.PermissionGrantedByUser
             )
         else:
             self.web.page().setFeaturePermission(
                 url,
                 feature,
-                QWebEngineView.PermissionDeniedByUser
+                QWebEnginePage.PermissionDeniedByUser
             )
 
 
