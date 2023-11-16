@@ -44,6 +44,8 @@ _ = lang_translations.gettext
 class Window(QWidget):
     def __init__(self):
         self.app = QApplication(sys.argv)
+        self.web = QWebEngineView()
+        self.web.page().profile().setHttpUserAgent("BigBashView-Agent")
         super().__init__()
         self.web = QWebEngineView()
         self.inspector = QWebEngineView()

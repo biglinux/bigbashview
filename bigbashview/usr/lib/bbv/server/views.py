@@ -40,6 +40,11 @@ class url_handler(object):
         return self.parse_and_call(web.data(), name)
 
     def parse_and_call(self, qs, name):
+        user_agent = web.ctx.env.get('HTTP_USER_AGENT')
+        if user_agent != "BigBashView-Agent":
+            raise web.Forbidden()
+        if web.ctx.ip != '127.0.0.1':
+            raise web.Forbidden()
         qs = parse_qs(qs)
         options, content = self._get_set_default_options(name)
         html = self.called(options, content, qs)

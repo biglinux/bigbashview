@@ -27,6 +27,8 @@ class Window(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self)
         self.webview = WebKit2.WebView()
+        settings = self.webview.get_settings()
+        settings.set_user_agent("BigBashView-Agent")
         self.webview.show()
         self.add(self.webview)
         self.set_icon_from_file(ICON)
