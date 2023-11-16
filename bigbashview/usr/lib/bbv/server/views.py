@@ -135,7 +135,7 @@ class content_handler(url_handler):
 
     def include_python(self, html_content, script, original_string):
         try:
-            result = subprocess.check_output(['python3', script], stderr=subprocess.STDOUT)
+            result = subprocess.check_output(['python', '-c', script], stderr=subprocess.STDOUT)
             html_content = html_content.replace(original_string, result.decode())
         except subprocess.CalledProcessError as e:
             html_content = html_content.replace(original_string, f"Error executing Python script: {e.output.decode()}")
