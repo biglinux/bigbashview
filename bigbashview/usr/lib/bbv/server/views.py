@@ -100,6 +100,8 @@ class content_handler(url_handler):
                 html_content = self.include_bash(html_content, include_content, match.group(0))
             elif include_type == 'php':
                 html_content = self.include_php(html_content, include_content, match.group(0))
+            elif include_type == 'python':
+                html_content = self.include_python(html_content, include_content, match.group(0))
             elif include_type == 'node':
                 html_content = self.include_node(html_content, include_content, match.group(0))
 
@@ -129,6 +131,14 @@ class content_handler(url_handler):
             html_content = html_content.replace(original_string, result.decode())
         except subprocess.CalledProcessError as e:
             html_content = html_content.replace(original_string, f"Error executing PHP script: {e.output.decode()}")
+        return html_content
+
+    def include_python(self, html_content, script, original_string):
+        try:
+            result = subprocess.check_output(['python3', script], stderr=subprocess.STDOUT)
+            html_content = html_content.replace(original_string, result.decode())
+        except subprocess.CalledProcessError as e:
+            html_content = html_content.replace(original_string, f"Error executing Python script: {e.output.decode()}")
         return html_content
 
     def include_node(self, html_content, script, original_string):
