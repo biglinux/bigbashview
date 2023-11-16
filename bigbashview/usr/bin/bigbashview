@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-exec python3 /usr/lib/bbv/bigbashview.py "$@"
+PATH="/usr/share/bigbashview/framework/shell/:$PATH" exec python3 /usr/lib/bbv/bigbashview.py "$@"
