@@ -29,6 +29,7 @@ import web
 from shutil import which
 
 
+
 class url_handler(object):
     __url__ = '/'
 
@@ -86,7 +87,7 @@ class content_handler(url_handler):
             return "File not found"
 
     def process_includes(self, html_content):
-        pattern = r'<\?include (\w+) "(.*?)"\?>'
+        pattern = r'<\?include (\w+)(.*?)\?>'
         matches = re.finditer(pattern, html_content, re.DOTALL)
 
         for match in matches:
