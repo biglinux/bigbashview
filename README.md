@@ -325,6 +325,13 @@ To execute scripts, embed them within the following tags:
   ?>
   ```
 
+- **PYTHON:**
+  ```html
+  <?include python
+  # Your Python code here
+  ?>
+  ```
+  
 - **Node.js:**
   ```html
   <?include node
