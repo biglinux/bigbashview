@@ -23,6 +23,7 @@ from .utils import get_env_for_shell, to_s
 from .html import HTML
 from bbv import globaldata
 import subprocess
+import re
 import os
 import web
 from shutil import which
@@ -74,11 +75,68 @@ class content_handler(url_handler):
     def called(self, options, content, query):
         try:
             with open(content) as arq:
-                return arq.read()
+                html_content = arq.read()
+                html_content = self.process_includes(html_content)
+                return html_content
         except UnicodeDecodeError:
             with open(content, 'rb') as arq:
                 return arq.read()
+        except FileNotFoundError:
+            web.ctx.status = '404 Not Found'
+            return "File not found"
 
+    def process_includes(self, html_content):
+        pattern = r'<\?include (\w+) "(.*?)"\?>'
+        matches = re.finditer(pattern, html_content, re.DOTALL)
+
+        for match in matches:
+            include_type, include_content = match.groups()
+            include_content = include_content.strip()
+
+            if include_type == 'html':
+                html_content = self.include_html(html_content, include_content, match.group(0))
+            elif include_type == 'bash':
+                html_content = self.include_bash(html_content, include_content, match.group(0))
+            elif include_type == 'php':
+                html_content = self.include_php(html_content, include_content, match.group(0))
+            elif include_type == 'node':
+                html_content = self.include_node(html_content, include_content, match.group(0))
+
+        return html_content
+
+    def include_html(self, html_content, file_path, original_string):
+        full_path = os.path.join(os.getcwd(), file_path)
+        try:
+            with open(full_path, 'r') as file:
+                included_html = file.read()
+                html_content = html_content.replace(original_string, included_html)
+        except FileNotFoundError:
+            html_content = html_content.replace(original_string, f"File {full_path} not found")
+        return html_content
+
+    def include_bash(self, html_content, script, original_string):
+        try:
+            result = subprocess.check_output(['bash', '-c', script], stderr=subprocess.STDOUT)
+            html_content = html_content.replace(original_string, result.decode())
+        except subprocess.CalledProcessError as e:
+            html_content = html_content.replace(original_string, f"Error executing bash script: {e.output.decode()}")
+        return html_content
+
+    def include_php(self, html_content, script, original_string):
+        try:
+            result = subprocess.check_output(['php', '-r', script], stderr=subprocess.STDOUT)
+            html_content = html_content.replace(original_string, result.decode())
+        except subprocess.CalledProcessError as e:
+            html_content = html_content.replace(original_string, f"Error executing PHP script: {e.output.decode()}")
+        return html_content
+
+    def include_node(self, html_content, script, original_string):
+        try:
+            result = subprocess.check_output(['node', '-e', script], stderr=subprocess.STDOUT)
+            html_content = html_content.replace(original_string, result.decode())
+        except subprocess.CalledProcessError as e:
+            html_content = html_content.replace(original_string, f"Error executing Node.js script: {e.output.decode()}")
+        return html_content
 
 class execute_handler(url_handler):
     __url__ = '/execute(.*)'

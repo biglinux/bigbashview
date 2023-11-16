@@ -294,6 +294,67 @@ In comptibility mode, the URLs will not contain commands, just the path for the 
 
 To get some examples on how to use compatibility mode, see the folder _compatibility_mode_ inside the demos folder of your BigBashView package.
 
+
+Claro, aqui está uma documentação em inglês, formatada em Markdown, para a sua implementação de inclusão de conteúdos e execução de scripts no servidor Python com a classe `content_handler`. A documentação inclui uma descrição geral, instruções de uso e exemplos.
+
+---
+
+### HTML Inclusion
+
+To include an HTML file, use the following syntax in your HTML:
+
+```html
+<?include html path/to/file.html?>
+```
+
+### Script Execution
+
+To execute scripts, embed them within the following tags:
+
+- **Bash:**
+  ```html
+  <?include bash
+  # Your bash commands here
+  ?>
+  ```
+
+- **PHP:**
+  ```html
+  <?include php
+  # Your PHP code here
+  ?>
+  ```
+
+- **Node.js:**
+  ```html
+  <?include node
+  # Your Node.js code here
+  ?>
+  ```
+
+## Examples
+
+### Including an HTML File
+
+```html
+<!-- Include a navigation bar -->
+<div>
+    <?include html components/navigation.html?>
+</div>
+```
+
+### Executing a Bash Script
+
+```html
+<!-- List files in the root and home directories -->
+<div>
+    <?include bash
+    ls /
+    ls /home
+    ?>
+</div>
+```
+
 ## Legacy Refrences
 
 - Visit [BigLinux Blog](https://biglinux.blogspot.com/2009/07/bigbashview-em-busca-da-revolucao.html) and [BigBashView's section](https://github.com/biglinux/bigbashview/blob/master/bigbashview/usr/share/bigbashview/README.md)
