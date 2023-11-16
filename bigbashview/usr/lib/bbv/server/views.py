@@ -117,6 +117,8 @@ class content_handler(url_handler):
         try:
             with open(full_path, 'r') as file:
                 included_html = file.read()
+                # Processar includes no conteúdo incluído
+                included_html = self.process_includes(included_html)
                 html_content = html_content.replace(original_string, included_html)
         except FileNotFoundError:
             html_content = html_content.replace(original_string, f"File {full_path} not found")
