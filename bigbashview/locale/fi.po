@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Information"
-msgstr "Informaatio"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Tervetuloa BigBashView'hun"
 
-msgid "License: "
-msgstr "Lisenssi: "
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Isännän nimi"
 
-msgid "Created by:"
-msgstr "Tekijä:"
-
-msgid "Date:"
-msgstr "Päivämäärä:"
-
-msgid "Code URL:"
-msgstr "Koodin URL-osoite:"
-
-msgid "Project URL:"
-msgstr "Projektin URL-osoite:"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Työympäristö"
 
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
@@ -98,33 +95,3 @@ msgstr "Kopioi kuva"
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Copiar endereço da imagem"
 msgstr "Kopioi kuvan osoite"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
-msgstr "Tervetuloa BigBashView'hun"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
-msgstr "Isännän nimi"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Työympäristö"
-
-msgid "Bom dia"
-msgstr "Hyvää huomenta"
-
-msgid "Boa tarde"
-msgstr "Hyvää iltapäivää"
-
-msgid "Boa noite"
-msgstr "Hyvää yötä"
-
-msgid "Configurações da tela"
-msgstr "Näytön asetukset"
-
-msgid "As configurações da tela foram resetadas."
-msgstr "Näytön asetukset on nollattu."

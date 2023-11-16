@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Information"
-msgstr "Informație"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Bine ati venit la BigBashView"
 
-msgid "License: "
-msgstr "Licență: "
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Numele gazdei"
 
-msgid "Created by:"
-msgstr "Creat de:"
-
-msgid "Date:"
-msgstr "Dată:"
-
-msgid "Code URL:"
-msgstr "URL-ul codului:"
-
-msgid "Project URL:"
-msgstr "ADRESA URL a proiectului:"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Mediul de lucru"
 
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
@@ -98,33 +95,3 @@ msgstr "Copierea imaginii"
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Copiar endereço da imagem"
 msgstr "Copiați adresa imaginii"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
-msgstr "Bine ati venit la BigBashView"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
-msgstr "Numele gazdei"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Mediul de lucru"
-
-msgid "Bom dia"
-msgstr "Buna dimineaţa"
-
-msgid "Boa tarde"
-msgstr "Bună ziua"
-
-msgid "Boa noite"
-msgstr "Noapte bună"
-
-msgid "Configurações da tela"
-msgstr "Setările ecranului"
-
-msgid "As configurações da tela foram resetadas."
-msgstr "Setările ecranului au fost resetate."

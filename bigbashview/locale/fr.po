@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Information"
-msgstr "Information"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Bienvenue sur BigBashView"
 
-msgid "License: "
-msgstr "Licence: "
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Nom d’hôte"
 
-msgid "Created by:"
-msgstr "Créé par:"
-
-msgid "Date:"
-msgstr "Date:"
-
-msgid "Code URL:"
-msgstr "URL du code :"
-
-msgid "Project URL:"
-msgstr "URL du projet :"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Environnement de travail"
 
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
@@ -98,33 +95,3 @@ msgstr "Copier l’image"
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Copiar endereço da imagem"
 msgstr "Copier l’adresse de l’image"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
-msgstr "Bienvenue sur BigBashView"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
-msgstr "Nom d’hôte"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Environnement de travail"
-
-msgid "Bom dia"
-msgstr "Bonjour"
-
-msgid "Boa tarde"
-msgstr "Bonne après-midi"
-
-msgid "Boa noite"
-msgstr "Bonne nuit"
-
-msgid "Configurações da tela"
-msgstr "Paramètres de l’écran"
-
-msgid "As configurações da tela foram resetadas."
-msgstr "Les paramètres de l’écran ont été réinitialisés."

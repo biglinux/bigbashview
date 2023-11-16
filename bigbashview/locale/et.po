@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Information"
-msgstr "Informatsioon"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Tere tulemast BigBashView"
 
-msgid "License: "
-msgstr "Litsents: "
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Hosti nimi"
 
-msgid "Created by:"
-msgstr "Looja:"
-
-msgid "Date:"
-msgstr "Kuupäev:"
-
-msgid "Code URL:"
-msgstr "Koodi URL:"
-
-msgid "Project URL:"
-msgstr "Projekti URL:"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Töökeskkond"
 
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
@@ -98,33 +95,3 @@ msgstr "Kopeeri pilt"
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Copiar endereço da imagem"
 msgstr "Kopeeri pildi aadress"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
-msgstr "Tere tulemast BigBashView"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
-msgstr "Hosti nimi"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Töökeskkond"
-
-msgid "Bom dia"
-msgstr "Tere hommikust"
-
-msgid "Boa tarde"
-msgstr "Tere päevast"
-
-msgid "Boa noite"
-msgstr "Head ööd"
-
-msgid "Configurações da tela"
-msgstr "Ekraani seaded"
-
-msgid "As configurações da tela foram resetadas."
-msgstr "Ekraani seaded on lähtestatud."

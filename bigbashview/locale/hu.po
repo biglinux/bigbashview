@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Information"
-msgstr "Információ"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Üdvözöljük a BigBashView oldalán!"
 
-msgid "License: "
-msgstr "Licenc: "
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Állomásnév"
 
-msgid "Created by:"
-msgstr "Létrehozta:"
-
-msgid "Date:"
-msgstr "Dátum:"
-
-msgid "Code URL:"
-msgstr "Kód URL-címe:"
-
-msgid "Project URL:"
-msgstr "Projekt URL-címe:"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Munkakörnyezet"
 
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
@@ -98,33 +95,3 @@ msgstr "Kép másolása"
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Copiar endereço da imagem"
 msgstr "Kép címének másolása"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
-msgstr "Üdvözöljük a BigBashView oldalán!"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
-msgstr "Állomásnév"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Munkakörnyezet"
-
-msgid "Bom dia"
-msgstr "Jó reggelt"
-
-msgid "Boa tarde"
-msgstr "Jó napot"
-
-msgid "Boa noite"
-msgstr "Jó éjszakát"
-
-msgid "Configurações da tela"
-msgstr "Képernyő beállítások"
-
-msgid "As configurações da tela foram resetadas."
-msgstr "A képernyő beállításai visszaálltak."

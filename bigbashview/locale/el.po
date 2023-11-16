@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Information"
-msgstr "Πληροφορία"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Καλώς ήρθατε στο BigBashΠροβολή"
 
-msgid "License: "
-msgstr "Άδεια: "
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Όνομα κεντρικού υπολογιστή"
 
-msgid "Created by:"
-msgstr "Δημιουργήθηκε από:"
-
-msgid "Date:"
-msgstr "Ημερομηνία:"
-
-msgid "Code URL:"
-msgstr "Διεύθυνση URL κώδικα:"
-
-msgid "Project URL:"
-msgstr "Διεύθυνση URL έργου:"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Εργασιακό Περιβάλλον"
 
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
@@ -98,33 +95,3 @@ msgstr "Αντιγραφή εικόνας"
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Copiar endereço da imagem"
 msgstr "Αντιγραφή διεύθυνσης εικόνας"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
-msgstr "Καλώς ήρθατε στο BigBashΠροβολή"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
-msgstr "Όνομα κεντρικού υπολογιστή"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Εργασιακό Περιβάλλον"
-
-msgid "Bom dia"
-msgstr "Καλημέρα"
-
-msgid "Boa tarde"
-msgstr "Καλό απόγευμα"
-
-msgid "Boa noite"
-msgstr "Καληνύχτα"
-
-msgid "Configurações da tela"
-msgstr "Ρυθμίσεις οθόνης"
-
-msgid "As configurações da tela foram resetadas."
-msgstr "Έγινε επαναφορά των ρυθμίσεων οθόνης."

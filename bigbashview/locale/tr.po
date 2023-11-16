@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Information"
-msgstr "Bilgi"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "BigBashView'e Hoş Geldiniz"
 
-msgid "License: "
-msgstr "Lisans: "
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Ana Bilgisayar Adı"
 
-msgid "Created by:"
-msgstr "Tarafından yaratılmıştır:"
-
-msgid "Date:"
-msgstr "Tarih:"
-
-msgid "Code URL:"
-msgstr "Kod URL'si:"
-
-msgid "Project URL:"
-msgstr "Proje URL'si:"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Çalışma Ortamı"
 
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
@@ -98,33 +95,3 @@ msgstr "Resmi kopyala"
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Copiar endereço da imagem"
 msgstr "Resim adresini kopyala"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
-msgstr "BigBashView'e Hoş Geldiniz"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
-msgstr "Ana Bilgisayar Adı"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Çalışma Ortamı"
-
-msgid "Bom dia"
-msgstr "Günaydın"
-
-msgid "Boa tarde"
-msgstr "İyi günler"
-
-msgid "Boa noite"
-msgstr "İyi geceler"
-
-msgid "Configurações da tela"
-msgstr "Ekran ayarları"
-
-msgid "As configurações da tela foram resetadas."
-msgstr "Ekran ayarları sıfırlandı."

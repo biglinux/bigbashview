@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Information"
-msgstr "Informacija"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
+msgid "Bem-vindo ao BigBashView"
+msgstr "Dobrodošli u BigBashView"
 
-msgid "License: "
-msgstr "Dozvola: "
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
+msgid "Nome do Host"
+msgstr "Naziv glavnog računala"
 
-msgid "Created by:"
-msgstr "Stvorio:"
-
-msgid "Date:"
-msgstr "Datum:"
-
-msgid "Code URL:"
-msgstr "URL koda:"
-
-msgid "Project URL:"
-msgstr "URL projekta:"
+# 
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
+msgid "Ambiente de Trabalho"
+msgstr "Radno okruženje"
 
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 72
@@ -98,33 +95,3 @@ msgstr "Kopiraj sliku"
 # File: bigbashview/bigbashview/usr/lib/bbv/ui/qt.py, line: 98
 msgid "Copiar endereço da imagem"
 msgstr "Kopiraj adresu slike"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
-msgstr "Dobrodošli u BigBashView"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
-msgstr "Naziv glavnog računala"
-
-# 
-# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Radno okruženje"
-
-msgid "Bom dia"
-msgstr "Dobro jutro"
-
-msgid "Boa tarde"
-msgstr "Dobar dan"
-
-msgid "Boa noite"
-msgstr "Laku noć"
-
-msgid "Configurações da tela"
-msgstr "Postavke zaslona"
-
-msgid "As configurações da tela foram resetadas."
-msgstr "Postavke zaslona su vraćene na izvorno."
