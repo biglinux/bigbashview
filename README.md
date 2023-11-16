@@ -304,7 +304,7 @@ Claro, aqui está uma documentação em inglês, formatada em Markdown, para a s
 To include an HTML file, use the following syntax in your HTML:
 
 ```html
-<?include html path/to/file.html?>
+<?include html "path/to/file.html"?>
 ```
 
 ### Script Execution
@@ -339,7 +339,7 @@ To execute scripts, embed them within the following tags:
 ```html
 <!-- Include a navigation bar -->
 <div>
-    <?include html components/navigation.html?>
+    <?include html "components/navigation.html"?>
 </div>
 ```
 
