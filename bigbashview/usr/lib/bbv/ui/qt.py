@@ -20,10 +20,10 @@
 import sys
 import os
 from PySide6.QtCore import QUrl, Qt
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication, QFileDialog
 from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWebEngineCore import QWebEnginePage
+from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineDownloadRequest
 
 from bbv.globaldata import ICON, TITLE
 
@@ -74,6 +74,18 @@ class Window(QWidget):
         self.splitter2 = QSplitter(Qt.Horizontal)
         self.hbox.addWidget(self.splitter)
         self.setLayout(self.hbox)
+        self.web.page().profile().downloadRequested.connect(self.onDownloadRequested)
+
+    def onDownloadRequested(self, download: QWebEngineDownloadRequest):
+        home_directory = os.path.expanduser('~')
+
+        save_path, _ = QFileDialog.getSaveFileName(self, download.suggestedFileName(), os.path.join(home_directory, download.suggestedFileName()))
+        if save_path:
+            save_directory = os.path.dirname(save_path)
+            save_filename = os.path.basename(save_path)
+            download.setDownloadDirectory(save_directory)
+            download.setDownloadFileName(save_filename)
+            download.accept()
 
     def onFeature(self, url, feature):
         if feature in (
