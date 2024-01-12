@@ -15,13 +15,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
+
 import os
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit2", "4.1")
 from gi.repository import Gtk, WebKit2, Gdk
 from bbv.globaldata import ICON, TITLE
-
 
 class Window(Gtk.Window):
     def __init__(self):
@@ -46,18 +46,22 @@ class Window(Gtk.Window):
         self.connect("key-press-event", self.key)
 
     def key(self, webview, event):
+        # Reload the webview when the F5 key is pressed
         if event.keyval == 65474:
             self.webview.reload()
+        # Show the web inspector when the F12 key is pressed
         if event.keyval == 65481:
             inspector = self.webview.get_inspector()
             inspector.show()
 
     def add_script(self, webview, event):
+        # Add a JavaScript function to the webview that can be called from the loaded webpage
         script = "function _run(run){fetch('/execute$'+run);}"
         if event == WebKit2.LoadEvent.FINISHED:
             self.webview.run_javascript(script)
 
     def viewer(self, window_state):
+        # Set the window state based on the provided argument
         if window_state == "maximized":
             self.maximize()
             self.show()
@@ -84,21 +88,26 @@ class Window(Gtk.Window):
 
     @staticmethod
     def run():
+        # Start the Gtk main loop
         Gtk.main()
 
     @staticmethod
     def close_window(webview):
+        # Quit the Gtk main loop when the webview is closed
         Gtk.main_quit()
 
     def title_changed(self, webview, title):
+        # Set the window title and WM_CLASS property based on the webview's title
         title = self.webview.get_title()
         os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS '{title}'")
         self.set_title(title)
 
     def load_url(self, url):
+        # Load the specified URL in the webview
         self.webview.load_uri(url)
 
     def set_size(self, width, height, window_state):
+        # Set the window size and position based on the provided arguments
         display = Gdk.Display.get_primary_monitor(Gdk.Display.get_default())
         size = display.get_geometry()
         if width <= 0:
@@ -112,6 +121,7 @@ class Window(Gtk.Window):
             self.set_resizable(False)
 
     def style(self, colorful):
+        # Set the window and webview background color based on the provided argument
         if colorful == "black":
             self.override_background_color(
                 Gtk.StateFlags.NORMAL,

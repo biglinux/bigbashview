@@ -17,6 +17,41 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#####################################################################
+#
+#  This program is a script to run Bash+HTML in a Desktop WebView.
+#  It uses the BigBashView library.
+#
+#  The script takes command line arguments to configure the WebView window.
+#  It supports options such as URL/File, background color, work directory,
+#  window icon, window title, process name, window size, rendering toolkit,
+#  window state, and GPU rendering activation.
+#
+#  The script initializes the Main class, which sets up the argument parser
+#  and parses the command line arguments. It then checks the specified
+#  directory for files that autoload with the -d/--directory option.
+#  If a matching file is found, it sets the URL to that file.
+#
+#  The script then checks for the availability of the rendering toolkits,
+#  QtWebEngine and WebKitGTK2. If both are unavailable, it displays an error
+#  message and exits. If only one toolkit is available, it sets the toolkit
+#  to that one. If both toolkits are available, it sets the toolkit to 'auto'
+#  and tries to import the QtWebEngine toolkit first. If it fails, it imports
+#  the WebKitGTK2 toolkit.
+#
+#  After setting up the toolkit, the script creates an instance of the
+#  corresponding window class (gtk.Window or qt.Window) and sets the window
+#  properties based on the command line arguments. It then runs the window,
+#  loading the specified URL and starting the server if specified.
+#
+#  The Main class also includes a nested class, formatter, which is a helper
+#  class for formatting the help message of the argument parser.
+#
+#  The script imports the necessary modules and defines the Main class.
+#  It then creates an instance of the Main class and calls its run() method
+#  to start the script.
+
 import argparse
 import sys
 import os
@@ -26,12 +61,14 @@ from setproctitle import setproctitle
 class Main:
     # Start bbv #
     def __init__(self):
+        # Helper class for formatting the help message
         def formatter(prog):
             return argparse.RawTextHelpFormatter(
                 prog,
                 max_help_position=100,
                 width=None)
 
+        # Create the argument parser
         parser = argparse.ArgumentParser(
             prog='bigbashview',
             description='''
@@ -74,6 +111,7 @@ class Main:
             ''',
             formatter_class=formatter)
 
+        # Define the command line arguments
         parser.add_argument('url', default='/', nargs='?', help='URL/File')
         parser.add_argument(
             '-v', '--version',
@@ -104,13 +142,19 @@ class Main:
             '-w', '--window_state', default=None,
             help='''Window state: fullscreen, maximized, fixed,
               frameless, alwaystop, framelesstop, maximizedframelesstop''')
+        parser.add_argument(
+            '-g', '--gpu', action='store_true',
+            help='Activate GPU rendering')
 
+        # Parse the command line arguments
         args = parser.parse_args()
         self.url = args.url
 
+        # Check if the specified directory exists
         if args.directory and os.path.isdir(args.directory):
             os.chdir(args.directory)
             if self.url == '/':
+                # Check for files that autoload with the -d/--directory option
                 files = list(filter(os.path.isfile, os.listdir()))
                 if files:
                     for file in files:
@@ -122,15 +166,19 @@ class Main:
                             self.url = f'./{file}'
                             break
 
+        # Set the global window title if specified
         if args.name:
             globaldata.TITLE = args.name
 
+        # Set the global window icon if the file exists
         if os.path.exists(args.icon):
             globaldata.ICON = args.icon
 
+        # Set the process name if specified
         if args.process:
             setproctitle(args.process)
 
+        # Parse the window size argument
         geom = args.size.split('x')
         try:
             width, height = geom
@@ -140,18 +188,21 @@ class Main:
             parser.print_help()
             sys.exit(1)
 
+        # Parse the background color argument
         if args.color in ['black', 'transparent', None]:
             self.color = args.color
         else:
             parser.print_help()
             sys.exit(1)
 
+        # Parse the rendering toolkit argument
         if args.toolkit in ['auto', 'qt', 'gtk']:
             self.toolkit = args.toolkit
         else:
             parser.print_help()
             sys.exit(1)
 
+        # Parse the window state argument
         if args.window_state in [
             'fullscreen', 'maximized',
             'fixed', 'frameless',
@@ -163,7 +214,7 @@ class Main:
             sys.exit(1)
 
         check_qt = check_gtk = False
-        # construct window
+        # Construct the window
         if self.toolkit == 'auto':
             try:
                 from bbv.ui import qt
@@ -202,17 +253,28 @@ class Main:
                 print(e)
                 print('Please install PyQt5')
                 sys.exit(1)
-            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --font-render-hinting=none --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --disable-breakpad --skia-resource-cache-limit-mb=1'
-            os.environ['QT_QUICK_BACKEND'] = 'software'
-            os.environ['QSG_RENDER_LOOP'] = 'basic'
-            os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
-            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+
+            if args.gpu:
+                # Enable GPU rendering, with good support in effects like blur
+                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --no-sandbox --single-process --autoplay-policy=no-user-gesture-required --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan --use-gl=angle --disable-breakpad --skia-resource-cache-limit-mb=1'
+                os.environ['QSG_RENDER_LOOP'] = 'basic'
+                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+            else:
+                # Disable GPU rendering, open faster and use less memory
+                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --disable-breakpad --skia-resource-cache-limit-mb=1'
+                os.environ['QT_QUICK_BACKEND'] = 'software'
+                os.environ['QSG_RENDER_LOOP'] = 'basic'
+                os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
+                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
     def run(self, start_server=True):
+        # Import the run_server function from bbv2server module
         from bbv.server.bbv2server import run_server
+        # Start the server if specified
         server = run_server() if start_server else None
 
+        # Check if the URL is a local file
         if self.url.find('://') == -1:
             if not self.url.startswith('/'):
                 self.url = '/'+self.url
@@ -221,10 +283,13 @@ class Main:
                 globaldata.PORT,
                 self.url)
 
+        # Set the window size, style, viewer, and load the URL
         self.window.set_size(self.width, self.height, self.window_state)
         self.window.style(self.color)
         self.window.viewer(self.window_state)
         self.window.load_url(self.url)
+        # Run the window
         self.window.run()
+        # Stop the server if started
         if server:
             server.stop()
