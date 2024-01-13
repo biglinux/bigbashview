@@ -256,12 +256,12 @@ class Main:
 
             if args.gpu:
                 # Enable GPU rendering, with good support in effects like blur
-                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --no-sandbox --single-process --autoplay-policy=no-user-gesture-required --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan --use-gl=angle --disable-breakpad --skia-resource-cache-limit-mb=1'
+                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --no-sandbox --single-process --autoplay-policy=no-user-gesture-required --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --enable-gpu-rasterization --disable-gpu-sandbox --disable-breakpad'
                 os.environ['QSG_RENDER_LOOP'] = 'basic'
                 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             else:
                 # Disable GPU rendering, open faster and use less memory
-                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --disable-breakpad --skia-resource-cache-limit-mb=1'
+                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --disable-breakpad'
                 os.environ['QT_QUICK_BACKEND'] = 'software'
                 os.environ['QSG_RENDER_LOOP'] = 'basic'
                 os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
