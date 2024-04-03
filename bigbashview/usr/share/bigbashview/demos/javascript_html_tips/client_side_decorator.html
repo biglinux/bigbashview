@@ -1,0 +1,223 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window Control CSD Mode</title>
+    <style>
+        body {
+            margin: 0;
+            margin-top: 15px;
+            overflow: hidden;
+            text-align: -webkit-center;
+            font-family: 'noto sans', lato, sans-serif;
+        }
+
+
+        .title-bar {
+            padding-top: 10px;
+            align-items: end;
+            justify-self: right;
+            position: fixed;
+            right: 0;
+            padding-right: 26px;
+        }
+
+        article.content {
+            vertical-align: middle;
+            height: auto;
+            margin: auto;
+        }
+
+        .right {
+            background: #ffffff;
+            width: 100%;
+            justify-content: right;
+            display: flex;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            align-items: start;
+            padding: 50px;
+        }
+
+        .left {
+            height: 100%;
+            width: 250px;
+            align-content: flex-start;
+        }
+
+        .window-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .window-control-btn {
+            width: 20px;
+            height: 20px;
+            border: none;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            background-color: red;
+        }
+
+        .minimize-btn {
+            background-color: yellow;
+        }
+
+        .maximize-btn {
+            background-color: green;
+        }
+
+        .page {
+            border-radius: 12px;
+            background-color: #ebebeb;
+            margin: 0px;
+            padding: 0px;
+            display: flex;
+        }
+    </style>
+</head>
+
+<body class="drag-area">
+    <div class="page">
+        <div class="title-bar">
+            <div class="window-controls no-drag">
+                <button class="window-control-btn minimize-btn" onclick="windowControl.minimize()">-</button>
+                <button class="window-control-btn maximize-btn" onclick="windowControl.maximize()">[]</button>
+                <button class="window-control-btn close-btn" onclick="windowControl.close()">X</button>
+            </div>
+        </div>
+        <div class="left">
+            <div>Window Title</div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+            </p>
+        </div>
+        <div class="right">
+            <article class="content no-drag">
+                Open this example with: bigbashview -c transparent -w frameless client_side_decorator.html
+            </article>
+        </div>
+    </div>
+
+    <!-- QtWebChannel, import in javascript options to manage window in pyQt, move, resize, minimize, maximize and close -->
+    <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <script>
+        var canResize = true; // Por padrão, permitir redimensionamento
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                window.windowControl = channel.objects.windowControl;
+
+                // Configura o listener para mudanças de estado da janela
+                windowControl.windowStateChanged.connect(function (state) {
+                    updatePageStyle(state);
+                });
+
+                // Verifica o estado inicial da janela
+                windowControl.isMaximized(function (maximized) {
+                    if (maximized) {
+                        updatePageStyle('maximized');
+                    } else {
+                        updatePageStyle('normal');
+                    }
+                });
+            });
+
+            function updatePageStyle(state) {
+                var page = document.querySelector('.page');
+                var body = document.querySelector('body'); // Selecionando o elemento body
+                if (state === 'maximized') {
+                    page.style.boxShadow = 'none';
+                    page.style.height = '100vh';
+                    page.style.width = '100vw';
+                    body.style.marginTop = '0'; // Ajustando margin-top do body para 0
+                    canResize = false; // Desabilita o redimensionamento
+                } else {
+                    page.style.boxShadow = '0px 0px 15px 0px rgba(0,0,0,0.3)';
+                    page.style.height = 'calc(100vh - 30px)';
+                    page.style.width = 'calc(100vw - 30px)';
+                    body.style.marginTop = '15px'; // Ajustando margin-top do body para 15px
+                    canResize = true; // Desabilita o redimensionamento
+                }
+            }
+
+        });
+    </script>
+
+    <!-- Move and Resize Window -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const dragArea = document.querySelector('.drag-area');
+            const resizeAreas = document.querySelectorAll('body');
+            dragArea.addEventListener('mousedown', function (event) {
+                if (!event.target.closest('.no-drag')) {
+                    windowControl.moveWindow();
+                };
+            });
+
+            // Change mouse cursor in border, only visual things
+            window.addEventListener('mousemove', function (event) {
+                const detectedRegion = detectResizeRegion(event, document.querySelector('body'));
+                switch (detectedRegion) {
+                    case 'top-left':
+                    case 'bottom-right':
+                        document.body.style.cursor = 'nwse-resize';
+                        break;
+                    case 'top-right':
+                    case 'bottom-left':
+                        document.body.style.cursor = 'nesw-resize';
+                        break;
+                    case 'top':
+                    case 'bottom':
+                        document.body.style.cursor = 'ns-resize';
+                        break;
+                    case 'left':
+                    case 'right':
+                        document.body.style.cursor = 'ew-resize';
+                        break;
+                    default:
+                        document.body.style.cursor = 'default';
+                }
+            });
+
+            // Now, really resize window
+            resizeAreas.forEach(function (area) {
+                area.addEventListener('mousedown', function (event) {
+                    const detectedRegion = detectResizeRegion(event, area);
+                    if (detectedRegion) {
+                        windowControl.resizeWindowBy(detectedRegion);
+                    }
+                });
+            });
+        });
+
+        // Create region in border of body to resize window
+        function detectResizeRegion(event, area) {
+            if (!canResize) return; // Se o redimensionamento estiver desabilitado, não faça nada
+
+            const threshold = 15; // Size of resize region
+            const rect = area.getBoundingClientRect();
+
+            const nearTop = event.clientY - rect.top < threshold;
+            const nearBottom = rect.bottom - event.clientY < threshold;
+            const nearLeft = event.clientX - rect.left < threshold;
+            const nearRight = rect.right - event.clientX < threshold;
+
+            if (nearTop && nearLeft) return 'top-left';
+            if (nearTop && nearRight) return 'top-right';
+            if (nearBottom && nearLeft) return 'bottom-left';
+            if (nearBottom && nearRight) return 'bottom-right';
+            if (nearTop) return 'top';
+            if (nearBottom) return 'bottom';
+            if (nearLeft) return 'left';
+            if (nearRight) return 'right';
+        }
+    </script>
+</body>
+
+</html>
