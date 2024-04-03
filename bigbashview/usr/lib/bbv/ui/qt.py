@@ -2,7 +2,7 @@
 #
 #  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#  Copyright (C) 2009  Bruno Goncalves Araujo
+#  Copyright (C) 2009-2024  Bruno Goncalves Araujo
 #  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 #  This file contains the implementation of a Qt-based UI for the BigBashView application.
@@ -34,11 +34,12 @@
 
 import sys
 import os
-from PySide6.QtCore import QUrl, Qt
+from PySide6.QtCore import QUrl, Qt, QObject, Slot, Signal, QEvent
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication, QFileDialog
 from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineDownloadRequest
+from PySide6.QtWebChannel import QWebChannel
 
 from bbv.globaldata import ICON, TITLE
 
@@ -54,6 +55,55 @@ lang_translations.install()
 # Define _ shortcut for translations
 _ = lang_translations.gettext
 
+# WindowControl class for handling window state changes and interactions
+# between the web view and the main window, using signals and slots
+# acessible from JavaScript code in the web page
+# used in csd mode (client side decoration)
+class WindowControl(QObject):
+    windowStateChanged = Signal(str)  # Definição do sinal
+
+    def __init__(self, window):
+        super().__init__()
+        self.window = window
+
+    @Slot()
+    def minimize(self):
+        self.window.showMinimized()
+
+    @Slot()
+    def maximize(self):
+        if not self.window.isMaximized():
+            self.window.showMaximized()
+        else:
+            self.window.showNormal()
+
+    @Slot(result=bool)
+    def isMaximized(self):
+        return self.window.isMaximized()
+
+    @Slot()
+    def close(self):
+        self.window.close()
+
+    @Slot()
+    def moveWindow(self):
+        if self.window.windowHandle():
+            self.window.windowHandle().startSystemMove()
+
+    @Slot(str)
+    def resizeWindowBy(self, resizeRegion):
+        edge = Qt.Edge(0)
+        if 'left' in resizeRegion:
+            edge |= Qt.LeftEdge
+        if 'right' in resizeRegion:
+            edge |= Qt.RightEdge
+        if 'top' in resizeRegion:
+            edge |= Qt.TopEdge
+        if 'bottom' in resizeRegion:
+            edge |= Qt.BottomEdge
+
+        if edge and self.window.windowHandle():
+            self.window.windowHandle().startSystemResize(edge)
 
 class Window(QWidget):
     def __init__(self):
@@ -91,6 +141,20 @@ class Window(QWidget):
         self.splitter2 = QSplitter(Qt.Horizontal)
         self.hbox.addWidget(self.splitter)
         self.setLayout(self.hbox)
+
+        # Add control and channel for web interaction, to be used in csd mode
+        self.control = WindowControl(self)
+        self.channel = QWebChannel()
+        self.web.page().setWebChannel(self.channel)
+        self.channel.registerObject("windowControl", self.control)
+
+    def changeEvent(self, event):
+        super().changeEvent(event)
+        if event.type() == QEvent.WindowStateChange:
+            if self.isMaximized():
+                self.control.windowStateChanged.emit('maximized')
+            elif self.windowState() == Qt.WindowNoState:
+                self.control.windowStateChanged.emit('normal')
 
     def onDownloadRequested(self, download: QWebEngineDownloadRequest):
         # Handle download requests by showing a file dialog for saving the file
