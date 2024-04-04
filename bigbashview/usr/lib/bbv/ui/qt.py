@@ -112,7 +112,6 @@ class Window(QWidget):
         self.web = QWebEngineView()
         self.web.page().profile().setHttpUserAgent("BigBashView-Agent")
         super().__init__()
-        self.web = QWebEngineView()
         self.inspector = QWebEngineView()
 
         # Set window icon and title
@@ -223,25 +222,18 @@ class Window(QWidget):
         # Set the window state based on the provided argument
         if window_state == "maximized":
             self.setWindowState(Qt.WindowMaximized)
-            self.show()
         elif window_state == "fullscreen":
             self.setWindowState(Qt.WindowFullScreen)
-            self.show()
         elif window_state == "frameless":
             self.setWindowFlags(Qt.FramelessWindowHint)
-            self.show()
         elif window_state == "alwaystop":
             self.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.show()
         elif window_state == "framelesstop":
             self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
-            self.show()
         elif window_state == "maximizedframelesstop":
             self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
             self.setWindowState(Qt.WindowMaximized)
-            self.show()
-        else:
-            self.show()
+        self.show()
 
     def run(self):
         # Start the application event loop
@@ -260,7 +252,8 @@ class Window(QWidget):
         # Load the specified URL in the web view
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
         self.web.load(self.url)
-
+        
+        
     def set_size(self, width, height, window_state):
         # Set the window size and position based on the provided arguments
         display = self.app.screenAt(QCursor().pos())

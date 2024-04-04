@@ -136,6 +136,9 @@ class Main:
             '-s', '--size', default='0x0',
             help='Window Size: [width]x[height]')
         parser.add_argument(
+            '-m', '--minsize', default='0x0',
+            help='Minimum Window Size: [min_width]x[min_height]')
+        parser.add_argument(
             '-t', '--toolkit', default='auto',
             help='Rendering by QtWebEngine or WebKitGTK2: qt or gtk')
         parser.add_argument(
@@ -184,6 +187,15 @@ class Main:
             width, height = geom
             self.width = int(width)
             self.height = int(height)
+        except ValueError:
+            parser.print_help()
+            sys.exit(1)
+
+        min_geom = args.minsize.split('x')
+        try:
+            min_width, min_height = map(int, min_geom)
+            self.min_width = min_width
+            self.min_height = min_height
         except ValueError:
             parser.print_help()
             sys.exit(1)
@@ -284,6 +296,7 @@ class Main:
                 self.url)
 
         # Set the window size, style, viewer, and load the URL
+        self.window.setMinimumSize(self.min_width, self.min_height)
         self.window.set_size(self.width, self.height, self.window_state)
         self.window.style(self.color)
         self.window.viewer(self.window_state)
