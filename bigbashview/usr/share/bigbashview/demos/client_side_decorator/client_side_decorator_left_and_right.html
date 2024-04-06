@@ -283,11 +283,35 @@
                 windowControl.isMaximized(function (maximized) {
                     updatePageStyle(maximized ? 'maximized' : 'normal');
                 });
-                // Adds a double-click event listener on the title bar to toggle window state
+
+                // Variables for double-click detection
+                let lastClickTime = 0;
+                disableDragArea = false;
+                const doubleClickDelay = 300; // Tempo máximo em milissegundos entre cliques para ser considerado um clique duplo
+                // Maybe use in future if qtwayland double click fixed // Adds a double-click event listener on the title bar to toggle window state
+                // Maybe use in future if qtwayland double click fixed // var titleBar = document.getElementById('title-bar');
+                // Maybe use in future if qtwayland double click fixed // titleBar.addEventListener('dblclick', function () {
+                // Maybe use in future if qtwayland double click fixed //     window.windowControl.maximize(); // Calls the method to maximize or restore the window
+                // Maybe use in future if qtwayland double click fixed // });
+
+                // Start workaround for qtwayland bug with double click
+                // Adds a mousedown event listener on the title bar
                 var titleBar = document.getElementById('title-bar');
-                titleBar.addEventListener('dblclick', function () {
-                    window.windowControl.maximize(); // Calls the method to maximize or restore the window
+                titleBar.addEventListener('mousedown', function (event) {
+                    const currentTime = new Date().getTime();
+                    const timeSinceLastClick = currentTime - lastClickTime;
+
+                    if (timeSinceLastClick < doubleClickDelay) {
+                        // Clique duplo detectado
+                        window.windowControl.maximize(); // Calls the method to maximize or restore the window
+                        disableDragArea = true;
+                        setTimeout(() => {
+                            disableDragArea = false;
+                        }, 300);
+                    }
+                    lastClickTime = currentTime;
                 });
+                // End workaround for maximize window with double click
             });
             function updatePageStyle(state) {
                 var page = document.getElementById('page');
