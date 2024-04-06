@@ -1,0 +1,432 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window Control CSD Mode</title>
+    <style>
+        *::-webkit-scrollbar {
+            height: 9px;
+            /* Sets the height of the horizontal scrollbar */
+            width: 9px;
+            /* Sets the width of the vertical scrollbar */
+        }
+
+        *::-webkit-scrollbar-track {
+            border-radius: 5px;
+            /* Rounds the corners of the scrollbar track */
+            background-color: #00000000;
+            /* Sets a transparent background color for the track */
+        }
+
+        /* Darkens the scrollbar track on hover */
+        *::-webkit-scrollbar-track:hover {
+            background-color: #00000020;
+            /* Semi-transparent black */
+        }
+
+        *::-webkit-scrollbar-track:active {
+            background-color: #00000020;
+            /* Semi-transparent black */
+        }
+
+        *::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            /* Rounds the corners of the scrollbar thumb */
+            background-color: #00000020;
+            /* Sets a semi-transparent background color for the thumb */
+        }
+
+        /* Darkens the scrollbar thumb on hover */
+        *::-webkit-scrollbar-thumb:hover {
+            background-color: #00000040;
+            /* More opaque semi-transparent black */
+        }
+
+        *::-webkit-scrollbar-thumb:active {
+            background-color: #00000020;
+            /* Semi-transparent black */
+        }
+    
+        body {
+            /* The body is used to render the shadow around the window and allow resizing */
+            overflow: hidden;
+            text-align: -webkit-center;
+        }
+
+        body.normal-mode {
+            margin-top: 15px;
+        }
+
+        /* Removes all margins in maximized window mode, and window shadow */
+        body.maximized-mode {
+            margin: 0;
+        }
+
+        /* In this div the page is actually rendered */
+        #page {
+            border-radius: 12px; /* Rounds the corners of the page container */
+            background-color: #ebebeb;
+            margin: 0px;
+            padding: 0px;
+            display: flex;
+        }
+
+        #page.normal-mode {
+            box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.3);  /* Adds a shadow to the page container in not maximized mode */
+            height: calc(100vh - 30px); /* Sets the height to the full viewport height minus 30px in normal mode, 15px for the top and 15px for the bottom, for shadow */
+            width: calc(100vw - 30px);
+            border-radius: 10px; /* Rounds the corners of the page container in normal mode */
+        }
+
+        #page.maximized-mode {
+            box-shadow: none; /* Removes the shadow from the page container in maximized mode */
+            height: 100vh; /* Sets the height to the full viewport height in maximized mode */
+            width: 100vw;
+            border-radius: 0px; /* Removes the corner rounding in maximized mode */
+        }
+        
+        .page-content {
+            margin-left: 10px;
+            margin-top: 50px;
+            overflow: auto;
+        }
+
+        #title-bar {
+            position: fixed; /* Fixes the title bar at the top of the page */
+            padding: 5px; /* Adds space around the title bar */
+            width: -webkit-fill-available;
+            justify-content: center;
+            user-select: none; /* Prevents text selection within the title bar */
+        }
+
+        article.content {
+            vertical-align: middle;
+            height: auto;
+            margin: auto;
+        }
+
+        .window-control-btn-box {
+            padding-top: 8px; /* Adds padding at the top of the window control buttons */
+            z-index: 100000 !important; /* Ensures the window control buttons are always on top */
+            position: relative;
+        }
+
+        #right {
+            background: #ffffff;
+            width: 100%;
+            justify-content: right;
+            display: flex;
+            align-items: start;
+            padding: 50px;
+            text-align: left;
+        }
+
+        #right.normal-mode {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        #right.maximized-mode {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        #left {
+            width: 250px;
+            margin-top: 5px;
+            align-content: flex-start;
+            overflow: auto;
+        }
+
+        #window-controls-left {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            position: absolute;
+            height: min-content;
+            width: min-content;
+        }
+
+        #window-controls-right {
+            display: flex;
+            align-items: center;
+            margin-right: 8px;
+            position: absolute;
+            height: min-content;
+            width: min-content;
+            right: 10px;
+        }
+
+        .maximized-mode-window-control-right {
+            right: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .maximized-mode-window-control-left {
+            margin-left: 0 !important;
+        }
+
+        .window-controls-space-left-side {
+            margin-top: 3em;
+        }
+
+        .window-controls-space-right-side {
+            margin-top: 3em;
+        }
+
+        .window-controls-maximized {
+            display: flex;
+            align-items: center;
+        }
+
+        .window-controls-left-side {
+            left: 0px;
+            position: fixed;
+            flex-flow: row-reverse;
+        }
+
+        .window-controls-left-side-maximized {
+            left: 5px;
+            position: fixed;
+            flex-flow: row-reverse;
+        }
+
+        .window-control-btn {
+            border: none;
+            margin-right: 0.4em;
+            margin-left: 0.4em;
+            border-radius: 1em;
+            aspect-ratio: 1 / 1;
+            padding: 0.2em;
+            display: flex;
+            min-width: 18px;
+            background-color: #00000012;
+        }
+
+        .window-control-btn:hover {
+            background-color: #00000018;
+        }
+
+        .window-control-btn-img {
+            margin: auto;
+        }
+    </style>
+</head>
+
+<html>
+
+<body>
+    <div id="page">
+        <div id="title-bar" class="drag-area">BigLinux</div>
+
+        <!-- Includes the window control side shell script -->
+        <?include bash ./windowControlSide.sh ?>
+
+        <div class="page-content">
+            <article class="content page-content" class="drag-area">
+                <!-- Instructions on how to open this example -->
+                Open this example with: bigbashview -c transparent -w frameless client_side_decorator.html.
+                <br>
+                <br>
+                To detect window icons need geticons: https://crates.io/crates/geticons
+                <br>
+                <br>
+                Side of the window controls can be changed by changing the windowControlSide.sh file and detect kwin buttons configuration.
+                <br>
+                <br>
+                Use the drag-area class so that the window can be moved by holding the mouse in the area.
+                <br>
+                <br>
+                The support for using window icons on the right and left side is automatic
+                <br>
+                <br>
+                Id title-bar is used both to move the window and supports 2 clicks to maximize or unmaximize the window.
+                <br>
+                <br>
+                All is configurable and easily adaptable to any environment, your creativity is the limit.
+            </article>
+        </div>
+    </div>
+
+    <!-- Import QtWebChannel to manage window actions like move, resize, minimize, maximize, and close in a PyQt environment -->
+    <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                window.windowControl = channel.objects.windowControl;
+
+                // Sets up a listener for window state changes
+                windowControl.windowStateChanged.connect(function (state) {
+                    updatePageStyle(state);
+                });
+
+                // Checks the initial window state
+                windowControl.isMaximized(function (maximized) {
+                    updatePageStyle(maximized ? 'maximized' : 'normal');
+                });
+                // Adds a double-click event listener on the title bar to toggle window state
+                var titleBar = document.getElementById('title-bar');
+                titleBar.addEventListener('dblclick', function () {
+                    window.windowControl.maximize(); // Calls the method to maximize or restore the window
+                });
+            });
+            function updatePageStyle(state) {
+                var page = document.getElementById('page');
+                var body = document.body;
+                var windowControlsRight = document.getElementById('window-controls-right');
+                var windowControlsLeft = document.getElementById('window-controls-left');
+                var windowControls = document.querySelector('.window-controls');
+                var maximize = document.querySelector('#maximize-btn-image');
+                var right = document.getElementById('right');
+
+                if (state === 'maximized') {
+                    // Adds the specific class and removing others
+                    page?.classList.add('maximized-mode');
+                    body?.classList.add('maximized-mode');
+                    page?.classList.remove('normal-mode');
+                    body?.classList.remove('normal-mode');
+                    windowControlsRight?.classList.add('maximized-mode-window-control-right');
+                    windowControlsLeft?.classList.add('maximized-mode-window-control-left');
+                    windowControlsRight?.classList.remove('window-controls');
+                    windowControlsLeft?.classList.remove('window-controls');
+                    right?.classList.add('maximized-mode-window-control-right');
+                    right?.classList.remove('normal-mode');
+                    canResize = false;
+                    if (maximize) { maximize.innerHTML = `<img class="window-control-btn-img" src="<?include bash geticons --no-fallbacks window-restore-symbolic | head -n1 ?>">`; }
+                } else {
+                    // Adds the specific class and removing others
+                    page?.classList.add('normal-mode');
+                    body?.classList.add('normal-mode');
+                    page?.classList.remove('maximized-mode');
+                    body?.classList.remove('maximized-mode');
+                    right?.classList.add('normal-mode');
+                    right?.classList.remove('maximized-mode-window-control-right');
+                    windowControlsRight?.classList.remove('maximized-mode-window-control-right');
+                    windowControlsLeft?.classList.remove('maximized-mode-window-control-left');
+                    windowControlsRight?.classList.add('window-controls');
+                    windowControlsLeft?.classList.add('window-controls');
+                    canResize = true;
+                    if (maximize) { maximize.innerHTML = `<img class="window-control-btn-img" src="<?include bash geticons --no-fallbacks window-maximize-symbolic | head -n1 ?>">`; }
+                }
+            }
+
+            // Moves the window when a draggable area is pressed
+            document.addEventListener('mousedown', function (event) {
+                let dragArea = event.target.closest('.drag-area');
+
+                if (dragArea && event.target === dragArea) {
+                    // Calculates if the click was within the visible content dimensions
+                    let withinVisibleWidth = event.clientX < (dragArea.getBoundingClientRect().left + dragArea.clientWidth);
+                    let withinVisibleHeight = event.clientY < (dragArea.getBoundingClientRect().top + dragArea.clientHeight);
+
+                    // If the click was not within the visible dimensions, it may be on the scrollbar
+                    let possiblyOnScrollbar = !withinVisibleWidth || !withinVisibleHeight;
+
+                    if (!possiblyOnScrollbar) {
+                        // Here, you call your 'moveWindow' method from your 'windowControl' object in Python
+                        window.windowControl.moveWindow();
+                    }
+                }
+            });
+
+            // Changes the cursor based on mouse position
+            window.addEventListener('mousemove', function (event) {
+                reevaluateCursor(event);
+            });
+
+            function reevaluateCursor(event) {
+                if (!canResize) {
+                    if (document.documentElement.style.cursor !== 'default') {
+                        document.documentElement.style.cursor = 'default';
+                    }
+                    return;
+                }
+
+                const resizeRegion = detectResizeRegion(event);
+                updateCursorStyle(resizeRegion);
+            }
+
+            function updateCursorStyle(region) {
+                let newCursorStyle = 'default';
+                switch (region) {
+                    case 'top-left':
+                    case 'bottom-right':
+                        newCursorStyle = 'nwse-resize';
+                        break;
+                    case 'top-right':
+                    case 'bottom-left':
+                        newCursorStyle = 'nesw-resize';
+                        break;
+                    case 'top':
+                    case 'bottom':
+                        newCursorStyle = 'ns-resize';
+                        break;
+                    case 'left':
+                    case 'right':
+                        newCursorStyle = 'ew-resize';
+                        break;
+                }
+
+                // Directly applying the cursor style can help enforce the update
+                if (document.documentElement.style.cursor !== newCursorStyle) {
+                    document.documentElement.style.cursor = newCursorStyle;
+                }
+            }
+
+            document.documentElement.addEventListener('mousedown', function (event) {
+                const detectedRegion = detectResizeRegion(event);
+                if (detectedRegion && canResize) {
+                    windowControl.resizeWindowBy(detectedRegion);
+                }
+            });
+
+            function detectResizeRegion(event) {
+                const cornerThreshold = 20; // Increases the sensitive area size for corners
+                const edgeThreshold = 15; // Keeps a smaller area for edges
+                const { clientX, clientY } = event;
+                const { innerWidth, innerHeight } = window;
+
+                const nearTopEdge = clientY < edgeThreshold;
+                const nearBottomEdge = innerHeight - clientY < edgeThreshold;
+                const nearLeftEdge = clientX < edgeThreshold;
+                const nearRightEdge = innerWidth - clientX < edgeThreshold;
+
+                const nearTopCorner = clientY < cornerThreshold;
+                const nearBottomCorner = innerHeight - clientY < cornerThreshold;
+                const nearLeftCorner = clientX < cornerThreshold;
+                const nearRightCorner = innerWidth - clientX < cornerThreshold;
+
+                // Checks corners first for priority over edges
+                if (nearTopCorner && nearLeftCorner) return 'top-left';
+                if (nearTopCorner && nearRightCorner) return 'top-right';
+                if (nearBottomCorner && nearLeftCorner) return 'bottom-left';
+                if (nearBottomCorner && nearRightCorner) return 'bottom-right';
+
+                // Checks edges
+                if (nearTopEdge) return 'top';
+                if (nearBottomEdge) return 'bottom';
+                if (nearLeftEdge) return 'left';
+                if (nearRightEdge) return 'right';
+            }
+        });
+
+        // Selects the div with the class 'window-controls-left'
+        var windowControlsLeft = document.querySelector('#window-controls-left');
+
+        // Checks if the div exists
+        if (windowControlsLeft) {
+            // Gets the height of the div
+            var height = windowControlsLeft.offsetHeight + 5;
+
+            // Selects the div with the id 'left'
+            var leftDiv = document.getElementById('left');
+
+            // Checks if the 'left' div exists
+            if (leftDiv) {
+                // Applies the height of the 'window-controls-left' div as the top margin on the 'left' div
+                leftDiv.style.marginTop = height + 'px';
+            }
+        }
+    </script>
+</body>
+
+</html>
