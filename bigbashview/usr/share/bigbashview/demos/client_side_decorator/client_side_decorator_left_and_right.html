@@ -365,7 +365,7 @@
                     // If the click was not within the visible dimensions, it may be on the scrollbar
                     let possiblyOnScrollbar = !withinVisibleWidth || !withinVisibleHeight;
 
-                    if (!possiblyOnScrollbar) {
+                    if (!possiblyOnScrollbar && !disableDragArea) {
                         // Here, you call your 'moveWindow' method from your 'windowControl' object in Python
                         window.windowControl.moveWindow();
                     }
