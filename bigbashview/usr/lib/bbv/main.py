@@ -266,18 +266,20 @@ class Main:
                 print('Please install PyQt5')
                 sys.exit(1)
 
+            flags = ('--ignore-gpu-blocklist --disable-logging --no-sandbox --single-process  --disable-gpu-sandbox --in-process-gpu '
+                    '--autoplay-policy=no-user-gesture-required --disable-back-forward-cache  --disable-breakpad '
+                    '--aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread')
             if args.gpu:
-                # Enable GPU rendering, with good support in effects like blur
-                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --no-sandbox --single-process --autoplay-policy=no-user-gesture-required --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --enable-gpu-rasterization --disable-gpu-sandbox --disable-breakpad'
-                os.environ['QSG_RENDER_LOOP'] = 'basic'
-                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+                flags += (' --enable-gpu-rasterization')
             else:
-                # Disable GPU rendering, open faster and use less memory
-                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing --autoplay-policy=no-user-gesture-required --disable-back-forward-cache --aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --disable-breakpad'
-                os.environ['QT_QUICK_BACKEND'] = 'software'
-                os.environ['QSG_RENDER_LOOP'] = 'basic'
-                os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
-                os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+                flags += (' --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode '
+                        '--num-raster-threads=0')
+
+            # Verifica se a variável de ambiente QTWEBENGINE_CHROMIUM_FLAGS está vazia ou não definida
+            if not os.environ.get('QTWEBENGINE_CHROMIUM_FLAGS', ''):
+                os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = flags
+
+            os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
             self.window = qt.Window()
 
     def run(self, start_server=True):
