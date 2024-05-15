@@ -15,16 +15,25 @@ msgstr  "Project-Id-Version: bigbashview\n"
         "Content-Transfer-Encoding: 8bit\n"
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
 msgid   "Bem-vindo ao BigBashView"
 msgstr  ""
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
 msgid   "Nome do Host"
 msgstr  ""
 
 #
+# #-#-#-#-#  bigbashview.pot (bigbashview)  #-#-#-#-#
+#
+# File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
 msgid   "Ambiente de Trabalho"
 msgstr  ""
