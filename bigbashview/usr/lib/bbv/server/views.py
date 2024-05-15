@@ -134,7 +134,7 @@ class content_handler(url_handler):
     # Include a bash script
     def include_bash(self, html_content, script, original_string):
         try:
-            result = subprocess.check_output(['bash', '-c', script], stderr=subprocess.STDOUT)
+            result = subprocess.check_output(['bash', '-c', script], stderr=subprocess.STDOUT, env={**os.environ, 'RUST_BACKTRACE': '0'})
             html_content = html_content.replace(original_string, result.decode())
         except subprocess.CalledProcessError as e:
             html_content = html_content.replace(original_string, f"Error executing bash script: {e.output.decode()}")
