@@ -41,7 +41,7 @@ from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineDownloadRequest
 from PySide6.QtWebChannel import QWebChannel
 
-from bbv.globaldata import ICON, TITLE
+from bbv.globaldata import ICON, TITLE, PROCESS
 
 # Import gettext module for translations
 import gettext
@@ -116,6 +116,8 @@ class Window(QWidget):
 
         # Set window icon and title
         self.setWindowIcon(QIcon(ICON))
+        self.app.setDesktopFileName(PROCESS)
+
         if TITLE:
             self.app.setApplicationName(TITLE)
             self.setWindowTitle(TITLE)
