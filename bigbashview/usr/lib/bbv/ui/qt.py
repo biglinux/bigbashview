@@ -270,7 +270,6 @@ class Window(QWidget):
 
         self.resize(width, height)
         qr = self.frameGeometry()
-        self.move(qr.topLeft())
         if window_state == "fixed":
             self.setFixedSize(width, height)
 
