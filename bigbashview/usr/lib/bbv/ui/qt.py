@@ -259,16 +259,21 @@ class Window(QWidget):
     def set_size(self, width, height, window_state):
         # Set the window size and position based on the provided arguments
         display = self.app.screenAt(QCursor().pos())
-        size = display.availableGeometry()
-        if width <= 0:
-            width = int(size.width()/2)
-        if height <= 0:
-            height = int(size.height()/2)
+        if display is None:
+            width = 1024
+            height = 600
+        else:
+            size = display.availableGeometry()
+            if width <= 0:
+                width = int(size.width()/2)
+            if height <= 0:
+                height = int(size.height()/2)
+
+            cp = display.availableGeometry().center()
+            qr.moveCenter(cp)
 
         self.resize(width, height)
         qr = self.frameGeometry()
-        cp = display.availableGeometry().center()
-        qr.moveCenter(cp)
         self.move(qr.topLeft())
         if window_state == "fixed":
             self.setFixedSize(width, height)
