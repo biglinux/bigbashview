@@ -254,8 +254,7 @@ class Window(QWidget):
         # Load the specified URL in the web view
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
         self.web.load(self.url)
-        
-        
+
     def set_size(self, width, height, window_state):
         # Set the window size and position based on the provided arguments
         display = self.app.screenAt(QCursor().pos())
@@ -268,9 +267,6 @@ class Window(QWidget):
                 width = int(size.width()/2)
             if height <= 0:
                 height = int(size.height()/2)
-
-            cp = display.availableGeometry().center()
-            qr.moveCenter(cp)
 
         self.resize(width, height)
         qr = self.frameGeometry()
