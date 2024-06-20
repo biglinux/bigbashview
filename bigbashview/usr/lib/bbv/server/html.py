@@ -13,9 +13,9 @@ lang_translations.install()
 # define _ shortcut for translations
 _ = lang_translations.gettext
 
-TITLE = _('Bem-vindo ao BigBashView')
-HOST_TEXT = _('Nome do Host')
-DE_TEXT = _('Ambiente de Trabalho')
+TITLE = _('Welcome to BigBashView')
+HOST_TEXT = _('Host Name')
+DE_TEXT = _('Desktop Environment')
 URL = 'https://github.com/biglinux/bigbashview'
 HOST = os.uname()[1]
 DE = os.environ.get('XDG_CURRENT_DESKTOP')

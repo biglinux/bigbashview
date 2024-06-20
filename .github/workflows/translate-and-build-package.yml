@@ -2,6 +2,12 @@ name: Translate and Build Package
 
 on:
   workflow_dispatch:
+    inputs:
+      debug_enabled:
+        type: boolean
+        description: 'With TMATE'
+        required: false
+        default: false
 
   push:
     branches: [ "*" ]
@@ -10,7 +16,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: If Template exit
+        shell: bash
+        run: |
+          cancel () {
+            echo "Pacote de template, não precisa traduzir e compilar"
+            echo "SAINDO...."
+            curl -s -H "Authorization: token ${{ github.token }}" \
+            -X POST "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel"
+            sleep infinity
+          }
+          if [ -n "$(grep biglinux-package-template pkgbuild/PKGBUILD)" ];then
+            cancel
+          fi
+      
       - name: Install Translator Dependencies
         shell: bash
         run: |
@@ -22,15 +42,23 @@ jobs:
           # Install attranslator
           sudo npm install --location=global attranslate
 
+      ## Tmate ##
+      - name: Setup TMATE Session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+
       - name: Translate Package
-        shell: bash -O extglob {0}
+        shell: bash #-O extglob {0}
         env:
           AZURE_KEY: ${{ secrets.AZURE_KEY }}
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
         run: |
           cd ..
           git clone https://github.com/biglinux/big-auto-translator.git
           mv big-auto-translator/gettext_po_generator_github.sh .
+          sudo cp -f big-auto-translator/openai-translate.js /usr/local/lib/node_modules/attranslate/dist/services/openai-translate.js
           gitfolder=$(echo ${{ github.repository }} | rev | cut -d "/" -f1 | rev)
+          # export OriginalLang=pt-BR
           bash gettext_po_generator_github.sh $gitfolder
 
       - name: Update github
@@ -49,6 +77,7 @@ jobs:
       - name: Send Hooks BigLinux Build Package
         shell: bash
         run: |
-          curl -X POST -H "Accept: application/json" -H "Authorization: token ${{ secrets.WEBHOOK_TOKEN }}" --data '{"event_type": "${{ github.repository }}", "client_payload": { "branch": "${{ github.ref_name }}", "url": "https://github.com/${{ github.repository }}"}}' https://api.github.com/repos/BigLinux-Package-Build/build-package/dispatches
-          curl -X POST -H "Accept: application/json" -H "Authorization: token ${{ secrets.WEBHOOK_TOKEN }}" --data '{"event_type": "${{ github.repository }}", "client_payload": { "branch": "${{ github.ref_name }}", "url": "https://github.com/${{ github.repository }}"}}' https://api.github.com/repos/BigLinux-Package-Build/build-package-ARM/dispatches
-          
+          if [ -z "$(grep biglinux-package-template pkgbuild/PKGBUILD)" ];then
+            curl -X POST -H "Accept: application/json" -H "Authorization: token ${{ secrets.WEBHOOK_TOKEN }}" --data '{"event_type": "${{ github.repository }}", "client_payload": { "branch": "${{ github.ref_name }}", "url": "https://github.com/${{ github.repository }}"}}' https://api.github.com/repos/BigLinux-Package-Build/build-package/dispatches
+            curl -X POST -H "Accept: application/json" -H "Authorization: token ${{ secrets.WEBHOOK_TOKEN }}" --data '{"event_type": "${{ github.repository }}", "client_payload": { "branch": "${{ github.ref_name }}", "url": "https://github.com/${{ github.repository }}"}}' https://api.github.com/repos/BigLinux-Package-Build/build-package-ARM/dispatches
+          fi
