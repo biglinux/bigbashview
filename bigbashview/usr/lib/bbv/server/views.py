@@ -34,11 +34,11 @@ class url_handler(object):
 
     # Handle GET requests
     def GET(self, name=''):
-        return self.parse_and_call(web.ctx.query[1:], name)
+        return self.parse_and_call(web.ctx.query[1:], unquote(name))
 
     # Handle POST requests
     def POST(self, name=''):
-        return self.parse_and_call(web.data(), name)
+        return self.parse_and_call(web.data(), unquote(name))
 
     # Parse the query string and call the appropriate method
     def parse_and_call(self, qs, name):
