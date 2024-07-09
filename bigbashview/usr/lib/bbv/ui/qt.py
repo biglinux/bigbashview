@@ -255,21 +255,21 @@ class Window(QWidget):
         self.url = QUrl.fromEncoded(url.encode("utf-8"))
         self.web.load(self.url)
 
-    def set_size(self, width, height, window_state):
+    def set_size(self, width, height, window_state, min_width, min_height):
         # Set the window size and position based on the provided arguments
-        display = self.app.screenAt(QCursor().pos())
+        display = self.app.primaryScreen()
         if display is None:
             width = 1024
             height = 600
         else:
             size = display.availableGeometry()
             if width <= 0:
-                width = int(size.width()/2)
+                width = int(size.width() / 2)
             if height <= 0:
-                height = int(size.height()/2)
+                height = int(size.height() / 2)
 
+        self.setMinimumSize(min_width, min_height)
         self.resize(width, height)
-        qr = self.frameGeometry()
         if window_state == "fixed":
             self.setFixedSize(width, height)
 

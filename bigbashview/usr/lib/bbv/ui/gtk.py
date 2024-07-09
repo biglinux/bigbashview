@@ -1,21 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-#  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
-#  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>
-
 import os
 import gi
 gi.require_version("Gtk", "3.0")
@@ -106,16 +88,22 @@ class Window(Gtk.Window):
         # Load the specified URL in the webview
         self.webview.load_uri(url)
 
-    def set_size(self, width, height, window_state):
+    def set_size(self, width, height, window_state, min_width, min_height):
         # Set the window size and position based on the provided arguments
-        display = Gdk.Display.get_primary_monitor(Gdk.Display.get_default())
-        size = display.get_geometry()
-        if width <= 0:
-            width = size.width/2
-        if height <= 0:
-            height = size.height/2
+        display = Gdk.Display.get_default()
+        monitor = display.get_primary_monitor() if display else None
+        if monitor:
+            size = monitor.get_geometry()
+            if width <= 0:
+                width = size.width // 2
+            if height <= 0:
+                height = size.height // 2
+        else:
+            width = width if width > 0 else 800
+            height = height if height > 0 else 600
 
-        self.set_size_request(width, height)
+        self.set_size_request(min_width, min_height)
+        self.set_default_size(width, height)
         self.set_position(Gtk.WindowPosition.CENTER)
         if window_state == "fixed":
             self.set_resizable(False)

@@ -298,8 +298,7 @@ class Main:
                 self.url)
 
         # Set the window size, style, viewer, and load the URL
-        self.window.setMinimumSize(self.min_width, self.min_height)
-        self.window.set_size(self.width, self.height, self.window_state)
+        self.window.set_size(self.width, self.height, self.window_state, self.min_width, self.min_height)
         self.window.style(self.color)
         self.window.viewer(self.window_state)
         self.window.load_url(self.url)
