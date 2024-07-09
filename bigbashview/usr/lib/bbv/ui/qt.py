@@ -279,7 +279,7 @@ class Window(QWidget):
             self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 1))
         elif colorful == "transparent":
             self.setAttribute(Qt.WA_TranslucentBackground)
-            self.web.page().setBackgroundColor('transparent')
+            self.web.page().setBackgroundColor(QColor.fromRgbF(0, 0, 0, 0.01))
             self.setStyleSheet("background:transparent;")
         elif os.environ.get('XDG_CURRENT_DESKTOP') == 'KDE':
             rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(',')
