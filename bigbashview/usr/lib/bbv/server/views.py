@@ -272,6 +272,7 @@ class default_handler(url_handler):
         web.header('Content-Type', 'text/html; charset=UTF-8')
         execute_content = " ".join((content, unquote(self.original_qs)))
         if content.endswith(execute_ext):
+            execute_content = " ".join((content, unquote(self.original_qs)))
             return execute_handler().called(options, execute_content, query)
         if content.endswith(content_ext):
             return content_handler().called(options, content, query)
