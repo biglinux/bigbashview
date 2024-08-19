@@ -148,10 +148,16 @@ class Main:
         parser.add_argument(
             '-g', '--gpu', action='store_true',
             help='Activate GPU rendering')
+        parser.add_argument(
+            '-e', '--external_link', action='store_true',
+            help='Open external link in default browser')
 
         # Parse the command line arguments
         args = parser.parse_args()
         self.url = args.url
+
+        if args.external_link:
+            globaldata.EXTERNAL_LINK = True
 
         # Check if the specified directory exists
         if args.directory and os.path.isdir(args.directory):
@@ -177,9 +183,12 @@ class Main:
         if os.path.exists(args.icon):
             globaldata.ICON = args.icon
 
-        # Set the process name if specified
+        # Get the process name if specified
         if args.process:
-            setproctitle(args.process)
+            globaldata.PROCESS = args.process
+
+        # Set the process name    
+        setproctitle(globaldata.PROCESS)
 
         # Parse the window size argument
         geom = args.size.split('x')
@@ -225,22 +234,19 @@ class Main:
             parser.print_help()
             sys.exit(1)
 
-        check_qt = check_gtk = False
         # Construct the window
         if self.toolkit == 'auto':
             try:
                 from bbv.ui import qt
                 self.toolkit = 'qt'
-                check_qt = True
             except ImportError as e:
                 print(e)
                 try:
                     from bbv.ui import gtk
                     self.toolkit = 'gtk'
-                    check_gtk = True
                 except ImportError as e:
                     print(e)
-                    print('Please install WebKitGtk2 or PyQt5')
+                    print('Please install WebKitGtk2 or PySide6')
                     sys.exit(1)
 
         if self.toolkit == 'gtk':
@@ -263,7 +269,7 @@ class Main:
                 from bbv.ui import qt
             except ImportError as e:
                 print(e)
-                print('Please install PyQt5')
+                print('Please install PySide6')
                 sys.exit(1)
 
             flags = ('--ignore-gpu-blocklist --disable-logging --no-sandbox --single-process  --disable-gpu-sandbox --in-process-gpu '

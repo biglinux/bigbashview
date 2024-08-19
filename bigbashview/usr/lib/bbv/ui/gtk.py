@@ -2,30 +2,46 @@ import os
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit2", "4.1")
-from gi.repository import Gtk, WebKit2, Gdk
-from bbv.globaldata import ICON, TITLE
+from gi.repository import Gtk, WebKit2, Gdk, Gio
+from bbv.globaldata import ICON, TITLE, EXTERNAL_LINK
 
 class Window(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self)
         self.webview = WebKit2.WebView()
         settings = self.webview.get_settings()
-        settings.set_user_agent("BigBashView-Agent")
+        settings.set_user_agent("BigBashView-Agent") # User-Agent Custom
+        settings.set_enable_developer_extras(True) # Enable Web Inspector
         self.webview.show()
         self.add(self.webview)
         self.set_icon_from_file(ICON)
+
         if TITLE:
             self.set_title(TITLE)
         else:
             self.webview.connect("notify::title", self.title_changed)
+
+        if EXTERNAL_LINK:
+            self.webview.connect("decide-policy", self.LinkOpener)
+            
         self.webview.connect("load-changed", self.add_script)
         self.webview.connect("close", self.close_window)
-        self.webview.get_settings().set_property(
-            "enable-developer-extras",
-            True
-        )
         self.connect("destroy", Gtk.main_quit)
         self.connect("key-press-event", self.key)
+
+    def LinkOpener(self, web_view, decision, decision_type):
+        """Intercepta navegações para abrir links externos no navegador padrão."""
+        if decision_type == WebKit2.PolicyDecisionType.NAVIGATION_ACTION:
+            navigation_action = decision.get_navigation_action()
+            request = decision.get_navigation_action().get_request()
+            uri = request.get_uri()
+            if not uri.startswith("http://127.0.0.1"):
+                if navigation_action.get_navigation_type() == WebKit2.NavigationType.LINK_CLICKED:
+                    # Abre links externos no navegador padrão do sistema
+                    Gio.app_info_launch_default_for_uri(uri, None)
+                    decision.ignore()
+                    return False
+            return True
 
     def key(self, webview, event):
         # Reload the webview when the F5 key is pressed
@@ -79,9 +95,8 @@ class Window(Gtk.Window):
         Gtk.main_quit()
 
     def title_changed(self, webview, title):
-        # Set the window title and WM_CLASS property based on the webview's title
+        # Set the window title
         title = self.webview.get_title()
-        os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS '{title}'")
         self.set_title(title)
 
     def load_url(self, url):
