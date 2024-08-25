@@ -6,7 +6,7 @@
 #  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 #  This file contains the implementation of a Qt-based UI for the BigBashView application.
-#  It provides a window with a web view and various features such as download handling, 
+#  It provides a window with a web view and various features such as download handling,
 #  page inspection, and window customization.
 #
 #  The code is divided into several sections:
@@ -36,7 +36,7 @@ import sys
 import os
 from PySide6.QtCore import QUrl, Qt, QObject, Slot, Signal, QEvent
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication, QFileDialog
-from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor, QDesktopServices
+from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QDesktopServices
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineDownloadRequest
 from PySide6.QtWebChannel import QWebChannel
@@ -119,7 +119,7 @@ class Window(QWidget):
         self.app = QApplication(sys.argv)
         super().__init__()
         self.web = QWebEngineView()
-        self.web.page().profile().setHttpUserAgent("BigBashView-Agent")        
+        self.web.page().profile().setHttpUserAgent("BigBashView-Agent")
         self.inspector = QWebEngineView()
 
         # Set window icon and title
@@ -131,7 +131,7 @@ class Window(QWidget):
             self.setWindowTitle(TITLE)
         else:
             self.web.titleChanged.connect(self.title_changed)
-        
+
         if EXTERNAL_LINK:
             self.web.setPage(LinkOpener(self))
 

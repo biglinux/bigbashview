@@ -187,7 +187,7 @@ class Main:
         if args.process:
             globaldata.PROCESS = args.process
 
-        # Set the process name    
+        # Set the process name
         setproctitle(globaldata.PROCESS)
 
         # Parse the window size argument
@@ -246,7 +246,7 @@ class Main:
                     self.toolkit = 'gtk'
                 except ImportError as e:
                     print(e)
-                    print('Please install WebKitGtk2 or PySide6')
+                    print('Please install WebKitGtk or PySide6')
                     sys.exit(1)
 
         if self.toolkit == 'gtk':
@@ -254,15 +254,13 @@ class Main:
                 from bbv.ui import gtk
             except ImportError as e:
                 print(e)
-                print('Please install WebKitGtk2')
+                print('Please install WebKitGtk')
                 sys.exit(1)
             os.environ['GDK_BACKEND'] = 'x11'
             os.environ['WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS'] = '1'
             os.environ['WEBKIT_DISABLE_COMPOSITING_MODE'] = '1'
             os.environ['WEBKIT_HARDWARE_ACCELERATION_POLICY_NEVER'] = '1'
-            self.window = gtk.Window()
-            if globaldata.TITLE:
-                self.window.set_wmclass(globaldata.TITLE, globaldata.TITLE)
+            self.window = gtk.Window(None)
 
         if self.toolkit == 'qt':
             try:

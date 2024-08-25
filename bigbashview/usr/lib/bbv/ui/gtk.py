@@ -1,20 +1,31 @@
 import os
 import gi
-gi.require_version("Gtk", "3.0")
-gi.require_version("WebKit2", "4.1")
-from gi.repository import Gtk, WebKit2, Gdk, Gio
-from bbv.globaldata import ICON, TITLE, EXTERNAL_LINK
+gi.require_version("Gtk", "4.0")
+gi.require_version("WebKit", "6.0")
+from gi.repository import Gtk, WebKit, Gdk, Gio, GLib
+from bbv.globaldata import ICON, TITLE, EXTERNAL_LINK, PROCESS
+
+
+class Application(Gtk.Application):
+    def __init__(self):
+        super().__init__(application_id="biglinux.bbv", flags=Gio.ApplicationFlags.NON_UNIQUE)
+        GLib.set_application_name(PROCESS)
+
+    def do_activate(self):
+        Window(app=self)
 
 class Window(Gtk.Window):
-    def __init__(self):
-        Gtk.Window.__init__(self)
-        self.webview = WebKit2.WebView()
+    def __init__(self, app):
+        super().__init__(application=app)
+        self.webview = WebKit.WebView()
         settings = self.webview.get_settings()
         settings.set_user_agent("BigBashView-Agent") # User-Agent Custom
         settings.set_enable_developer_extras(True) # Enable Web Inspector
-        self.webview.show()
-        self.add(self.webview)
-        self.set_icon_from_file(ICON)
+        settings.set_enable_javascript(True)
+        self.set_child(self.webview)
+        
+        # Definir o ícone da janela
+        self.set_icon_name("big-logo")
 
         if TITLE:
             self.set_title(TITLE)
@@ -23,76 +34,73 @@ class Window(Gtk.Window):
 
         if EXTERNAL_LINK:
             self.webview.connect("decide-policy", self.LinkOpener)
-            
+
         self.webview.connect("load-changed", self.add_script)
         self.webview.connect("close", self.close_window)
-        self.connect("destroy", Gtk.main_quit)
-        self.connect("key-press-event", self.key)
+        self.connect('close-request',self.close_window)
+
+        # Criar um controlador de eventos para capturar teclas pressionadas
+        key_controller = Gtk.EventControllerKey.new()
+        self.webview.add_controller(key_controller)
+        key_controller.connect("key-pressed", self.key)       
 
     def LinkOpener(self, web_view, decision, decision_type):
         """Intercepta navegações para abrir links externos no navegador padrão."""
-        if decision_type == WebKit2.PolicyDecisionType.NAVIGATION_ACTION:
+        if decision_type == WebKit.PolicyDecisionType.NAVIGATION_ACTION:
             navigation_action = decision.get_navigation_action()
-            request = decision.get_navigation_action().get_request()
+            request = navigation_action.get_request()
             uri = request.get_uri()
             if not uri.startswith("http://127.0.0.1"):
-                if navigation_action.get_navigation_type() == WebKit2.NavigationType.LINK_CLICKED:
+                if navigation_action.get_navigation_type() == WebKit.NavigationType.LINK_CLICKED:
                     # Abre links externos no navegador padrão do sistema
                     Gio.app_info_launch_default_for_uri(uri, None)
                     decision.ignore()
                     return False
             return True
 
-    def key(self, webview, event):
+    def key(self, controller, keyval, keycode, state):
         # Reload the webview when the F5 key is pressed
-        if event.keyval == 65474:
+        if keyval == 65474:  # F5
             self.webview.reload()
         # Show the web inspector when the F12 key is pressed
-        if event.keyval == 65481:
+        if keyval == 65481:  # F12
             inspector = self.webview.get_inspector()
             inspector.show()
 
     def add_script(self, webview, event):
         # Add a JavaScript function to the webview that can be called from the loaded webpage
         script = "function _run(run){fetch('/execute$'+run);}"
-        if event == WebKit2.LoadEvent.FINISHED:
-            self.webview.run_javascript(script)
+        if event == WebKit.LoadEvent.FINISHED:
+            self.webview.evaluate_javascript(script, -1)
 
     def viewer(self, window_state):
         # Set the window state based on the provided argument
         if window_state == "maximized":
             self.maximize()
-            self.show()
         elif window_state == "fullscreen":
             self.fullscreen()
-            self.show()
         elif window_state == "frameless":
             self.set_decorated(False)
-            self.show()
         elif window_state == "framelesstop":
             self.set_decorated(False)
             self.set_keep_above(True)
-            self.show()
         elif window_state == "maximizedframelesstop":
             self.set_decorated(False)
             self.set_keep_above(True)
             self.maximize()
-            self.show()
         elif window_state == "alwaystop":
             self.set_keep_above(True)
-            self.show()
-        else:
-            self.show()
+        self.present()
 
-    @staticmethod
-    def run():
-        # Start the Gtk main loop
-        Gtk.main()
+    def run(self):
+        # Start the Gtk Application
+        app = Application()
+        app.run()
 
-    @staticmethod
-    def close_window(webview):
-        # Quit the Gtk main loop when the webview is closed
-        Gtk.main_quit()
+    def close_window(self, webview):
+        # Quit the Gtk Application when the webview is closed
+        self.close()
+        os.kill(os.getpid(), 15)
 
     def title_changed(self, webview, title):
         # Set the window title
@@ -119,29 +127,19 @@ class Window(Gtk.Window):
 
         self.set_size_request(min_width, min_height)
         self.set_default_size(width, height)
-        self.set_position(Gtk.WindowPosition.CENTER)
         if window_state == "fixed":
             self.set_resizable(False)
 
     def style(self, colorful):
         # Set the window and webview background color based on the provided argument
+        css_provider = Gtk.CssProvider()
         if colorful == "black":
-            self.override_background_color(
-                Gtk.StateFlags.NORMAL,
-                Gdk.RGBA(0, 0, 0, 1)
-            )
+            css_provider.load_from_string("window{background-color:rgba(0, 0, 0, 1);}")
             self.webview.set_background_color(Gdk.RGBA(0, 0, 0, 1))
 
         elif colorful == "transparent":
-            screen = self.get_screen()
-            visual = screen.get_rgba_visual()
-            if visual is not None and screen.is_composited():
-                self.set_visual(visual)
-                self.override_background_color(
-                    Gtk.StateFlags.NORMAL,
-                    Gdk.RGBA(0, 0, 0, 0)
-                )
-                self.webview.set_background_color(Gdk.RGBA(0, 0, 0, 0))
+            css_provider.load_from_string("window{background-color:rgba(0, 0, 0, 0);}")
+            self.webview.set_background_color(Gdk.RGBA(0, 0, 0, 0))
 
         elif os.environ.get("XDG_CURRENT_DESKTOP") == "KDE":
             rgb = os.popen("kreadconfig5 --group WM --key activeBackground").read().split(",")
@@ -151,16 +149,17 @@ class Window(Gtk.Window):
                 r = float(int(r)/255)
                 g = float(int(g)/255)
                 b = float(int(b)/255)
-                self.override_background_color(
-                    Gtk.StateFlags.NORMAL,
-                    Gdk.RGBA(r, g, b, 1)
-                )
                 self.webview.set_background_color(Gdk.RGBA(r, g, b, 1))
             else:
-                color = self.get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
-                self.override_background_color(Gtk.StateFlags.NORMAL, color)
+                color = Gdk.RGBA(1,1,1,1)
+                style = "window{background-color:"+color.to_string()+";}"
+                css_provider.load_from_string(style)
                 self.webview.set_background_color(color)
         else:
-            color = self.get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
-            self.override_background_color(Gtk.StateFlags.NORMAL, color)
+            color = Gdk.RGBA(1,1,1,1)
+            style = "window{background-color:"+color.to_string()+";}"
+            css_provider.load_from_string(style)
             self.webview.set_background_color(color)
+
+        style_context = self.get_style_context()
+        style_context.add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
