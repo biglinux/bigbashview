@@ -6,7 +6,7 @@
 #  Copyright (C) 2021 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
 #
 #  This file contains the implementation of a Qt-based UI for the BigBashView application.
-#  It provides a window with a web view and various features such as download handling, 
+#  It provides a window with a web view and various features such as download handling,
 #  page inspection, and window customization.
 #
 #  The code is divided into several sections:
@@ -36,12 +36,12 @@ import sys
 import os
 from PySide6.QtCore import QUrl, Qt, QObject, Slot, Signal, QEvent
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QApplication, QFileDialog
-from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QCursor
+from PySide6.QtGui import QIcon, QColor, QKeySequence, QShortcut, QDesktopServices
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineDownloadRequest
 from PySide6.QtWebChannel import QWebChannel
 
-from bbv.globaldata import ICON, TITLE, PROCESS
+from bbv.globaldata import ICON, TITLE, PROCESS, EXTERNAL_LINK
 
 # Import gettext module for translations
 import gettext
@@ -105,13 +105,21 @@ class WindowControl(QObject):
         if edge and self.window.windowHandle():
             self.window.windowHandle().startSystemResize(edge)
 
+class LinkOpener(QWebEnginePage):
+    def acceptNavigationRequest(self, url, nav_type, is_main_frame):
+        if nav_type == QWebEnginePage.NavigationTypeLinkClicked:
+            # Abre o link clicado no navegador padrão do sistema
+            QDesktopServices.openUrl(url.toString())
+            return False  # Impede que o QWebEngineView siga o link
+        return True  # Permite outras navegações, como redirecionamentos
+
 class Window(QWidget):
     def __init__(self):
         # Initialize the application and web view
         self.app = QApplication(sys.argv)
+        super().__init__()
         self.web = QWebEngineView()
         self.web.page().profile().setHttpUserAgent("BigBashView-Agent")
-        super().__init__()
         self.inspector = QWebEngineView()
 
         # Set window icon and title
@@ -123,6 +131,9 @@ class Window(QWidget):
             self.setWindowTitle(TITLE)
         else:
             self.web.titleChanged.connect(self.title_changed)
+
+        if EXTERNAL_LINK:
+            self.web.setPage(LinkOpener(self))
 
         # Connect various signals to their respective slots
         self.web.page().windowCloseRequested.connect(self.close_window)
@@ -246,8 +257,7 @@ class Window(QWidget):
         self.app.quit()
 
     def title_changed(self, title):
-        # Set the window title and WM_CLASS property when the web page title changes
-        os.system(f"xprop -id $(xprop -root '\t$0' _NET_ACTIVE_WINDOW|cut -f2) -f WM_CLASS 8s -set WM_CLASS '{title}'")
+        # Set the window title
         self.setWindowTitle(title)
 
     def load_url(self, url):

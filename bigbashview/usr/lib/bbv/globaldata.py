@@ -25,6 +25,6 @@ ICON = os.sep.join((PROGDIR, "img", "bigbashview.svg"))
 LOGO = os.sep.join((PROGDIR, "img", "bigbashview.svg"))
 TITLE = None
 PROCESS = 'BigBashView'
-ROOT_FILE = False
+EXTERNAL_LINK = False
 ADDRESS = '127.0.0.1'
 PORT = 19000

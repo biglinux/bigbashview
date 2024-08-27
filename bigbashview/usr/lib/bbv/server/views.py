@@ -173,13 +173,13 @@ class execute_handler(url_handler):
     __url__ = '/execute(.*)'
 
     # Execute a command and return the output
-    def _execute(self, command, extra_env={}):
+    def _execute(self, command, root, extra_env={}):
         env = os.environ.copy()
         env['bbv_ip'] = str(globaldata.ADDRESS)
         env['bbv_port'] = str(globaldata.PORT)
         env.update(extra_env)
 
-        if not globaldata.ROOT_FILE:
+        if not root:
             po = subprocess.Popen(
                 command,
                 stdin=None,
@@ -203,10 +203,19 @@ class execute_handler(url_handler):
 
     # Handle the execute request
     def called(self, options, content, query):
-        (stdout, stderr) = self._execute(
-            content, extra_env=get_env_for_shell(query))
+        root = False
         if 'close' in options:
             os.kill(os.getpid(), 15)
+        if os.path.isfile(content) and not os.access(content, os.X_OK):
+            try:
+                from stat import S_IEXEC, S_IXGRP, S_IXOTH
+                permission = os.stat(content).st_mode
+                permission = permission | S_IEXEC | S_IXGRP | S_IXOTH
+                os.chmod(content, permission)
+            except Exception:
+                root = True
+        (stdout, stderr) = self._execute(
+            content, root, extra_env=get_env_for_shell(query))
         return stdout
 
 
@@ -230,7 +239,7 @@ class default_handler(url_handler):
     def bbv_compat_mode(self, options, content, query):
         execute_ext = ('.sh', '.sh.html', '.sh.htm', '.sh.php',
                     '.sh.py', '.sh.lua', '.sh.rb', '.sh.pl',
-                    '.sh.lisp', '.sh.jl', '.run', '.sh.js', '.sh.css', '.sh.js')  # Add .sh.js here
+                    '.sh.lisp', '.sh.jl', '.run', '.sh.js', '.sh.css')
         content_ext = ('.htm', '.html')
         content_plain_ext = ('.txt')
         content_css_ext = ('.css')
@@ -243,12 +252,6 @@ class default_handler(url_handler):
                 content = relative_content
             else:
                 content = './%s' % relative_content
-        if not os.access(content, os.X_OK) and content.endswith(execute_ext):
-            try:
-                import stat
-                os.chmod(content, os.stat(content).st_mode | stat.S_IEXEC)
-            except Exception:
-                globaldata.ROOT_FILE = True
         if content.endswith('.sh.css'):  # Existing condition for .sh.css
             web.header('Content-Type', 'text/css; charset=UTF-8')
             execute_content = " ".join((content, unquote(self.original_qs)))
@@ -270,7 +273,6 @@ class default_handler(url_handler):
             web.header('Content-Type', 'image/svg+xml; charset=UTF-8')
             return content_handler().called(options, content, query)
         web.header('Content-Type', 'text/html; charset=UTF-8')
-        execute_content = " ".join((content, unquote(self.original_qs)))
         if content.endswith(execute_ext):
             execute_content = " ".join((content, unquote(self.original_qs)))
             return execute_handler().called(options, execute_content, query)
