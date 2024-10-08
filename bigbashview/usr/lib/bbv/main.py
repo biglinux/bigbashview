@@ -276,7 +276,7 @@ class Main:
             if args.gpu:
                 flags += (' --enable-gpu-rasterization')
             else:
-                flags += (' --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode --num-raster-threads=0 --enable-low-end-device-mode')
+                flags += (' --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode --num-raster-threads=0')
 
             # Verifica se a variável de ambiente QTWEBENGINE_CHROMIUM_FLAGS está vazia ou não definida
             if not os.environ.get('QTWEBENGINE_CHROMIUM_FLAGS', ''):
