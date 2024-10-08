@@ -272,7 +272,7 @@ class Main:
 
             flags = ('--disable-logging --no-sandbox --single-process  --disable-gpu-sandbox --in-process-gpu '
                     '--autoplay-policy=no-user-gesture-required --disable-back-forward-cache  --disable-breakpad '
-                    '--aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread --disable-features=WebRtcAllowInputVolumeAdjustment')
+                    '--aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread,WebRtcAllowInputVolumeAdjustment')
             if args.gpu:
                 flags += (' --enable-gpu-rasterization')
             else:
