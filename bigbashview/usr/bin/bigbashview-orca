@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-# if $1 is --enable start orca, if --disable stop orca
-
 if [ "$1" = "--enable" ]; then
 
     # Autostart in GNOME
@@ -14,9 +12,10 @@ if [ "$1" = "--enable" ]; then
     kwriteconfig6 --file ~/.config/kaccessrc --group ScreenReader --key Enabled true 2> /dev/null
 
     # Start orca
-    exec orca
+    exec orca &
 
-elif [ "$1" = "--disable" ];
+elif [ "$1" = "--disable" ]; then
+
     # Autostart in GNOME
     GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.a11y.applications screen-reader-enabled false 2> /dev/null
 
