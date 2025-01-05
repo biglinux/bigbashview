@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+# if $1 is --enable start orca, if --disable stop orca
+
+if [ "$1" = "--enable" ]; then
+
+    # Autostart in GNOME
+    GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.a11y.applications screen-reader-enabled true 2> /dev/null
+
+    # Autostart in XFCE
+    xfconf-query -c xfce4-session -n -t bool -p /general/StartAssistiveTechnologies -s true  2> /dev/null
+
+    # Autostart in KDE
+    kwriteconfig6 --file ~/.config/kaccessrc --group ScreenReader --key Enabled true 2> /dev/null
+
+    # Start orca
+    exec orca
+
+elif [ "$1" = "--disable" ];
+    # Autostart in GNOME
+    GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.a11y.applications screen-reader-enabled false 2> /dev/null
+
+    # Autostart in XFCE
+    xfconf-query -c xfce4-session -n -t bool -p /general/StartAssistiveTechnologies -s false 2> /dev/null
+
+    # Autostart in KDE
+    kwriteconfig6 --file ~/.config/kaccessrc --group ScreenReader --key Enabled false 2> /dev/null
+
+    killall orca
+else
+    echo $"Possible options: --enable or --disable"
+fi

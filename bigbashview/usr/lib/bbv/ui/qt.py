@@ -170,10 +170,10 @@ class Window(QWidget):
             process_check = os.system("pgrep orca > /dev/null 2>&1")
             
             if process_check == 0:  # If pgrep returns 0, the Orca process is running
-                os.system("killall orca")
+                os.system("bigbashview-orca --disable &")
                 print("Orca process terminated.")
             else:
-                os.system("orca &")  # Start the Orca process in the background
+                os.system("bigbashview-orca --enable &")  # Start the Orca process in the background
                 print("Orca process started.")
         except Exception as e:
             # Handle any exceptions that occur while managing the Orca process
