@@ -1,3 +1,9 @@
 #!/usr/bin/env sh
 
-PATH="/usr/share/bigbashview/framework/shell/:/usr/local/bin:/usr/bin/:$PATH" exec python3 /usr/lib/bbv/bigbashview.py "$@"
+if [[ $UID = 0 ]]; then
+    start_dbus_launch=dbus-launch
+    unset WAYLAND_DISPLAY
+    unset XDG_SESSION_TYPE
+fi
+
+PATH="/usr/share/bigbashview/framework/shell/:/usr/local/bin:/usr/bin/:$PATH" exec $start_dbus_launch python3 /usr/lib/bbv/bigbashview.py "$@"
