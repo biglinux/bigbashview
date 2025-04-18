@@ -270,14 +270,15 @@ class Main:
                 print('Please install PySide6')
                 sys.exit(1)
 
-            flags = ('--disable-logging --no-sandbox --single-process  --disable-gpu-sandbox --in-process-gpu '
+            flags = ('--disable-logging --no-sandbox --single-process  --disable-gpu-sandbox --in-process-gpu --dawn-vulkan '
                     '--autoplay-policy=no-user-gesture-required --disable-back-forward-cache  --disable-breakpad '
                     '--aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread,WebRtcAllowInputVolumeAdjustment')
             if args.gpu:
                 flags += (' --enable-gpu-rasterization')
             else:
+                os.environ['QT_QUICK_BACKEND'] = 'software'
+                os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
                 if os.environ.get('QSG_RENDER_LOOP') == 'basic':
-                    os.environ['QT_QUICK_BACKEND'] = 'software'
                     flags += (' --disable-gpu --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode --num-raster-threads=0')
                 else:
                     flags += (' --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode --num-raster-threads=0')
