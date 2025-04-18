@@ -15,18 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-msgid "Bem-vindo ao BigBashView"
+#: NEEDS WORK
+msgid "Welcome to BigBashView"
 msgstr "Ласкаво просимо до BigBashView"
-
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-msgid "Nome do Host"
+#: NEEDS WORK
+msgid "Host Name"
 msgstr "Ім'я хоста"
-
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-msgid "Ambiente de Trabalho"
-msgstr "Робоче середовище"
+#: NEEDS WORK
+msgid "Desktop Environment"
+msgstr "Середовище робочого столу"

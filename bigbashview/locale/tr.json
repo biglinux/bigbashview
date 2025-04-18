@@ -1,1 +1,1 @@
-{"tr":{"plural-forms":"nplurals=2; plural=(n != 1);","messages":{"Bem-vindo ao BigBashView":{"*":["BigBashView'e Hoş Geldiniz"]},"Nome do Host":{"*":["Ana Bilgisayar Adı"]},"Ambiente de Trabalho":{"*":["Çalışma Ortamı"]}}}}
+{"tr":{"plural-forms":"nplurals=2; plural=(n != 1);","messages":{"Welcome to BigBashView":{"*":["BigBashView'e hoş geldiniz"]},"Host Name":{"*":["Ana Bilgisi"]},"Desktop Environment":{"*":["Masaüstü Ortamı"]}}}}
