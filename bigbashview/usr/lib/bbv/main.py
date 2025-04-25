@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2008 Wilson Pinto Júnior <wilson@openlanhouse.org>
+#  Copyright (C) 2008 Wilson Pinto Jￃﾺnior <wilson@openlanhouse.org>
 #  Copyright (C) 2011 Thomaz de Oliveira dos Reis <thor27@gmail.com>
 #  Copyright (C) 2009  Bruno Goncalves Araujo
-#  Copyright (C) 2022 Elton Fabrício Ferreira <eltonfabricio10@gmail.com>
+#  Copyright (C) 2022 Elton Fabrￃﾭcio Ferreira <eltonfabricio10@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -270,18 +270,15 @@ class Main:
                 print('Please install PySide6')
                 sys.exit(1)
 
-            flags = ('--disable-logging --no-sandbox --single-process  --disable-gpu-sandbox --in-process-gpu '
-                    '--autoplay-policy=no-user-gesture-required --disable-back-forward-cache  --disable-breakpad '
-                    '--aggressive-cache-discard --disable-features=BackForwardCache,CacheCodeOnIdle,ConsumeCodeCacheOffThread,WebRtcAllowInputVolumeAdjustment')
             if args.gpu:
-                flags += (' --enable-gpu-rasterization')
+                flags = (' --enable-gpu-rasterization')
             else:
                 os.environ['QT_QUICK_BACKEND'] = 'software'
                 os.environ['QT_XCB_GL_INTEGRATION'] = 'none'
                 if os.environ.get('QSG_RENDER_LOOP') == 'basic':
-                    flags += (' --disable-gpu --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode --num-raster-threads=0')
+                    flags = (' --disable-gpu --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode --num-raster-threads=0')
                 else:
-                    flags += (' --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode --num-raster-threads=0')
+                    flags = (' --disable-webgl --disable-accelerated-video-decode --disable-accelerated-video-encode --num-raster-threads=0')
 
             # Verify envitonment variable QTWEBENGINE_CHROMIUM_FLAGS if defined
             if not os.environ.get('QTWEBENGINE_CHROMIUM_FLAGS', ''):
