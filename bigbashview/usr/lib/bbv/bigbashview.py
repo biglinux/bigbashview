@@ -17,6 +17,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys
+import glob
+
+def _enable_python_version_fallback():
+    """
+    Append site-packages from other python versions to sys.path
+    to allow importing modules not yet available in the current version.
+    """
+    # glob pattern for site-packages
+    # We assume standard linux paths: /usr/lib/pythonX.Y/site-packages
+    paths = glob.glob('/usr/lib/python3.*/site-packages')
+    
+    current_version_path = f"/usr/lib/python{sys.version_info.major}.{sys.version_info.minor}/site-packages"
+
+    for path in paths:
+        if path == current_version_path:
+            continue
+            
+        if path not in sys.path:
+            # Append to end of path to use as fallback
+            sys.path.append(path)
+
+_enable_python_version_fallback()
+
 from bbv.main import Main
 
 if __name__ == "__main__":
