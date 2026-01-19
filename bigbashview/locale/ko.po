@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the bigbashview package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: bigbashview\n"
@@ -17,16 +16,13 @@ msgstr ""
 "X-Generator: attranslate\n"
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 16
-#: NEEDS WORK
 msgid "Welcome to BigBashView"
 msgstr "BigBashView에 오신 것을 환영합니다."
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 17
-#: NEEDS WORK
 msgid "Host Name"
 msgstr "호스트 이름"
 # 
 # File: bigbashview/bigbashview/usr/lib/bbv/server/html.py, line: 18
-#: NEEDS WORK
 msgid "Desktop Environment"
 msgstr "데스크탑 환경"
